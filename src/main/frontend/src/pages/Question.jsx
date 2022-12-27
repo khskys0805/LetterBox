@@ -18,9 +18,9 @@ const QuestionBox = styled.div`
 `;
 
 const QuestionInside = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  display: grid;
+  grid-auto-columns: 8fr 2fr;
+  height: 100%;
   padding: 30px;
   box-sizing: border-box;
   text-align: center;
@@ -40,19 +40,28 @@ export default function Question() {
   return (
     <QuestionBox>
       <QuestionInside>
-        {turn < 4 && step[turn]()}
-        {turn < 4 && (
-          <RoundButton
-            Children={Next}
-            onClick={() => {
-              console.log(turn);
-              setTurn(turn + 1);
-            }}
-          />
+        {turn < 3 && (
+          <>
+            <div style={{ alignSelf: "center" }}>{step[turn]()}</div>
+            <div style={{ alignSelf: "center" }}>
+              {
+                <RoundButton
+                  Children={Next}
+                  onClick={() => {
+                    console.log(turn);
+                    setTurn(turn + 1);
+                    if (turn === 3) {
+                      navigate("/result");
+                    }
+                  }}
+                />
+              }
+            </div>
+          </>
         )}
         {/* axios사용하여 url주소 넘기기  추가하면 지우기*/}
-        {turn === 4 && <Complete />}
       </QuestionInside>
+      {/* {turn === 4 && <Complete />} */}
     </QuestionBox>
   );
 }
