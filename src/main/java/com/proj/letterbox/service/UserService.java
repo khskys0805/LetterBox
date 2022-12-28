@@ -81,7 +81,7 @@ public class UserService {
         KakaoProfile profile = findProfile(token);
 
         //(2)UserReapository 에 만들어뒀던 findByKakaoEmail() 메소드를 이용해 User 객체에 담아준다.
-        User user = userRepository.findByKakaoEmail(profile.getKakao_account().getEmail());
+        User user = userRepository.findByEmail(profile.getKakao_account().getEmail());
         //(3)DB에 사용자를 저장하기 전, 이미 존재하는 사용자인지 체크할 필요가 있다.
         //이를 user 변수의 값이 null인지 아닌지로 판단한다. 만약 null 이라면 DB에 저장되지 않은 사용자이므로 사용자 저장 로직을 실행한다
         if(user == null) {
