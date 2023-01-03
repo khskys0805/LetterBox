@@ -46,10 +46,12 @@ public class UserController {
 
 
     @RequestMapping(value = "/")
+
     public String home() {
         return "index";
     }
     @RequestMapping (value = "/login/getKakaoAuthUrl")
+
     public @ResponseBody String getKakaoAuthUrl(HttpServletRequest request){
             String reqUrl = KakaoAuthUrl + "/oauth/authorize?client_id=" + KakaoApiKey + "&redirect_uri="+ RedirectURI + "&response_type=code";
             return reqUrl;
@@ -94,6 +96,12 @@ public class UserController {
         headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
         //JWT 가 담긴 헤더와 200 ok 스테이터스 값, "success" 라는 바디값을 ResponseEntity 에 담아 프론트 측에 전달한다.
         return ResponseEntity.ok().headers(headers).body("success");
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<Object> getCurrentUser(HttpServletRequest request) {
+        User user = userService.getUser(request);
+        return ResponseEntity.ok().body(user);
     }
 
 }
