@@ -20,6 +20,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 @Service
@@ -161,5 +162,10 @@ public class UserService {
         }
 
         return kakaoProfile;
+    }
+    public User getUser(HttpServletRequest request) {
+        Long userCode = (Long)request.getAttribute("userCode");
+        User user = userRepository.findByUserCode(userCode);
+        return user;
     }
 }

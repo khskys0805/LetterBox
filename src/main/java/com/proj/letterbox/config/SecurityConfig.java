@@ -42,7 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin().disable()
                 .addFilter(corsFilter);
         http.authorizeRequests()
-                .antMatchers(FRONT_URL+"/main/**")
+                .antMatchers(FRONT_URL+"/**")
                 .authenticated()
                 .anyRequest().permitAll()
 
