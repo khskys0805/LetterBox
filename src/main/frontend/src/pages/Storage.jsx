@@ -4,7 +4,7 @@ import styled from "styled-components";
 import RoundButton from "../components/RoundButton";
 import { SCREEN_MAX_SIZE } from "../constant/max-style";
 
-const MainBox = styled.div`
+const StorageBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
   margin: 0 auto;
   height: 100vh;
@@ -15,25 +15,26 @@ const MainBox = styled.div`
   box-sizing: border-box;
 `;
 
-export default function Main() {
-  const navigate = useNavigate();
-  const Login = () => <span>로그인</span>;
+export default function Storage() {
+  const Fortune = () => <span>복 선물하기</span>;
   const Bag = () => <span>내 복주머니 만들기</span>;
+  const navigate = useNavigate();
   return (
-    <MainBox>
-      <img src={require("../img/luckyBag.png")} alt="로고" />
+    <StorageBox>
+      <img src={require("../img/luckyBag_inside.png")} alt="배경" />
       <RoundButton
-        Children={Login}
+        Children={Fortune}
         onClick={() => {
-          navigate("/auth");
+          navigate("/question");
         }}
       />
       <RoundButton
         Children={Bag}
         onClick={() => {
-          navigate("/question");
+          navigate("/auth");
         }}
       />
-    </MainBox>
+      {/* <RoundButton Children={} onClick={()=>{console.log("dfs")}}/> */}
+    </StorageBox>
   );
 }

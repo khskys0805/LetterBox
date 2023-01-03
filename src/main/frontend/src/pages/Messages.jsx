@@ -2,9 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../components/RoundButton";
+import { SCREEN_MAX_SIZE } from "../constant/max-style";
 
 const MessagesBox = styled.div`
-  max-width: 500px;
+  max-width: ${SCREEN_MAX_SIZE}px;
   padding: 0 28px;
   height: 100vh;
   display: flex;

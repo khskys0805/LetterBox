@@ -7,9 +7,10 @@ import Content from "./fortune/Content";
 import { useNavigate } from "react-router-dom";
 import Complete from "./fortune/Complete";
 import styled from "styled-components";
+import { SCREEN_MAX_SIZE } from "../constant/max-style";
 
 const QuestionBox = styled.div`
-  max-width: 600px;
+  max-width: ${SCREEN_MAX_SIZE}px;
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -40,7 +41,7 @@ export default function Question() {
   return (
     <QuestionBox>
       <QuestionInside>
-        {turn < 3 && (
+        {turn < 4 && (
           <>
             <div style={{ alignSelf: "center" }}>{step[turn]()}</div>
             <div style={{ alignSelf: "center" }}>

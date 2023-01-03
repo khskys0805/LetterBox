@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { INPUT_MAX_SIZE } from "../../constant/max-style";
 
 const InputBox = styled.input`
   all: unset;

@@ -18,7 +18,7 @@ const InputBox = styled.textarea`
 
 const ImageButton = styled.div`
   padding: 16px 25px;
-  background: #f93a68;
+  background: #da2e2a;
   border-radius: 50px;
   color: white;
   width: 100%;
