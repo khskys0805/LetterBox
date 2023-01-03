@@ -2,9 +2,11 @@ package com.proj.letterbox.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.proj.letterbox.config.jwt.JwtProperties;
 import com.proj.letterbox.model.User;
 import com.proj.letterbox.model.oauth.OauthToken;
 import com.proj.letterbox.service.UserService;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +30,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
     private static Logger logger = LoggerFactory.getLogger(UserController.class);
     @Value("${KakaoAuthUrl}")
     private String KakaoAuthUrl;
@@ -52,14 +55,6 @@ public class UserController {
             return reqUrl;
     }
 
-    @RequestMapping(value = "/login/oauth_kakao")
-    public User getLogin(@RequestParam("code") String code) {
-
-        OauthToken oauthToken = userService.getAccessToken(code);
-        User user = userService.saveUser(oauthToken.getAccess_token());
-
-        return user;
-    }
 
     public String getKakaoUniqueNo(String accessToken) throws Exception {
 
@@ -84,6 +79,21 @@ public class UserController {
 
         return kakaoUniqueNo;
 
+    }
+
+    // 프론트에서 인가코드 받아오는 url
+    @GetMapping("/login/oauth_kakao")
+    public ResponseEntity getLogin(@RequestParam("code") String code) {
+        // 넘어온 인가 코드를 통해 access_token 발급
+        OauthToken oauthToken= userService.getAccessToken(code);
+        // 발급 받은 accessToken 으로 카카오 회원 정보 DB 저장 후 JWT 를 생성
+        //UserService 의 기존 SaveUser 메소드를 수정한다
+        String jwtToken = userService.saveUserAndGetToken(oauthToken.getAccess_token());
+        //응답 헤더의 Authorization 이라는 항목에 JWT 를 넣어준다.
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+        //JWT 가 담긴 헤더와 200 ok 스테이터스 값, "success" 라는 바디값을 ResponseEntity 에 담아 프론트 측에 전달한다.
+        return ResponseEntity.ok().headers(headers).body("success");
     }
 
 }

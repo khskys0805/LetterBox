@@ -1,7 +1,10 @@
 package com.proj.letterbox.service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.proj.letterbox.config.jwt.JwtProperties;
 import com.proj.letterbox.model.User;
 import com.proj.letterbox.model.oauth.KakaoProfile;
 import com.proj.letterbox.model.oauth.OauthToken;
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Date;
 
 @Service
 public class UserService {
@@ -75,7 +80,7 @@ public class UserService {
 
         return oauthToken; //(8)Json 데이터가 OauthToken 객체에 잘 담기면 리턴해준다.
     }
-    public User saveUser(String token) {
+    public String saveUserAndGetToken(String token) {
 
         //(1)findProfile()이라는 메소드를 이용해 엑세스 토큰으로 카카오 서버에서 사용자 정보를 가져온다. 해당 메소드는 saveUser() 메소드 아래에 구현한다.
         KakaoProfile profile = findProfile(token);
@@ -96,8 +101,29 @@ public class UserService {
 
             userRepository.save(user);
         }
+        //createToken() 메소드를 이용해 String 형의 JWT 를 반환한다.
+        return createToken(user);
+    }
+    public String createToken(User user) { //(2-1)파라미터로 User 객체를 받고 리턴 타입이 String 인 createToken() 메소드를 만든다.
 
-        return user;
+        //(2-2)해당 프로젝트에서는 java-jwt 라이브러리를 사용하기 때문에 jjwt 라이브러리와 문법이 다르므로 주의한다.
+        String jwtToken = JWT.create()
+
+                //(2-3)Payload 에 들어갈 등록된 클레임 을 설정한다.
+                //sub 는 자유롭게 지정한다. (별로 중요하지 않다)
+                //exp 는 앞서 만든 JwtProperties 의 만료 시간 필드를 불러와 위와 같이 작성한다.
+                .withSubject(user.getEmail())
+                .withExpiresAt(new Date(System.currentTimeMillis()+ JwtProperties.EXPIRATION_TIME))
+
+                //(2-4)Payload 에 들어갈 개인 클레임 을 설정한다.
+                //.withClaim(이름, 내용) 형태로 작성한다. 사용자를 식별할 수 있는 값과, 따로 추가하고 싶은 값을 자유롭게 넣는다.
+                .withClaim("id", user.getUserCode())
+                .withClaim("nickname", user.getNickname())
+
+                //(2-5)Signature 를 설정한다. 위와 같이 알고리즘을 명시하고 앞서 만든 JwtProperties 의 비밀 키 필드를 불러와 넣어준다.
+                .sign(Algorithm.HMAC512(JwtProperties.SECRET));
+
+        return jwtToken; //(2-6)만들어진 JWT 를 반환한다.
     }
 
 
