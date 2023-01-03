@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Complete from "./fortune/Complete";
 import styled from "styled-components";
 import { SCREEN_MAX_SIZE } from "../constant/max-style";
+import Locate from "./fortune/Locate";
 
 const QuestionBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
@@ -35,13 +36,14 @@ export default function Question() {
     () => <Hints />,
     () => <Connct />,
     () => <Content />,
+    () => <Locate />,
   ];
   const [turn, setTurn] = useState(0);
   const navigate = useNavigate();
   return (
     <QuestionBox>
       <QuestionInside>
-        {turn < 4 && (
+        {turn < 5 && (
           <>
             <div style={{ alignSelf: "center" }}>{step[turn]()}</div>
             <div style={{ alignSelf: "center" }}>
@@ -51,7 +53,7 @@ export default function Question() {
                   onClick={() => {
                     console.log(turn);
                     setTurn(turn + 1);
-                    if (turn === 3) {
+                    if (turn === 4) {
                       navigate("/result");
                     }
                   }}

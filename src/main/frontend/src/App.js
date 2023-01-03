@@ -19,7 +19,7 @@ function App() {
           <Route path="/auth" element={<Login />} />
           {/* <Route path="/" element={<Chatting />} /> */}
           <Route path="/question" element={<Question />} />
-          {/* <Route path="/result" element={<Complete />} /> */}
+          <Route path="/result" element={<Complete />} />
           <Route path="/messages" element={<Messages />} />
           <Route path="/storage" element={<Storage />} />
         </Routes>
