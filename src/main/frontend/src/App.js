@@ -8,6 +8,7 @@ import Main from "./pages/Main";
 import { GlobalStyle } from "./style/Base";
 import Messages from "./pages/Messages";
 import Storage from "./pages/Storage";
+import Token from "./pages/Token";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/auth" element={<Login />} />
+          <Route path="/kakao/login" element={<Token />} />
           {/* <Route path="/" element={<Chatting />} /> */}
           <Route path="/question" element={<Question />} />
           <Route path="/result" element={<Complete />} />

@@ -44,7 +44,6 @@ public class UserController {
     @Value("${KakaoApiUrl}")
     private String KakaoApiUrl;
 
-
     @RequestMapping(value = "/")
 
     public String home() {
@@ -95,7 +94,7 @@ public class UserController {
         HttpHeaders headers = new HttpHeaders();
         headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
         //JWT 가 담긴 헤더와 200 ok 스테이터스 값, "success" 라는 바디값을 ResponseEntity 에 담아 프론트 측에 전달한다.
-        return ResponseEntity.ok().headers(headers).body("success");
+        return ResponseEntity.ok().headers(headers).body(null);
     }
 
     @GetMapping("/me")
