@@ -1,34 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function Token() {
-  const params = window.location.search;
+  const [serchParams, setSearchParams] = useSearchParams();
   const [jwtToken, setJwtToken] = useState();
-  console.log(jwtToken);
-  return (
-    <>
-      <button
-        onClick={() => {
-          axios
-            .get(`/login/oauth_kakao${params}`)
-            .then((res) => setJwtToken(res.headers.authorization))
-            .catch((err) => console.log(err));
-        }}
-      >
-        Token
-      </button>
-      <button
-        onClick={() => {
-          axios
-            .get("/me", {
-              headers: { authorization: jwtToken },
-            })
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
-        }}
-      >
-        me
-      </button>
-    </>
-  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(`/login/oauth_kakao?code=${serchParams.get("code")}`)
+      .then((res) => {
+        setJwtToken(res.headers.authorization);
+        localStorage.setItem("jwt", res.headers.authorization);
+        navigate("/storage");
+      })
+      .catch((err) => {
+        console.log("로그인을 다시 시도해주세요");
+        navigate("/auth");
+      });
+  }, []);
 }
