@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
+import RoundButton from "../../components/RoundButton";
+
 const ConnectTitle = styled.p`
   line-height: 24px;
 `;
@@ -15,6 +18,11 @@ const InputBox = styled.input`
 `;
 
 export default function Connct() {
+  const { inputs, setInputs } = useOutletContext();
+  const Next = () => <span>다음</span>;
+  const navigate = useNavigate();
+  const [connect, setConnect] = useState(inputs.connect);
+
   return (
     <div>
       <ConnectTitle>
@@ -22,7 +30,20 @@ export default function Connct() {
         <br />
         연락처를 알려주세요
       </ConnectTitle>
-      <InputBox placeholder="연락처 입력" />
+      <InputBox
+        placeholder="연락처 입력"
+        value={connect}
+        onChange={(event) => {
+          setConnect(event.target.value);
+        }}
+      />
+      <RoundButton
+        Children={Next}
+        onClick={() => {
+          setInputs({ ...inputs, connect });
+          navigate("/question/content");
+        }}
+      />
     </div>
   );
 }

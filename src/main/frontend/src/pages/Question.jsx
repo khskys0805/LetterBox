@@ -1,14 +1,7 @@
 import React, { useState } from "react";
-import RoundButton from "../components/RoundButton";
-import Connct from "./fortune/Connct";
-import Hints from "./fortune/Hints";
-import Nickname from "./fortune/Nickname";
-import Content from "./fortune/Content";
-import { useNavigate } from "react-router-dom";
-import Complete from "./fortune/Complete";
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import { SCREEN_MAX_SIZE } from "../constant/max-style";
-import Locate from "./fortune/Locate";
 
 const QuestionBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
@@ -27,44 +20,23 @@ const QuestionInside = styled.div`
   box-sizing: border-box;
   text-align: center;
   width: 100%;
+  align-content: space-around;
 `;
 
 export default function Question() {
-  const Next = () => <span>다음</span>;
-  const step = [
-    () => <Nickname />,
-    () => <Hints />,
-    () => <Connct />,
-    () => <Content />,
-    () => <Locate />,
-  ];
-  const [turn, setTurn] = useState(0);
-  const navigate = useNavigate();
+  const [inputs, setInputs] = useState({
+    nickName: "",
+    hints: { first: "", second: "", thrid: "" },
+    connect: "",
+    content: { img: "", text: "" },
+    locate: 0,
+  });
+  console.log(inputs);
   return (
     <QuestionBox>
       <QuestionInside>
-        {turn < 5 && (
-          <>
-            <div style={{ alignSelf: "center" }}>{step[turn]()}</div>
-            <div style={{ alignSelf: "center" }}>
-              {
-                <RoundButton
-                  Children={Next}
-                  onClick={() => {
-                    console.log(turn);
-                    setTurn(turn + 1);
-                    if (turn === 4) {
-                      navigate("/result");
-                    }
-                  }}
-                />
-              }
-            </div>
-          </>
-        )}
-        {/* axios사용하여 url주소 넘기기  추가하면 지우기*/}
+        <Outlet context={{ inputs, setInputs }} />
       </QuestionInside>
-      {/* {turn === 4 && <Complete />} */}
     </QuestionBox>
   );
 }

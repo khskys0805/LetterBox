@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
+import RoundButton from "../../components/RoundButton";
 
 const HintsTitle = styled.p`
   line-height: 24px;
@@ -29,6 +31,11 @@ const Input = styled.input`
 `;
 
 export default function Hints() {
+  const { inputs, setInputs } = useOutletContext();
+  const Next = () => <span>다음</span>;
+  const navigate = useNavigate();
+  const [hints, setHints] = useState(inputs.hints);
+
   return (
     <div>
       <HintsTitle>
@@ -39,17 +46,42 @@ export default function Hints() {
       <HintsInput>
         <InputBox>
           <span>1.</span>
-          <Input placeholder="첫번째 힌트 입력" />
+          <Input
+            placeholder="첫번째 힌트 입력"
+            value={hints.first}
+            onChange={(event) => {
+              setHints({ ...hints, first: event.target.value });
+            }}
+          />
         </InputBox>
         <InputBox>
           <span>2.</span>
-          <Input placeholder="두번째 힌트 입력" />
+          <Input
+            placeholder="두번째 힌트 입력"
+            value={hints.second}
+            onChange={(event) => {
+              setHints({ ...hints, second: event.target.value });
+            }}
+          />
         </InputBox>
         <InputBox>
           <span>3.</span>
-          <Input placeholder="세번째 힌트 입력" />
+          <Input
+            placeholder="세번째 힌트 입력"
+            value={hints.thrid}
+            onChange={(event) => {
+              setHints({ ...hints, thrid: event.target.value });
+            }}
+          />
         </InputBox>
       </HintsInput>
+      <RoundButton
+        Children={Next}
+        onClick={() => {
+          setInputs({ ...inputs, hints });
+          navigate("/question/connect");
+        }}
+      />
     </div>
   );
 }

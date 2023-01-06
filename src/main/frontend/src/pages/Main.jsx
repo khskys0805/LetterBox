@@ -19,21 +19,25 @@ export default function Main() {
   const navigate = useNavigate();
   const Login = () => <span>로그인</span>;
   const Bag = () => <span>내 복주머니 만들기</span>;
+  const user = localStorage.getItem("jwt");
   return (
     <MainBox>
       <img src={require("../img/luckyBag.png")} alt="로고" />
-      <RoundButton
-        Children={Login}
-        onClick={() => {
-          navigate("/auth");
-        }}
-      />
-      <RoundButton
-        Children={Bag}
-        onClick={() => {
-          navigate("/question");
-        }}
-      />
+      {user ? (
+        <RoundButton
+          Children={Bag}
+          onClick={() => {
+            navigate("/createBag");
+          }}
+        />
+      ) : (
+        <RoundButton
+          Children={Login}
+          onClick={() => {
+            navigate("/auth");
+          }}
+        />
+      )}
     </MainBox>
   );
 }

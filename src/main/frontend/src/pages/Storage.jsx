@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import RoundButton from "../components/RoundButton";
+import styled from "styled-components";
 import { SCREEN_MAX_SIZE } from "../constant/max-style";
 
 const StorageBox = styled.div`
@@ -25,7 +25,7 @@ export default function Storage() {
       <RoundButton
         Children={Fortune}
         onClick={() => {
-          navigate("/question");
+          navigate("/question/nickname");
         }}
       />
       <RoundButton
