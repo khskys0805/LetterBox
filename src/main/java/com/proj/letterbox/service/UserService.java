@@ -11,6 +11,7 @@ import com.proj.letterbox.model.oauth.OauthToken;
 import com.proj.letterbox.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -164,7 +165,7 @@ public class UserService {
         return kakaoProfile;
     }
     public User getUser(HttpServletRequest request) {
-        Long userCode = (Long)request.getAttribute("userCode");
+        Integer userCode = (Integer) request.getAttribute("userCode");
         User user = userRepository.findByUserCode(userCode);
         return user;
     }

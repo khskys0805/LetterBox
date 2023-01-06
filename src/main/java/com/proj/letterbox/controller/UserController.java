@@ -2,6 +2,7 @@ package com.proj.letterbox.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysql.cj.protocol.Message;
 import com.proj.letterbox.config.jwt.JwtProperties;
 import com.proj.letterbox.model.User;
 import com.proj.letterbox.model.oauth.OauthToken;
@@ -50,38 +51,13 @@ public class UserController {
     public String home() {
         return "index";
     }
-    @RequestMapping (value = "/login/getKakaoAuthUrl")
 
+    @RequestMapping (value = "/login/getKakaoAuthUrl")
     public @ResponseBody String getKakaoAuthUrl(HttpServletRequest request){
             String reqUrl = KakaoAuthUrl + "/oauth/authorize?client_id=" + KakaoApiKey + "&redirect_uri="+ RedirectURI + "&response_type=code";
             return reqUrl;
     }
 
-
-    public String getKakaoUniqueNo(String accessToken) throws Exception {
-
-        String kakaoUniqueNo = "";
-
-        // restTemplate을 사용하여 API 호출
-        RestTemplate restTemplate = new RestTemplate();
-        String reqUrl = "/v2/user/me";
-        URI uri = URI.create(KakaoApiUrl + reqUrl);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", "bearer " + accessToken);
-        headers.set("KakaoAK", KakaoApiKey);
-
-        MultiValueMap<String, Object> parameters = new LinkedMultiValueMap<String, Object>();
-        parameters.add("property_keys", "[\"id\"]");
-
-        HttpEntity<MultiValueMap<String, Object>> restRequest = new HttpEntity<>(parameters, headers);
-        ResponseEntity<JSONObject> apiResponse = restTemplate.postForEntity(uri, restRequest, JSONObject.class);
-        JSONObject responseBody = apiResponse.getBody();
-        kakaoUniqueNo = String.valueOf(responseBody.get("id"));
-
-        return kakaoUniqueNo;
-
-    }
 
     // 프론트에서 인가코드 받아오는 url
     @GetMapping("/login/oauth_kakao")
