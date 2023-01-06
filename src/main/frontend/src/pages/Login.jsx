@@ -56,10 +56,6 @@ const social = [
               .get("/login/getKakaoAuthUrl")
               .then((response) => window.open(response.data, "_self"))
               .catch((error) => console.log(error));
-
-            // window.open(
-            //   `https://kauth.kakao.com/oauth/authorize?client_id=&redirect_uri=http://localhost:3000/kakao/login&response_type=code`
-            // );
           }}
         >
           카카오로 계속하기
@@ -72,7 +68,6 @@ const social = [
 
 export default function Login() {
   const navigate = useNavigate();
-  const [token, setToken] = useState();
   return (
     <LoginBox>
       <LoginTitle>로그인</LoginTitle>
@@ -82,20 +77,10 @@ export default function Login() {
             key={site}
             Children={Children}
             background={background}
-            onClick={() => {
-              onClick(setToken);
-            }}
+            onClick={onClick}
           />
         ))}
       </LoginButtons>
-      <div
-        onClick={() => {
-          window.open(token);
-          console.log(token);
-        }}
-      >
-        로그인하기
-      </div>
     </LoginBox>
   );
 }
