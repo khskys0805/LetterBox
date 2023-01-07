@@ -39,6 +39,10 @@ public class User {
     @CreationTimestamp //(4)
     private Timestamp createTime;
 
+//    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = 'user')
+//    @JoinColumn(name = 'user_code')
+//    private LetterBox letterBox;
+
     @Builder
     public User(Long id, String profileImg, String nickname,
                 String email, String userRole) {
