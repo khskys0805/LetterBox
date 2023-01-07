@@ -1,17 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import RoundButton from "../components/RoundButton";
+import { useNavigate } from "react-router-dom";
 
 const LoginBox = styled.div`
   max-width: 500px;
-  display: flex;
-  flex-direction: column;
   margin: 0 auto;
+  display: grid;
+  grid-auto-columns: 1fr 5fr;
+  height: 100vh;
+  padding: 0 36px;
 `;
 
-const LoginTitle = styled.h2``;
-const LoginButton = styled.div``;
+const LoginTitle = styled.span`
+  font-size: 40px;
+  text-align: center;
+  align-self: center;
+`;
+const LoginButtons = styled.div`
+  width: 100%;
+  margin: 0 auto;
+`;
 
 const social = [
   {
@@ -40,27 +50,37 @@ const social = [
     Children: () => (
       <>
         <img alt="카카오" src={require("../img/kakao.png")} />
-        <span>카카오로 계속하기</span>
+        <div
+          onClick={() => {
+            axios
+              .get("/login/getKakaoAuthUrl")
+              .then((response) => window.open(response.data, "_self"))
+              .catch((error) => console.log(error));
+          }}
+        >
+          카카오로 계속하기
+        </div>
       </>
     ),
-    onClick: () => {
-      axios
-        .get("/login/getKakaoAuthUrl")
-        .then((response) => window.open(response.data, "_self"))
-        .catch((error) => console.log(error));
-    },
+    onClick: async (setToken) => {},
   },
 ];
 
 export default function Login() {
+  const navigate = useNavigate();
   return (
     <LoginBox>
       <LoginTitle>로그인</LoginTitle>
-      <LoginButton>
-        {social.map(({ site, background, Children }) => (
-          <RoundButton key={site} Children={Children} background={background} />
+      <LoginButtons>
+        {social.map(({ site, background, Children, onClick }) => (
+          <RoundButton
+            key={site}
+            Children={Children}
+            background={background}
+            onClick={onClick}
+          />
         ))}
-      </LoginButton>
+      </LoginButtons>
     </LoginBox>
   );
 }

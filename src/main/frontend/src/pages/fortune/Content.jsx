@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
+import RoundButton from "../../components/RoundButton";
 
 const ConnectTitle = styled.p`
   line-height: 24px;
@@ -16,21 +18,56 @@ const InputBox = styled.textarea`
   margin: 35px 0 15px;
 `;
 
-const ImageButton = styled.div`
+const ImageInput = styled.div`
   padding: 16px 25px;
-  background: #f93a68;
+  background: #da2e2a;
   border-radius: 50px;
   color: white;
   width: 100%;
   box-sizing: border-box;
+  & input {
+    display: none;
+  }
 `;
 
 export default function Content() {
+  const { inputs, setInputs } = useOutletContext();
+  const Next = () => <span>다음</span>;
+  const navigate = useNavigate();
+  const [content, setContent] = useState(inputs.content);
+
   return (
-    <div>
-      <ConnectTitle>따듯한 말을 가득 담아 복을 보내주세요</ConnectTitle>
-      <InputBox placeholder="내용 입력" />
-      <ImageButton>갤러리에서 배경 이미지 선택</ImageButton>
-    </div>
+    <>
+      <div>
+        <ConnectTitle>따듯한 말을 가득 담아 복을 보내주세요</ConnectTitle>
+        <InputBox
+          placeholder="내용 입력"
+          onChange={(event) => {
+            setContent({ ...content, text: event.target.value });
+          }}
+          value={content.text}
+        />
+        <ImageInput>
+          <label htmlFor="image">
+            {content.img ? content.img : "갤러리에서 배경 이미지 선택"}
+          </label>
+          <input
+            type="file"
+            id="image"
+            accept="image/*"
+            onChange={(event) => {
+              setContent({ ...content, img: event.target.value });
+            }}
+          />
+        </ImageInput>
+      </div>
+      <RoundButton
+        Children={Next}
+        onClick={() => {
+          setInputs({ ...inputs, content });
+          navigate("/question/locate");
+        }}
+      />
+    </>
   );
 }
