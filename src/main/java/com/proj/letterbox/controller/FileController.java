@@ -18,7 +18,7 @@ public class FileController {
     @Autowired
     FilesService filesService;
 
-    @RequestMapping("file/upload")
+    @RequestMapping("/file/upload")
     public Files fileinsert(HttpServletRequest request, @RequestPart MultipartFile files) throws Exception {
         Files file = new Files();
         String sourceFileName = files.getOriginalFilename();

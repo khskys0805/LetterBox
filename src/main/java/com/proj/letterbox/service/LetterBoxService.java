@@ -30,4 +30,9 @@ public class LetterBoxService {
         letterBoxRepository.save(letterBox);
         return letterBox;
     }
+
+
+    public LetterBox getLetterBoxById (int letterboxIdx) {
+        return letterBoxRepository.findByLetterboxId(letterboxIdx);
+    }
 }

@@ -8,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface LetterBoxRepository extends CrudRepository<LetterBox, Integer> {
     //TODO 여기서부터 채우면 됨.
     public LetterBox findByOwner(User user);
+    public LetterBox findByLetterboxId(int letterboxId);
 }
