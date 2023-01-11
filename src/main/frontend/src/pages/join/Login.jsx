@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import RoundButton from "../components/RoundButton";
+import RoundButton from "../../components/RoundButton";
 import { useNavigate } from "react-router-dom";
 
 const LoginBox = styled.div`
@@ -29,7 +29,7 @@ const social = [
     background: "#D33A2D",
     Children: () => (
       <>
-        <img alt="구글" src={require("../img/google.png")} />
+        <img alt="구글" src={require("../../img/google.png")} />
         <span>구글로 계속하기</span>
       </>
     ),
@@ -39,7 +39,7 @@ const social = [
     background: "#01C73C",
     Children: () => (
       <>
-        <img alt="네이버" src={require("../img/naver.png")} />
+        <img alt="네이버" src={require("../../img/naver.png")} />
         <span>네이버로 계속하기</span>
       </>
     ),
@@ -49,7 +49,7 @@ const social = [
     background: "#FDD92B",
     Children: () => (
       <>
-        <img alt="카카오" src={require("../img/kakao.png")} />
+        <img alt="카카오" src={require("../../img/kakao.png")} />
         <div
           onClick={() => {
             axios

@@ -78,7 +78,7 @@ const CreateBagTitle = styled.p`
   }
 `;
 
-export default function Bag() {
+export default function CreateBox() {
   const Create = () => <span>만들기</span>;
   const navigate = useNavigate();
   return (
