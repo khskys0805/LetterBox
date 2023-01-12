@@ -165,7 +165,7 @@ public class UserService {
         return kakaoProfile;
     }
     public User getUser(HttpServletRequest request) {
-        Integer userCode = (Integer) request.getAttribute("userCode");
+        Long userCode = (Long) request.getAttribute("userCode");
         User user = userRepository.findByUserCode(userCode);
         return user;
     }
