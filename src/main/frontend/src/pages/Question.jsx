@@ -57,7 +57,6 @@ export default function Question() {
     navigate(move);
   }, [move]);
 
-  console.log(inputs.nickName);
   return (
     <QuestionBox>
       <QuestionInside>

@@ -16,32 +16,35 @@ import Locate from "./pages/fortune/Locate";
 import CreateBox from "./pages/box/CreateBox";
 import UserBox from "./pages/box/UserBox";
 import LetterBox from "./pages/LetterBox";
+import { UserContextProvider } from "./pages/Context";
 
 function App() {
   return (
     <BrowserRouter>
       <GlobalStyle />
       <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/auth" element={<Login />} />
-          <Route path="/kakao/login" element={<Token />} />
-          <Route element={<PrivateRoute />}>
-            <Route element={<Question />}>
-              <Route path="/question/nickname" element={<Nickname />} />
-              <Route path="/question/hints" element={<Hints />} />
-              <Route path="/question/connect" element={<Connct />} />
-              <Route path="/question/content" element={<Content />} />
-              <Route path="/question/locate" element={<Locate />} />
+        <UserContextProvider>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/auth" element={<Login />} />
+            <Route path="/kakao/login" element={<Token />} />
+            <Route element={<PrivateRoute />}>
+              <Route element={<Question />}>
+                <Route path="/question/nickname" element={<Nickname />} />
+                <Route path="/question/hints" element={<Hints />} />
+                <Route path="/question/connect" element={<Connct />} />
+                <Route path="/question/content" element={<Content />} />
+                <Route path="/question/locate" element={<Locate />} />
+              </Route>
+              <Route path="/chatting" element={<Chatting />} />
+              <Route path="/result" element={<Complete />} />
+              <Route path="/messages" element={<Messages />} />
+              <Route path="/createBox" element={<CreateBox />} />
+              <Route path="/userbox" element={<UserBox />} />
             </Route>
-            <Route path="/chatting" element={<Chatting />} />
-            <Route path="/result" element={<Complete />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/createBox" element={<CreateBox />} />
-            <Route path="/userbox" element={<UserBox />} />
-          </Route>
-          <Route path="/box" element={<LetterBox />} />
-        </Routes>
+            <Route path="/box" element={<LetterBox />} />
+          </Routes>
+        </UserContextProvider>
       </div>
     </BrowserRouter>
   );

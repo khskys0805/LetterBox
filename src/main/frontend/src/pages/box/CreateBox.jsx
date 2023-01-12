@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
@@ -81,6 +82,7 @@ const CreateBagTitle = styled.p`
 export default function CreateBox() {
   const Create = () => <span>만들기</span>;
   const navigate = useNavigate();
+  console.log(localStorage.getItem("jwt"));
   return (
     <CreateBagBox>
       <CreateBagInfo>
@@ -100,7 +102,12 @@ export default function CreateBox() {
       <RoundButton
         Children={Create}
         onClick={() => {
-          navigate("/userBag");
+          axios
+            .get("/me", {
+              headers: { authorization: localStorage.getItem("jwt") },
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
         }}
       />
     </CreateBagBox>

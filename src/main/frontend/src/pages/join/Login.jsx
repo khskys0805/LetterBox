@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useUserContext } from "../Context";
 
 const LoginBox = styled.div`
   max-width: 500px;
@@ -74,7 +75,12 @@ const social = [
 ];
 
 export default function Login() {
-  const navigate = useNavigate();
+  const location = useLocation();
+  const { setBack, back } = useUserContext();
+  useEffect(() => {
+    setBack(!location.state ? "/createbox" : location.state);
+  }, [location]);
+  console.log(back);
   return (
     <LoginBox>
       <LoginTitle>로그인</LoginTitle>
