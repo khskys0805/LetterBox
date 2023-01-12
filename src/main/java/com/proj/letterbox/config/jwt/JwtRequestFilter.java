@@ -5,9 +5,12 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.proj.letterbox.controller.UserController;
 import com.proj.letterbox.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.parser.Authorization;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,6 +27,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     UserRepository userRepository;
 
+    private static Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -38,11 +43,15 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         //jwtHeader 가 제대로 된 형식이라면 토큰 앞의 Bearer 를 떼어내 token 변수에 담는다.
         String token = jwtHeader.replace(JwtProperties.TOKEN_PREFIX, "");
         Long userCode = null;
+        System.out.print(token);
+        logger.debug("토큰 값 : " + token);
+        logger.debug("userCode : " + userCode);
 
         //token 을 비밀 키로 복호화하는 동시에 개인 클레임에 넣어뒀던 id 값을 가져온다. 이 코드 자체가 인증과정이므로 이어지는 catch 문에서 Exception 처리를 해준다.
         try {
             userCode = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
                     .getClaim("id").asLong();
+
         } catch (TokenExpiredException e) {
             e.printStackTrace();
             request.setAttribute(JwtProperties.HEADER_STRING, "토큰이 만료되었습니다.");
