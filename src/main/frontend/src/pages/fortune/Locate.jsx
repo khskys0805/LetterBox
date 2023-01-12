@@ -12,8 +12,8 @@ const LocatePick = styled.div`
   position: absolute;
   top: 25%;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
   clip-path: polygon(
     35% -8%,
     73% -1%,
@@ -42,16 +42,16 @@ export default function Locate() {
   const { inputs, setInputs } = useOutletContext();
   const Next = () => <span>다음</span>;
   const navigate = useNavigate();
-  const msg = Array.from({ length: 16 }, (_, idx) => idx);
+  const msg = Array.from({ length: 25 }, (_, idx) => idx);
   const [locate, setLocate] = useState(inputs.locate);
-  const ban = [0, 3, 12, 15];
+  const ban = [0, 4, 20, 24];
   return (
     <>
       <LocateBox>
         <LocatePick>
           {msg.map((index) => {
             if (ban.includes(index)) {
-              return <div />;
+              return <div key={index} />;
             } else {
               return (
                 <LocateCell
@@ -59,7 +59,6 @@ export default function Locate() {
                   number={index}
                   current={locate}
                   onClick={() => {
-                    console.log(ban.includes(index) ? "34" : "no");
                     setLocate(index);
                   }}
                 />

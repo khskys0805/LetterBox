@@ -23,6 +23,15 @@ const LoginButtons = styled.div`
   margin: 0 auto;
 `;
 
+const SocialButton = styled.button`    cursor: pointer;
+all: unset;
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 10px;
+}`;
+
 const social = [
   {
     site: "Goolge",
@@ -48,19 +57,17 @@ const social = [
     site: "Kakao",
     background: "#FDD92B",
     Children: () => (
-      <>
+      <SocialButton
+        onClick={() => {
+          axios
+            .get("/login/getKakaoAuthUrl")
+            .then((response) => window.open(response.data, "_self"))
+            .catch((error) => console.log(error));
+        }}
+      >
         <img alt="카카오" src={require("../../img/kakao.png")} />
-        <div
-          onClick={() => {
-            axios
-              .get("/login/getKakaoAuthUrl")
-              .then((response) => window.open(response.data, "_self"))
-              .catch((error) => console.log(error));
-          }}
-        >
-          카카오로 계속하기
-        </div>
-      </>
+        <div>카카오로 계속하기</div>
+      </SocialButton>
     ),
     onClick: async (setToken) => {},
   },
