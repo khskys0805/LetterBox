@@ -13,7 +13,6 @@ const ButtonSkill = styled.img`
 `;
 
 export default function ImgButton({ skill }) {
-  console.log(skill);
   return (
     <ImgButtonBox>
       <img src={require("../img/border.png")} alt="배경" />
