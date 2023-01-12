@@ -8,6 +8,8 @@ import com.proj.letterbox.repository.UserRepository;
 import com.proj.letterbox.service.LetterBoxService;
 import com.proj.letterbox.service.LetterService;
 import com.proj.letterbox.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ public class LetterBoxController {
     @Autowired
     UserService userService;
 
+    final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     //조회
     @ResponseBody
     @GetMapping(value = "")
@@ -38,6 +42,8 @@ public class LetterBoxController {
     @PostMapping(value = "")
     public ResponseEntity<Object> saveLetterBox(HttpServletRequest request, @RequestBody LetterBox letterBox) {
         User user = userService.getUser(request);
+        logger.debug(user.getEmail());
+
         LetterBox getLetterBox = letterBoxService.findLetterBoxByUserIdx(user.getUserCode());
         if (getLetterBox == null) {
             LetterBox newLetterBox = letterBoxService.saveLetterBox(user.getUserCode(), letterBox);
