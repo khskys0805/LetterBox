@@ -7,6 +7,8 @@ import com.proj.letterbox.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 
 @Service
 public class LetterBoxService {
@@ -27,6 +29,7 @@ public class LetterBoxService {
     public LetterBox saveLetterBox(int userIdx, LetterBox letterBox) {
         User user = userRepository.findByUserCode(userIdx);
         letterBox.setOwner(user);
+        letterBox.setLetterList(new ArrayList<>());
         letterBoxRepository.save(letterBox);
         return letterBox;
     }
