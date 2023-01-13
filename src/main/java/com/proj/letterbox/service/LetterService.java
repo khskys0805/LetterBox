@@ -28,6 +28,7 @@ public class LetterService {
         User user = userService.getUser(request);
         letter.setUser(user);
         LetterBox letterBox = letterBoxService.getLetterBoxById(letterboxIdx);
+        letter.getLetterlocation();
         letter.setLetterBox(letterBox);
         letterRepository.save(letter);
         return letter;
