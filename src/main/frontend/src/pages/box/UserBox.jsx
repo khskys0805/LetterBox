@@ -1,7 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import ImgButton from "../../components/ImgButton";
 import { SCREEN_MAX_SIZE } from "../../constant/max-style";
 import Share from "./Share";
 
@@ -34,16 +33,6 @@ const TitleBoxType = styled.p`
 `;
 
 export default function UserBox() {
-  useEffect(() => {
-    axios
-      .get("/letterbox", {
-        headers: { authorization: localStorage.getItem("jwt") },
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((err) => console.log(err));
-  }, []);
   return (
     <StorageBox>
       <StorageTitle>

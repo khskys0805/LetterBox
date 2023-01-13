@@ -120,7 +120,10 @@ export default function CreateBox() {
               console.log(response);
               navigate("/box/user");
             })
-            .catch((err) => alert("다시 시도해주세요"));
+            .catch((err) => {
+              console.log(err);
+              alert("다시 시도해주세요");
+            });
         }}
       />
     </CreateBagBox>

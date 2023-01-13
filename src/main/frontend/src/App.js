@@ -42,11 +42,11 @@ function App() {
               <Route path="/messages" element={<Messages />} />
               <Route path="/box" element={<CheckBox />}>
                 <Route path="/box/create" element={<CreateBox />} />
+                <Route path="/box/user" element={<UserBox />} />
               </Route>
             </Route>
             {/* <Route path="/box/id/"></Route> */}
             <Route path="/box/other" element={<LetterBox />} />
-            <Route path="/box/user" element={<UserBox />} />
           </Routes>
         </UserContextProvider>
       </div>

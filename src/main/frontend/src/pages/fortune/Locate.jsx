@@ -79,7 +79,7 @@ export default function Locate() {
         onClick={() => {
           axios
             .post(
-              "/letterbox/3/letter",
+              "/letterbox/1/letter",
               {
                 name: inputs.name,
                 nickname: inputs.nickname,
