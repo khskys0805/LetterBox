@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -33,13 +35,17 @@ public class LetterBox {
         this.owner = owner;
     }
 
-    public LetterBox(int letterboxId, String name, LetterList letterList) {
+
+
+    @ElementCollection
+    @CollectionTable(
+            name = "letter_list",
+            joinColumns = @JoinColumn(name = "letterbox")
+    )
+    private List<LetterList> letterList = new ArrayList<>();
+    public LetterBox(int letterboxId, String name, List letterList) {
         this.letterboxId = letterboxId;
         this.name = name;
         this.letterList = letterList;
     }
-
-    @OneToOne
-    @JoinColumn(name="letterlist")
-    private LetterList letterList;
 }
