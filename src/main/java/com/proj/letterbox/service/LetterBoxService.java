@@ -1,7 +1,6 @@
 package com.proj.letterbox.service;
 
 import com.proj.letterbox.model.LetterBox;
-import com.proj.letterbox.model.LetterList;
 import com.proj.letterbox.model.User;
 import com.proj.letterbox.repository.LetterBoxRepository;
 import com.proj.letterbox.repository.UserRepository;
@@ -15,8 +14,6 @@ public class LetterBoxService {
     LetterBoxRepository letterBoxRepository;
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    LetterListService letterListService;
 
     public LetterBox findLetterBoxByUserIdx(int userIdx) {
         User user = userRepository.findByUserCode(userIdx);
@@ -30,18 +27,6 @@ public class LetterBoxService {
     public LetterBox saveLetterBox(int userIdx, LetterBox letterBox) {
         User user = userRepository.findByUserCode(userIdx);
         letterBox.setOwner(user);
-
-        LetterList letterList = letterListService.saveLetterList(new LetterList(false, false, false, false, false,
-                false, false, false, false, false,
-                false, false, false, false, false,
-                false, false, false, false, false,
-                false, false, false, false, false,
-                false, false, false, false, false,
-                false, false, false, false, false,
-                false, false, false, false, false,
-                false, false, false, false, false,
-                false, false, false));
-        letterBox.setLetterList(letterList);
         letterBoxRepository.save(letterBox);
         return letterBox;
     }
