@@ -82,7 +82,7 @@ const CreateBagTitle = styled.p`
 export default function CreateBox() {
   const Create = () => <span>만들기</span>;
   const navigate = useNavigate();
-  console.log(localStorage.getItem("jwt"));
+
   return (
     <CreateBagBox>
       <CreateBagInfo>
@@ -102,12 +102,46 @@ export default function CreateBox() {
       <RoundButton
         Children={Create}
         onClick={() => {
+          //복 보내기
           axios
-            .get("/me", {
-              headers: { authorization: localStorage.getItem("jwt") },
+            .post(
+              "/letterbox/1/letter",
+              {
+                name: "장현아",
+                nickname: "크리스마스진심임",
+                hint1: "어제 600일이었음",
+                hint2: "이제 복학함",
+                hint3: "아~ 인정",
+                phone: "010",
+                content: "아 안녕",
+              },
+              { headers: { authorization: localStorage.getItem("jwt") } }
+            )
+            .then((response) => {
+              console.log(response);
+              // navigate("/userBox");
             })
-            .then((res) => console.log(res))
             .catch((err) => console.log(err));
+          // 복주머니 생성
+          // axios
+          //   .post(
+          //     "/letterbox",
+          //     { name: "연주니" },
+          //     { headers: { authorization: localStorage.getItem("jwt") } }
+          //   )
+          //   .then((response) => {
+          //     console.log(response);
+          //     // navigate("/userBox");
+          //   })
+          //   .catch((err) => console.log(err));
+          // 마이페이지
+          //     axios
+          //     .get("/me", {
+          //       headers: { authorization: localStorage.getItem("jwt") },
+          //     })
+          //     .then((res) => console.log(res))
+          //     .catch((err) => console.log(err));
+          // }}
         }}
       />
     </CreateBagBox>
