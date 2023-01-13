@@ -29,6 +29,13 @@ public class LetterBox {
     @Column(name="create_time")
     private Timestamp create_time;
 
+    @ElementCollection
+    @CollectionTable(
+            name = "letter_list",
+            joinColumns = @JoinColumn(name = "letter_box_id")
+    )
+    private List<LetterList> letterList = new ArrayList<>();
+
     @Builder
     public LetterBox(String name, User owner) {
         this.name = name;
@@ -37,12 +44,7 @@ public class LetterBox {
 
 
 
-    @ElementCollection
-    @CollectionTable(
-            name = "letter_list",
-            joinColumns = @JoinColumn(name = "letterbox")
-    )
-    private List<LetterList> letterList = new ArrayList<>();
+
     public LetterBox(int letterboxId, String name, List letterList) {
         this.letterboxId = letterboxId;
         this.name = name;
