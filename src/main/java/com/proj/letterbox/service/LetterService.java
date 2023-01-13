@@ -30,7 +30,7 @@ public class LetterService {
         letter.setUser(user);
         LetterBox letterBox = letterBoxService.getLetterBoxById(letterboxIdx);
         int location = letter.getLetterlocation();
-        letterBox.getLetterList().add(new LetterList(letterboxIdx, location));
+        letterBox.getLetterList().add(new LetterList(location));
         //TODO : letterBox는 저장할 필요가 없는지 확인
         letter.setLetterBox(letterBox);
         letterRepository.save(letter);

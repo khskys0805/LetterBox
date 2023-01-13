@@ -11,8 +11,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LetterList {
-
-    private int letterBoxId;
     private int location;
 
 }
