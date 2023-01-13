@@ -118,7 +118,7 @@ export default function CreateBox() {
             )
             .then((response) => {
               console.log(response);
-              navigate("/userBox");
+              navigate("/box/user");
             })
             .catch((err) => alert("다시 시도해주세요"));
         }}
