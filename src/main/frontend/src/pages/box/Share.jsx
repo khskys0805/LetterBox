@@ -2,15 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-const ShareBox = styled.div`
+const ShareBox = styled.ul`
+  display: flex;
+  justify-content: space-around;
   width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
 `;
 
-export default function Share({ setShowShare }) {
+const ShareOptions = styled.li`
+  @media only screen and (max-width: 300px) {
+    & img {
+      width: 40px;
+      object-fit: cover;
+    }
+  }
+`;
+
+export default function Share() {
   const title = "내 복주머니 보내기";
   const sendUrl = window.location.href;
   useEffect(() => {
@@ -28,7 +35,7 @@ export default function Share({ setShowShare }) {
   console.log(copy);
   return (
     <ShareBox>
-      <div
+      <ShareOptions
         onClick={() => {
           if (window.Kakao) {
             const kakao = window.Kakao;
@@ -51,25 +58,25 @@ export default function Share({ setShowShare }) {
           }
         }}
       >
-        카카오톡
-      </div>
-      <div
+        <img src={require("../../img/kakaotalk.png")} alt="카카오톡 공유" />
+      </ShareOptions>
+      <ShareOptions
         onClick={() => {
           window.open(
             `https://twitter.com/intent/tweet?text=${title}&url=${sendUrl}`
           );
         }}
       >
-        트위터
-      </div>
-      <div
+        <img src={require("../../img/twitter.png")} alt="트위터 공유" />
+      </ShareOptions>
+      <ShareOptions
         onClick={() => {
           window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
         }}
       >
-        페이스북
-      </div>
-      <button
+        <img src={require("../../img/facebook.png")} alt="페이스북 공유" />
+      </ShareOptions>
+      <ShareOptions
         onClick={async () => {
           try {
             await navigator.clipboard.writeText(sendUrl);
@@ -79,16 +86,9 @@ export default function Share({ setShowShare }) {
           }
         }}
       >
-        복사
-      </button>
-      <input readOnly placeholder={sendUrl} />
-      <button
-        onClick={() => {
-          setShowShare(false);
-        }}
-      >
-        닫기
-      </button>
+        <img src={require("../../img/link.png")} alt="url 복사" />
+      </ShareOptions>
+      {/* <input readOnly placeholder={sendUrl} /> */}
     </ShareBox>
   );
 }

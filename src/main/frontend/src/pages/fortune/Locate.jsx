@@ -87,7 +87,7 @@ export default function Locate() {
                 hint2: inputs.hints.second,
                 hint3: inputs.hints.thrid,
                 content: inputs.content.text,
-                // file: "",
+                letterlocation: inputs.letterlocation,
               },
               { headers: { authorization: localStorage.getItem("jwt") } }
             )
@@ -95,7 +95,10 @@ export default function Locate() {
               console.log(response);
               navigate("/result");
             })
-            .catch((err) => alert("다시 시도해주세요"));
+            .catch((err) => {
+              alert("다시 시도해주세요");
+              console.log(err);
+            });
         }}
       />
     </>

@@ -11,20 +11,29 @@ const StorageBox = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
+  align-items: center;
   padding: 36px;
   box-sizing: border-box;
+  @media only screen and (min-width: 600px) {
+    justify-content: space-between;
+  }
 `;
 
-const ShareButton = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 25px;
+const StorageTitle = styled.h2`
+  font-size: 24px;
+  line-height: 34px;
+`;
+
+const TtitleNickname = styled.span`
+  color: #dd403d;
+`;
+
+const TitleBoxType = styled.p`
+  text-align: center;
 `;
 
 export default function UserBox() {
-  const [showShare, setShowShare] = useState(false);
   useEffect(() => {
     axios
       .get("/letterbox", {
@@ -37,16 +46,19 @@ export default function UserBox() {
   }, []);
   return (
     <StorageBox>
-      <img src={require("../../img/luckyBag_inside.png")} alt="배경" />
-      <ShareButton
-        onClick={() => {
-          setShowShare(true);
-        }}
-      >
-        <ImgButton skill={"share"} />
-        <div>공유하기</div>
-      </ShareButton>
-      {showShare && <Share setShowShare={setShowShare} />}
+      <StorageTitle>
+        <TtitleNickname>크리스마스 진심녀</TtitleNickname>
+        <span>의</span>
+        <TitleBoxType>복주머니</TitleBoxType>
+      </StorageTitle>
+      <img
+        src={require("../../img/luckyBag_inside.png")}
+        alt="배경"
+        style={{ width: "100%" }}
+      />
+
+      <Share />
+      <div>내 복주머니 공유하기</div>
     </StorageBox>
   );
 }
