@@ -15,7 +15,7 @@ public class LetterBoxService {
     @Autowired
     UserRepository userRepository;
 
-    public LetterBox findLetterBoxByUserIdx(long userIdx) {
+    public LetterBox findLetterBoxByUserIdx(int userIdx) {
         User user = userRepository.findByUserCode(userIdx);
         LetterBox letterBox = null;
         if (user != null) {
@@ -24,7 +24,7 @@ public class LetterBoxService {
         return letterBox;
     }
 
-    public LetterBox saveLetterBox(long userIdx, LetterBox letterBox) {
+    public LetterBox saveLetterBox(int userIdx, LetterBox letterBox) {
         User user = userRepository.findByUserCode(userIdx);
         letterBox.setOwner(user);
         letterBoxRepository.save(letterBox);

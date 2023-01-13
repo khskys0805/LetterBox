@@ -27,7 +27,8 @@ public class LetterService {
     public Letter saveLetter(HttpServletRequest request, int letterboxIdx, Letter letter) {
         User user = userService.getUser(request);
         letter.setUser(user);
-        letter.setLetterId(letterboxIdx);
+        LetterBox letterBox = letterBoxService.getLetterBoxById(letterboxIdx);
+        letter.setLetterBox(letterBox);
         letterRepository.save(letter);
         return letter;
     }
