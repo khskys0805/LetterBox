@@ -32,7 +32,7 @@ public class LetterBox {
     @ElementCollection
     @CollectionTable(
             name = "letter_list",
-            joinColumns = @JoinColumn(name = "letter_box_id")
+            joinColumns = @JoinColumn(name = "letterbox_id")
     )
     private List<LetterList> letterList = new ArrayList<>();
 
