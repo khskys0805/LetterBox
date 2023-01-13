@@ -13,28 +13,28 @@ const InputBox = styled.input`
   margin-top: 35px;
 `;
 
-export default function Nickname() {
+export default function Name() {
   const { inputs, setInputs } = useOutletContext();
   const Next = () => <span>다음</span>;
   const navigate = useNavigate();
-  const [nickname, setNickname] = useState(inputs.nickname);
+  const [name, setName] = useState(inputs.name);
   return (
     <>
       <div>
-        <p>복을 보낼 닉네임을 정해주세요</p>
+        <p>보내는 사람의 이름을 입력해주세요</p>
         <InputBox
-          placeholder="닉네임 입력"
+          placeholder="이름 입력"
           onChange={(event) => {
-            setNickname(event.target.value);
+            setName(event.target.value);
           }}
-          value={nickname}
+          value={name}
         />
       </div>
       <RoundButton
         Children={Next}
         onClick={() => {
-          setInputs({ ...inputs, nickname });
-          navigate("/question/hints");
+          setInputs({ ...inputs, name });
+          navigate("/question/nickname");
         }}
       />
     </>

@@ -37,51 +37,54 @@ export default function Hints() {
   const [hints, setHints] = useState(inputs.hints);
 
   return (
-    <div>
-      <HintsTitle>
-        자신이 누구인지 나타내는
-        <br />
-        힌트를 차례로 3개로 적어주세요
-      </HintsTitle>
-      <HintsInput>
-        <InputBox>
-          <span>1.</span>
-          <Input
-            placeholder="첫번째 힌트 입력"
-            value={hints.first}
-            onChange={(event) => {
-              setHints({ ...hints, first: event.target.value });
-            }}
-          />
-        </InputBox>
-        <InputBox>
-          <span>2.</span>
-          <Input
-            placeholder="두번째 힌트 입력"
-            value={hints.second}
-            onChange={(event) => {
-              setHints({ ...hints, second: event.target.value });
-            }}
-          />
-        </InputBox>
-        <InputBox>
-          <span>3.</span>
-          <Input
-            placeholder="세번째 힌트 입력"
-            value={hints.thrid}
-            onChange={(event) => {
-              setHints({ ...hints, thrid: event.target.value });
-            }}
-          />
-        </InputBox>
-      </HintsInput>
+    <>
+      <div>
+        <HintsTitle>
+          자신이 누구인지 나타내는
+          <br />
+          힌트를 차례로 3개로 적어주세요
+        </HintsTitle>
+        <HintsInput>
+          <InputBox>
+            <span>1.</span>
+            <Input
+              placeholder="첫번째 힌트 입력"
+              value={hints.first}
+              onChange={(event) => {
+                setHints({ ...hints, first: event.target.value });
+              }}
+            />
+          </InputBox>
+          <InputBox>
+            <span>2.</span>
+            <Input
+              placeholder="두번째 힌트 입력"
+              value={hints.second}
+              onChange={(event) => {
+                setHints({ ...hints, second: event.target.value });
+              }}
+            />
+          </InputBox>
+          <InputBox>
+            <span>3.</span>
+            <Input
+              placeholder="세번째 힌트 입력"
+              value={hints.thrid}
+              onChange={(event) => {
+                setHints({ ...hints, thrid: event.target.value });
+              }}
+            />
+          </InputBox>
+        </HintsInput>
+      </div>
+
       <RoundButton
         Children={Next}
         onClick={() => {
           setInputs({ ...inputs, hints });
-          navigate("/question/connect");
+          navigate("/question/content");
         }}
       />
-    </div>
+    </>
   );
 }

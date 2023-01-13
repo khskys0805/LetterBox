@@ -35,7 +35,7 @@ export default function Content() {
   const Next = () => <span>다음</span>;
   const navigate = useNavigate();
   const [content, setContent] = useState(inputs.content);
-
+  const [file, setFile] = useState("");
   return (
     <>
       <div>
@@ -43,7 +43,7 @@ export default function Content() {
         <InputBox
           placeholder="내용 입력"
           onChange={(event) => {
-            setContent({ ...content, text: event.target.value });
+            setContent({ text: event.target.value });
           }}
           value={content.text}
         />
@@ -56,7 +56,7 @@ export default function Content() {
             id="image"
             accept="image/*"
             onChange={(event) => {
-              setContent({ ...content, img: event.target.value });
+              // setContent({ ...content, img: event.target.value });
             }}
           />
         </ImageInput>

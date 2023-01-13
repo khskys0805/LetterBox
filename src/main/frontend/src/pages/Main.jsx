@@ -27,7 +27,7 @@ export default function Main() {
         <RoundButton
           Children={Bag}
           onClick={() => {
-            navigate("/createBox");
+            navigate("/box");
           }}
         />
       ) : (
