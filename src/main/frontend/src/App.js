@@ -16,6 +16,8 @@ import CreateBox from "./pages/box/CreateBox";
 import UserBox from "./pages/box/UserBox";
 import LetterBox from "./pages/LetterBox";
 import { UserContextProvider } from "./pages/Context";
+import Name from "./pages/fortune/Name";
+import CheckBox from "./pages/box/CheckBox";
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
             <Route path="/kakao/login" element={<Token />} />
             <Route element={<PrivateRoute />}>
               <Route element={<Question />}>
+                <Route path="/question/name" element={<Name />} />
                 <Route path="/question/nickname" element={<Nickname />} />
                 <Route path="/question/hints" element={<Hints />} />
                 <Route path="/question/content" element={<Content />} />
@@ -37,10 +40,13 @@ function App() {
               <Route path="/chatting" element={<Chatting />} />
               <Route path="/result" element={<Complete />} />
               <Route path="/messages" element={<Messages />} />
-              <Route path="/createBox" element={<CreateBox />} />
-              <Route path="/userbox" element={<UserBox />} />
+              <Route path="/box" element={<CheckBox />}>
+                <Route path="/box/create" element={<CreateBox />} />
+                <Route path="/box/user" element={<UserBox />} />
+              </Route>
             </Route>
-            <Route path="/box" element={<LetterBox />} />
+            {/* <Route path="/box/id/"></Route> */}
+            <Route path="/box/other" element={<LetterBox />} />
           </Routes>
         </UserContextProvider>
       </div>

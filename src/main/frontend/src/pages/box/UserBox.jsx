@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ImgButton from "../../components/ImgButton";
@@ -24,7 +25,16 @@ const ShareButton = styled.div`
 
 export default function UserBox() {
   const [showShare, setShowShare] = useState(false);
-
+  useEffect(() => {
+    axios
+      .get("/letterbox", {
+        headers: { authorization: localStorage.getItem("jwt") },
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <StorageBox>
       <img src={require("../../img/luckyBag_inside.png")} alt="배경" />
