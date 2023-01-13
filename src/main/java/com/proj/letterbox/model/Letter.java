@@ -40,9 +40,6 @@ public class Letter {
     @Column(name="hint3")
     private String hint3;
 
-    @Column(name="phone")
-    private String phone;
-
     @Column(name="content")
     private String content;
 
@@ -52,4 +49,7 @@ public class Letter {
 
     @Column(name="create_time")
     private Timestamp create_time;
+
+    @Column(name="letterloction")
+    private int letterlocation;
 }

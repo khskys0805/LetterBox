@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="letterBox")
+@Table(name="letter_box")
 public class LetterBox {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +32,14 @@ public class LetterBox {
         this.name = name;
         this.owner = owner;
     }
+
+    public LetterBox(int letterboxId, String name, LetterList letterList) {
+        this.letterboxId = letterboxId;
+        this.name = name;
+        this.letterList = letterList;
+    }
+
+    @OneToOne
+    @JoinColumn(name="letterlist")
+    private LetterList letterList;
 }

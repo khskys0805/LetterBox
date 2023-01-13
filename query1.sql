@@ -48,3 +48,62 @@ create table files (
 alter table letterboxDB.letter add file int;
 alter table letterboxDB.letter add foreign key(file) references files(file_id);
 alter table letterboxDB.letter drop column photo;
+alter table letterboxDB.letter add create_time timestamp default current_timestamp;
+alter table letterboxDB.letter drop column created_at;
+alter table letterboxDB.letterBox add create_time timestamp default current_timestamp;
+create table letter_list (
+	letterlist_id int auto_increment,
+    l0 boolean,
+    l1 boolean,
+    l2 boolean,
+    l3 boolean,
+    l4 boolean,
+    l5 boolean,
+    l6 boolean,
+    l7 boolean,
+    l8 boolean,
+    l9 boolean,
+    l10 boolean,
+    l11 boolean,
+    l12 boolean,
+    l13 boolean,
+    l14 boolean,
+    l15 boolean,
+    l16 boolean,
+    l17 boolean,
+    l18 boolean,
+    l19 boolean,
+    l20 boolean,
+    l21 boolean,
+    l22 boolean,
+    l23 boolean,
+    l24 boolean,
+    l25 boolean,
+    l26 boolean,
+    l27 boolean,
+    l28 boolean,
+    l29 boolean,
+    l30 boolean,
+    l31 boolean,
+    l32 boolean,
+    l33 boolean,
+    l34 boolean,
+    l35 boolean,
+    l36 boolean,
+    l37 boolean,
+    l38 boolean,
+    l39 boolean,
+    l40 boolean,
+    l41 boolean,
+    l42 boolean,
+    l43 boolean,
+    l44 boolean,
+    l45 boolean,
+    l46 boolean,
+    l47 boolean,
+    primary key(letterlist_id)
+);
+
+DELETE FROM letterboxDB.letter where letter_id < 100;
+DELETE FROM letterboxDB.letter_box where letterbox_id < 100;
+DELETE FROM letterboxDB.user where user_code < 100;
