@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { SCREEN_MAX_SIZE } from "../constant/max-style";
-import Nickname from "./fortune/Nickname";
+
 const QuestionBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
   height: 100vh;

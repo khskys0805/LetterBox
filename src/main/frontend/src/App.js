@@ -10,7 +10,6 @@ import Complete from "./pages/fortune/Complete";
 import Nickname from "./pages/fortune/Nickname";
 import Question from "./pages/Question";
 import Hints from "./pages/fortune/Hints";
-import Connct from "./pages/fortune/Connct";
 import Content from "./pages/fortune/Content";
 import Locate from "./pages/fortune/Locate";
 import CreateBox from "./pages/box/CreateBox";
@@ -32,7 +31,6 @@ function App() {
               <Route element={<Question />}>
                 <Route path="/question/nickname" element={<Nickname />} />
                 <Route path="/question/hints" element={<Hints />} />
-                <Route path="/question/connect" element={<Connct />} />
                 <Route path="/question/content" element={<Content />} />
                 <Route path="/question/locate" element={<Locate />} />
               </Route>
