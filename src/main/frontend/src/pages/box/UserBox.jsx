@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ImgButton from "../../components/ImgButton";
-import RoundButton from "../../components/RoundButton";
 import { SCREEN_MAX_SIZE } from "../../constant/max-style";
+import Share from "./Share";
 
 const StorageBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
@@ -22,14 +22,21 @@ const ShareButton = styled.div`
   row-gap: 25px;
 `;
 
-export default function UserBag() {
+export default function UserBox() {
+  const [showShare, setShowShare] = useState(false);
+
   return (
     <StorageBox>
       <img src={require("../../img/luckyBag_inside.png")} alt="배경" />
-      <ShareButton>
+      <ShareButton
+        onClick={() => {
+          setShowShare(true);
+        }}
+      >
         <ImgButton skill={"share"} />
-        <span>공유하기</span>
+        <div>공유하기</div>
       </ShareButton>
+      {showShare && <Share setShowShare={setShowShare} />}
     </StorageBox>
   );
 }

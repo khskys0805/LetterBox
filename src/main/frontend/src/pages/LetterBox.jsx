@@ -4,7 +4,7 @@ import RoundButton from "../components/RoundButton";
 import styled from "styled-components";
 import { SCREEN_MAX_SIZE } from "../constant/max-style";
 
-const StorageBox = styled.div`
+const LetterBoxCover = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
   margin: 0 auto;
   height: 100vh;
@@ -15,12 +15,12 @@ const StorageBox = styled.div`
   box-sizing: border-box;
 `;
 
-export default function Storage() {
+export default function LetterBox() {
   const Fortune = () => <span>복 선물하기</span>;
   const Bag = () => <span>내 복주머니 만들기</span>;
   const navigate = useNavigate();
   return (
-    <StorageBox>
+    <LetterBoxCover>
       <img src={require("../img/luckyBag_inside.png")} alt="배경" />
       <RoundButton
         Children={Fortune}
@@ -35,6 +35,6 @@ export default function Storage() {
         }}
       />
       {/* <RoundButton Children={} onClick={()=>{console.log("dfs")}}/> */}
-    </StorageBox>
+    </LetterBoxCover>
   );
 }

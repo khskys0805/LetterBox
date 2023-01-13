@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import RoundButton from "../components/RoundButton";
-import { useNavigate } from "react-router-dom";
+import RoundButton from "../../components/RoundButton";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useUserContext } from "../Context";
 
 const LoginBox = styled.div`
   max-width: 500px;
@@ -23,13 +24,22 @@ const LoginButtons = styled.div`
   margin: 0 auto;
 `;
 
+const SocialButton = styled.button`    cursor: pointer;
+all: unset;
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 10px;
+}`;
+
 const social = [
   {
     site: "Goolge",
     background: "#D33A2D",
     Children: () => (
       <>
-        <img alt="구글" src={require("../img/google.png")} />
+        <img alt="구글" src={require("../../img/google.png")} />
         <span>구글로 계속하기</span>
       </>
     ),
@@ -39,7 +49,7 @@ const social = [
     background: "#01C73C",
     Children: () => (
       <>
-        <img alt="네이버" src={require("../img/naver.png")} />
+        <img alt="네이버" src={require("../../img/naver.png")} />
         <span>네이버로 계속하기</span>
       </>
     ),
@@ -48,26 +58,29 @@ const social = [
     site: "Kakao",
     background: "#FDD92B",
     Children: () => (
-      <>
-        <img alt="카카오" src={require("../img/kakao.png")} />
-        <div
-          onClick={() => {
-            axios
-              .get("/login/getKakaoAuthUrl")
-              .then((response) => window.open(response.data, "_self"))
-              .catch((error) => console.log(error));
-          }}
-        >
-          카카오로 계속하기
-        </div>
-      </>
+      <SocialButton
+        onClick={() => {
+          axios
+            .get("/login/getKakaoAuthUrl")
+            .then((response) => window.open(response.data, "_self"))
+            .catch((error) => console.log(error));
+        }}
+      >
+        <img alt="카카오" src={require("../../img/kakao.png")} />
+        <div>카카오로 계속하기</div>
+      </SocialButton>
     ),
     onClick: async (setToken) => {},
   },
 ];
 
 export default function Login() {
-  const navigate = useNavigate();
+  const location = useLocation();
+  const { setBack, back } = useUserContext();
+  useEffect(() => {
+    setBack(!location.state ? "/createbox" : location.state);
+  }, [location]);
+  console.log(back);
   return (
     <LoginBox>
       <LoginTitle>로그인</LoginTitle>
