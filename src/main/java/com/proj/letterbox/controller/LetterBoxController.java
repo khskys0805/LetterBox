@@ -31,12 +31,27 @@ public class LetterBoxController {
 
     //조회
     @ResponseBody
-    @GetMapping(value = "")
-    public ResponseEntity<Object> findLetterBoxByUserIdx(HttpServletRequest request) {
+    @GetMapping(value = "/{letterboxIdx}")
+    public ResponseEntity<Object> findLetterBoxByUserIdx(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx) {
+        User user = userService.getUser(request);
+        LetterBox getLetterBox = letterBoxService.getLetterBoxById(letterboxIdx);
+        if (user == getLetterBox.getOwner())
+            return findMyLetterBox(request);
+        else {
+            LetterBox returnLetterBox = new LetterBox(getLetterBox.getLetterboxId(), getLetterBox.getName(), getLetterBox.getLetterList());
+            return ResponseEntity.ok().body(returnLetterBox);
+        }
+    }
+    //내 복주머니 조회
+    @ResponseBody
+    @GetMapping("my")
+    public ResponseEntity<Object> findMyLetterBox(HttpServletRequest request) {
         User user = userService.getUser(request);
         LetterBox getLetterBox = letterBoxService.findLetterBoxByUserIdx(user.getUserCode());
         return ResponseEntity.ok().body(getLetterBox);
     }
+
+
     //생성
     @ResponseBody
     @PostMapping(value = "")

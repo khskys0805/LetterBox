@@ -166,7 +166,8 @@ public class UserService {
     }
     public User getUser(HttpServletRequest request) {
         Long userCode = (Long) request.getAttribute("userCode");
-        User user = userRepository.findByUserCode(userCode);
+        int uc = userCode.intValue();
+        User user = userRepository.findByUserCode(uc);
         return user;
     }
 }
