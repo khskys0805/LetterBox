@@ -2,6 +2,7 @@ package com.proj.letterbox.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.File;
@@ -48,6 +49,7 @@ public class Letter {
     private Files file;
 
     @Column(name="create_time")
+    @CreationTimestamp
     private Timestamp create_time;
 
     @Column(name="letterloction")

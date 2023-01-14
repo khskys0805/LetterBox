@@ -33,18 +33,18 @@ public class LetterBoxController {
     @ResponseBody
     @GetMapping(value = "/{letterboxIdx}")
     public ResponseEntity<Object> findLetterBoxByUserIdx(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx) {
-        User user = userService.getUser(request);
         LetterBox getLetterBox = letterBoxService.getLetterBoxById(letterboxIdx);
-        if (user == getLetterBox.getOwner())
-            return findMyLetterBox(request);
-        else {
-            LetterBox returnLetterBox = new LetterBox(getLetterBox.getLetterboxId(), getLetterBox.getName(), getLetterBox.getLetterList());
-            return ResponseEntity.ok().body(returnLetterBox);
+        if (request.getHeader("authorization") != null) {
+            User user = userService.getUser(request);
+            if (user == getLetterBox.getOwner())
+                return findMyLetterBox(request);
         }
+        LetterBox returnLetterBox = new LetterBox(getLetterBox.getLetterboxId(), getLetterBox.getName(), getLetterBox.getLetterList());
+        return ResponseEntity.ok().body(returnLetterBox);
     }
     //내 복주머니 조회
     @ResponseBody
-    @GetMapping("my")
+    @GetMapping("/my")
     public ResponseEntity<Object> findMyLetterBox(HttpServletRequest request) {
         User user = userService.getUser(request);
         LetterBox getLetterBox = letterBoxService.findLetterBoxByUserIdx(user.getUserCode());
@@ -71,14 +71,17 @@ public class LetterBoxController {
     @ResponseBody
     @PostMapping(value = "/{letterboxIdx}/letter")
     public ResponseEntity<Object> saveLetter(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @RequestBody Letter letter) {
+        System.out.println("뉴레터!" + letter);
+        logger.debug("뉴레터!" + letter);
         Letter newLetter = letterService.saveLetter(request, letterboxIdx, letter);
+
         return ResponseEntity.ok().body(newLetter);
     }
 
     @ResponseBody
     @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}")
-    public ResponseEntity<Object> getLetter(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxId, @PathVariable("letterIdx") int letterIdx) {
-        Letter getLetter = letterService.getLetter(request, letterIdx, letterIdx);
+    public ResponseEntity<Object> getLetter(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx) {
+        Letter getLetter = letterService.getLetter(request, letterboxIdx, letterIdx);
         return ResponseEntity.ok().body(getLetter);
     }
 

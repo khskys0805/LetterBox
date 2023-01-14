@@ -29,7 +29,6 @@ public class LetterBoxService {
     public LetterBox saveLetterBox(int userIdx, LetterBox letterBox) {
         User user = userRepository.findByUserCode(userIdx);
         letterBox.setOwner(user);
-        letterBox.setLetterList(new ArrayList<>());
         letterBoxRepository.save(letterBox);
         return letterBox;
     }

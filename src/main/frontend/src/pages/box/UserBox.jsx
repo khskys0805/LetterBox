@@ -33,6 +33,7 @@ const TitleBoxType = styled.p`
 `;
 
 export default function UserBox() {
+  const formData = new FormData();
   return (
     <StorageBox>
       <StorageTitle>
@@ -45,9 +46,51 @@ export default function UserBox() {
         alt="배경"
         style={{ width: "100%" }}
       />
-
       <Share />
       <div>내 복주머니 공유하기</div>
+      <form
+        encType="multipart/form-data"
+        onSubmit={(event) => {
+          event.preventDefault();
+          axios
+            .post(
+              "/letterbox/1/letter",
+              {
+                name: "김연준",
+                nickname: "연주니",
+                hint1: "연재",
+                hint2: "쌍둥이",
+                hint3: "바보야",
+                content: "안녕하세요",
+                letterlocation: 1,
+              },
+              { headers: { authorization: localStorage.getItem("jwt") } }
+            )
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((err) => {
+              alert("다시 시도해주세요");
+              console.log(err);
+            });
+        }}
+      >
+        제출하기
+      </form>
+      <div
+        onClick={() => {
+          axios
+            .get("/letterbox/1", {
+              headers: { authorization: localStorage.getItem("jwt") },
+            })
+            .then((response) => {
+              console.log(response.data);
+            })
+            .catch((err) => console.log(err));
+        }}
+      >
+        확인하기
+      </div>
     </StorageBox>
   );
 }
