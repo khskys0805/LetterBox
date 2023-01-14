@@ -3,6 +3,7 @@ import styled from "styled-components";
 import ImgButton from "../../components/ImgButton";
 import { SCREEN_MAX_SIZE } from "../../constant/max-style";
 import Share from "./Share";
+import axios from "axios";
 
 const StorageBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
@@ -36,7 +37,30 @@ export default function UserBox() {
         <ImgButton skill={"share"} />
         <div>공유하기</div>
       </ShareButton>
-      {showShare && <Share setShowShare={setShowShare} />}
+        <div style={{background: "red"}} onClick={()=>{
+            console.log("df")
+            axios
+                .post(
+                    "/letterbox/1/letter",
+                    {
+                        name: "장현아",
+                        nickname: "진심녀",
+                        hint1: "ㅇㄹ",
+                        hint2: "ㅇㄹㄹ",
+                        hint3: "ㅇㄹ",
+                        content: "ㄷㄹ",
+                        letterlocation: 3,
+                    },
+                    { headers: { authorization: localStorage.getItem("jwt") } }
+                )
+                .then((response) => {
+                    console.log(response);
+
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }}>letter 테스트</div>
     </StorageBox>
   );
 }

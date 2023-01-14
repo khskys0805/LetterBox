@@ -103,18 +103,12 @@ export default function CreateBox() {
         Children={Create}
         onClick={() => {
           //복 보내기
+
+          // 복주머니 생성
           axios
             .post(
-              "/letterbox/1/letter",
-              {
-                name: "장현아",
-                nickname: "크리스마스진심임",
-                hint1: "어제 600일이었음",
-                hint2: "이제 복학함",
-                hint3: "아~ 인정",
-                phone: "010",
-                content: "아 안녕",
-              },
+              "/letterbox",
+              { name: "연주니" },
               { headers: { authorization: localStorage.getItem("jwt") } }
             )
             .then((response) => {
@@ -122,18 +116,6 @@ export default function CreateBox() {
               // navigate("/userBox");
             })
             .catch((err) => console.log(err));
-          // 복주머니 생성
-          // axios
-          //   .post(
-          //     "/letterbox",
-          //     { name: "연주니" },
-          //     { headers: { authorization: localStorage.getItem("jwt") } }
-          //   )
-          //   .then((response) => {
-          //     console.log(response);
-          //     // navigate("/userBox");
-          //   })
-          //   .catch((err) => console.log(err));
           // 마이페이지
           //     axios
           //     .get("/me", {

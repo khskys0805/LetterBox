@@ -165,6 +165,7 @@ public class UserService {
         return kakaoProfile;
     }
     public User getUser(HttpServletRequest request) {
+
         Long userCode = (Long) request.getAttribute("userCode");
         System.out.println("유저코드임"+userCode);
         int uc = userCode.intValue();

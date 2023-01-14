@@ -30,8 +30,9 @@ public class LetterService {
         letter.setUser(user);
         LetterBox letterBox = letterBoxService.getLetterBoxById(letterboxIdx);
         int location = letter.getLetterlocation();
-        letterBox.getLetterList().add(new LetterList(location));
+        letterBox.getLetterList().add(location);
         //TODO : letterBox는 저장할 필요가 없는지 확인
+        letterBoxRepository.save(letterBox);
         letter.setLetterBox(letterBox);
         letterRepository.save(letter);
         return letter;
@@ -39,8 +40,13 @@ public class LetterService {
 
     public Letter getLetter(HttpServletRequest request, int letterboxIdx, int letterIdx) {
         User user = userService.getUser(request);
-        return null;
-        //TODO getLetter 부분 고민 후 작성할 것...!!
+        LetterBox letterBox = letterBoxService.getLetterBoxById(letterboxIdx);
+        if (user == letterBox.getOwner()) {
+            return letterRepository.findByLetterId(letterIdx);
+        }
+        else {
+            return null;
+        }
     }
 
 }
