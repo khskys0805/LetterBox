@@ -80,7 +80,7 @@ export default function UserBox() {
       <div
         onClick={() => {
           axios
-            .get("/letterbox/1", {
+            .get("/letterbox/my", {
               headers: { authorization: localStorage.getItem("jwt") },
             })
             .then((response) => {

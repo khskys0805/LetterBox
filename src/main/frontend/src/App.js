@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/join/Login";
 import Main from "./pages/Main";
 import { GlobalStyle } from "./style/Base";
@@ -18,6 +18,7 @@ import LetterBox from "./pages/LetterBox";
 import { UserContextProvider } from "./pages/Context";
 import Name from "./pages/fortune/Name";
 import CheckBox from "./pages/box/CheckBox";
+import CheckLogin from "./pages/box/CheckLogin";
 
 function App() {
   return (
@@ -42,11 +43,12 @@ function App() {
               <Route path="/messages" element={<Messages />} />
               <Route path="/box" element={<CheckBox />}>
                 <Route path="/box/create" element={<CreateBox />} />
-                <Route path="/box/user" element={<UserBox />} />
               </Route>
             </Route>
-            {/* <Route path="/box/id/"></Route> */}
-            <Route path="/box/other" element={<LetterBox />} />
+            <Route path="/box/:id" element={<CheckLogin />}>
+              <Route path="/box/:id/user" element={<UserBox />} />
+              <Route path="/box/:id/other" element={<LetterBox />} />
+            </Route>
           </Routes>
         </UserContextProvider>
       </div>
