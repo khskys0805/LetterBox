@@ -13,9 +13,10 @@ public class FilesService {
     public void save(Files files) {
         Files f = new Files();
         f.setFilename(files.getFilename());
-        f.setFileoriname(files.getFileoriname());
         f.setFileurl(files.getFileurl());
-
         filesRepository.save(f);
+    }
+    public Files findByFileId(int id) {
+        return filesRepository.findByFileId(id);
     }
 }
