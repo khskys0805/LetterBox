@@ -2,7 +2,6 @@ package com.proj.letterbox.service;
 
 import com.proj.letterbox.model.Letter;
 import com.proj.letterbox.model.LetterBox;
-import com.proj.letterbox.model.LetterList;
 import com.proj.letterbox.model.User;
 import com.proj.letterbox.repository.LetterBoxRepository;
 import com.proj.letterbox.repository.LetterRepository;
