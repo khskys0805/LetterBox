@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
+import API from "../../config";
 
 const LocateBox = styled.div`
   position: relative;
@@ -79,7 +80,7 @@ export default function Locate() {
         onClick={() => {
           axios
             .post(
-              "/letterbox/1/letter",
+              API.LETTER("2"),
               {
                 name: inputs.name,
                 nickname: inputs.nickname,
@@ -88,6 +89,7 @@ export default function Locate() {
                 hint3: inputs.hints.thrid,
                 content: inputs.content.text,
                 letterlocation: inputs.letterlocation,
+                // file: 1,
               },
               { headers: { authorization: localStorage.getItem("jwt") } }
             )

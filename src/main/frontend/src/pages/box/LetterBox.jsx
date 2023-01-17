@@ -4,6 +4,7 @@ import RoundButton from "../../components/RoundButton";
 import styled from "styled-components";
 import { SCREEN_MAX_SIZE } from "../../constant/max-style";
 import axios from "axios";
+import API from "../../config";
 
 const LetterBoxCover = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
@@ -36,7 +37,7 @@ export default function LetterBox() {
   useEffect(() => {
     async function fetechData() {
       await axios
-        .get(`/letterbox/${id}`)
+        .get(`${API.LETTERBOX}/${id}`)
         .then((response) => {
           setData(response.data);
         })

@@ -1,8 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
+import API from "../../config";
 import { SCREEN_MAX_SIZE } from "../../constant/max-style";
 
 const CreateBagBox = styled.div`
@@ -112,7 +113,7 @@ export default function CreateBox() {
         onClick={() => {
           axios
             .post(
-              "/letterbox",
+              API.CREATEBOX,
               { name: boxName },
               { headers: { authorization: localStorage.getItem("jwt") } }
             )
