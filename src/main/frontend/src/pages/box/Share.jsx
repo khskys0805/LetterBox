@@ -19,7 +19,8 @@ const ShareOptions = styled.li`
 `;
 
 const ShareUrl = styled.div`
-  background: beige;
+  background: black;
+  color: white;
   position: absolute;
   top: -55%;
   left: 50%;
@@ -28,6 +29,11 @@ const ShareUrl = styled.div`
   transform: translate(-50%, -50%);
   padding: 10px 8px;
   border-radius: 6px;
+  @media only screen and (max-width: 300px) {
+    width: 80%;
+    text-align: center;
+    font-size: 12px;
+  }
 `;
 
 export default function Share() {
