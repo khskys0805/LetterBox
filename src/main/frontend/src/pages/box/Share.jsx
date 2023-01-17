@@ -6,6 +6,7 @@ const ShareBox = styled.ul`
   display: flex;
   justify-content: space-around;
   width: 100%;
+  position: relative;
 `;
 
 const ShareOptions = styled.li`
@@ -15,6 +16,18 @@ const ShareOptions = styled.li`
       object-fit: cover;
     }
   }
+`;
+
+const ShareUrl = styled.div`
+  background: beige;
+  position: absolute;
+  top: -55%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 10px 8px;
+  border-radius: 6px;
 `;
 
 export default function Share() {
@@ -31,8 +44,13 @@ export default function Share() {
       document.body.removeChild(script);
     };
   }, []);
-  const [copy, setCopy] = useState();
-  console.log(copy);
+  const [copy, setCopy] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setCopy(false), 3000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [copy]);
   return (
     <ShareBox>
       <ShareOptions
@@ -87,8 +105,8 @@ export default function Share() {
         }}
       >
         <img src={require("../../img/link.png")} alt="url 복사" />
+        {copy && <ShareUrl>url이 복사되었습니다.</ShareUrl>}
       </ShareOptions>
-      {/* <input readOnly placeholder={sendUrl} /> */}
     </ShareBox>
   );
 }
