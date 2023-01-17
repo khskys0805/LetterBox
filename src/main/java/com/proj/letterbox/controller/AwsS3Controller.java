@@ -25,8 +25,8 @@ public class AwsS3Controller {
             String filename = awsS3Service.uploadFile(multipartFile);
             String url = awsS3Service.getUrl(filename);
             Files files = new Files(filename, url);
-            filesService.save(files);
-            return ResponseEntity.ok().body(files);
+            Files newfile = filesService.save(files);
+            return ResponseEntity.ok().body(newfile);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(null);
         }

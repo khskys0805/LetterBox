@@ -10,11 +10,9 @@ public class FilesService {
     @Autowired
     FilesRepository filesRepository;
 
-    public void save(Files files) {
-        Files f = new Files();
-        f.setFilename(files.getFilename());
-        f.setFileurl(files.getFileurl());
-        filesRepository.save(f);
+    public Files save(Files files) {
+        filesRepository.save(files);
+        return files;
     }
     public Files findByFileId(int id) {
         return filesRepository.findByFileId(id);
