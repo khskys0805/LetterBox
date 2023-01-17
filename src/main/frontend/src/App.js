@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./pages/join/Login";
 import Main from "./pages/Main";
 import { GlobalStyle } from "./style/Base";
@@ -13,9 +13,10 @@ import Hints from "./pages/fortune/Hints";
 import Content from "./pages/fortune/Content";
 import Locate from "./pages/fortune/Locate";
 import CreateBox from "./pages/box/CreateBox";
-import UserBox from "./pages/box/UserBox";
-import LetterBox from "./pages/LetterBox";
 import { UserContextProvider } from "./pages/Context";
+import Name from "./pages/fortune/Name";
+import CheckBox from "./pages/box/CheckBox";
+import CheckLogin from "./pages/box/CheckLogin";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="/kakao/login" element={<Token />} />
             <Route element={<PrivateRoute />}>
               <Route element={<Question />}>
+                <Route path="/question/name" element={<Name />} />
                 <Route path="/question/nickname" element={<Nickname />} />
                 <Route path="/question/hints" element={<Hints />} />
                 <Route path="/question/content" element={<Content />} />
@@ -37,10 +39,11 @@ function App() {
               <Route path="/chatting" element={<Chatting />} />
               <Route path="/result" element={<Complete />} />
               <Route path="/messages" element={<Messages />} />
-              <Route path="/createBox" element={<CreateBox />} />
-              <Route path="/userbox" element={<UserBox />} />
+              <Route path="/box" element={<CheckBox />}>
+                <Route path="/box/create" element={<CreateBox />} />
+              </Route>
             </Route>
-            <Route path="/box" element={<LetterBox />} />
+            <Route path="/box/:id" element={<CheckLogin />} />
           </Routes>
         </UserContextProvider>
       </div>

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import ImgButton from "../../components/ImgButton";
 import { SCREEN_MAX_SIZE } from "../../constant/max-style";
 import Share from "./Share";
-import axios from "axios";
 
 const StorageBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
@@ -11,56 +11,39 @@ const StorageBox = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
+  align-items: center;
   padding: 36px;
   box-sizing: border-box;
+  @media only screen and (min-width: 600px) {
+    justify-content: space-between;
+  }
 `;
 
-const ShareButton = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  row-gap: 25px;
+const StorageTitle = styled.h2`
+  font-size: 24px;
+  line-height: 34px;
+  text-align: center;
 `;
 
-export default function UserBox() {
-  const [showShare, setShowShare] = useState(false);
+const TtitleNickname = styled.span`
+  color: #dd403d;
+`;
 
+export default function UserBox({ userBox }) {
   return (
     <StorageBox>
-      <img src={require("../../img/luckyBag_inside.png")} alt="배경" />
-      <ShareButton
-        onClick={() => {
-          setShowShare(true);
-        }}
-      >
-        <ImgButton skill={"share"} />
-        <div>공유하기</div>
-      </ShareButton>
-        <div style={{background: "red"}} onClick={()=>{
-            console.log("df")
-            axios
-                .post(
-                    "/letterbox/1/letter",
-                    {
-                        name: "장현아",
-                        nickname: "진심녀",
-                        hint1: "ㅇㄹ",
-                        hint2: "ㅇㄹㄹ",
-                        hint3: "ㅇㄹ",
-                        content: "ㄷㄹ",
-                        letterlocation: 3,
-                    },
-                    { headers: { authorization: localStorage.getItem("jwt") } }
-                )
-                .then((response) => {
-                    console.log(response);
-
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }}>letter 테스트</div>
+      <StorageTitle>
+        <TtitleNickname>{userBox.name}</TtitleNickname>
+        <span>의</span>
+        <p>복주머니</p>
+      </StorageTitle>
+      <img
+        src={require("../../img/luckyBag_inside.png")}
+        alt="배경"
+        style={{ width: "100%" }}
+      />
+      <Share />
     </StorageBox>
   );
 }

@@ -2,15 +2,41 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-const ShareBox = styled.div`
+const ShareBox = styled.ul`
+  display: flex;
+  justify-content: space-around;
   width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
 `;
 
-export default function Share({ setShowShare }) {
+const ShareOptions = styled.li`
+  @media only screen and (max-width: 300px) {
+    & img {
+      width: 40px;
+      object-fit: cover;
+    }
+  }
+`;
+
+const ShareUrl = styled.div`
+  background: black;
+  color: white;
+  position: absolute;
+  top: -55%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 10px 8px;
+  border-radius: 6px;
+  @media only screen and (max-width: 300px) {
+    width: 80%;
+    text-align: center;
+    font-size: 12px;
+  }
+`;
+
+export default function Share() {
   const title = "내 복주머니 보내기";
   const sendUrl = window.location.href;
   useEffect(() => {
@@ -24,11 +50,16 @@ export default function Share({ setShowShare }) {
       document.body.removeChild(script);
     };
   }, []);
-  const [copy, setCopy] = useState();
-  console.log(copy);
+  const [copy, setCopy] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setCopy(false), 3000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [copy]);
   return (
     <ShareBox>
-      <div
+      <ShareOptions
         onClick={() => {
           if (window.Kakao) {
             const kakao = window.Kakao;
@@ -51,25 +82,25 @@ export default function Share({ setShowShare }) {
           }
         }}
       >
-        카카오톡
-      </div>
-      <div
+        <img src={require("../../img/kakaotalk.png")} alt="카카오톡 공유" />
+      </ShareOptions>
+      <ShareOptions
         onClick={() => {
           window.open(
             `https://twitter.com/intent/tweet?text=${title}&url=${sendUrl}`
           );
         }}
       >
-        트위터
-      </div>
-      <div
+        <img src={require("../../img/twitter.png")} alt="트위터 공유" />
+      </ShareOptions>
+      <ShareOptions
         onClick={() => {
           window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl);
         }}
       >
-        페이스북
-      </div>
-      <button
+        <img src={require("../../img/facebook.png")} alt="페이스북 공유" />
+      </ShareOptions>
+      <ShareOptions
         onClick={async () => {
           try {
             await navigator.clipboard.writeText(sendUrl);
@@ -79,16 +110,9 @@ export default function Share({ setShowShare }) {
           }
         }}
       >
-        복사
-      </button>
-      <input readOnly placeholder={sendUrl} />
-      <button
-        onClick={() => {
-          setShowShare(false);
-        }}
-      >
-        닫기
-      </button>
+        <img src={require("../../img/link.png")} alt="url 복사" />
+        {copy && <ShareUrl>url이 복사되었습니다.</ShareUrl>}
+      </ShareOptions>
     </ShareBox>
   );
 }

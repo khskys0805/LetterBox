@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
@@ -82,6 +82,7 @@ const CreateBagTitle = styled.p`
 export default function CreateBox() {
   const Create = () => <span>만들기</span>;
   const navigate = useNavigate();
+  const [boxName, setBoxName] = useState("");
 
   return (
     <CreateBagBox>
@@ -91,7 +92,14 @@ export default function CreateBox() {
           alt="배경"
         />
         <CreateBagForm>
-          <BagInput placeholder="복주머니 이름" id="bagName" />
+          <BagInput
+            placeholder="복주머니 이름"
+            id="bagName"
+            value={boxName}
+            onChange={(event) => {
+              setBoxName(event.target.value);
+            }}
+          />
           <BagInputLabel htmlFor="bagName">
             <span>의</span>
             <p>복주머니</p>
@@ -102,28 +110,20 @@ export default function CreateBox() {
       <RoundButton
         Children={Create}
         onClick={() => {
-          //복 보내기
-
-          // 복주머니 생성
           axios
             .post(
               "/letterbox",
-              { name: "연주니" },
+              { name: boxName },
               { headers: { authorization: localStorage.getItem("jwt") } }
             )
             .then((response) => {
               console.log(response);
-              // navigate("/userBox");
+              navigate("/box/user");
             })
-            .catch((err) => console.log(err));
-          // 마이페이지
-          //     axios
-          //     .get("/me", {
-          //       headers: { authorization: localStorage.getItem("jwt") },
-          //     })
-          //     .then((res) => console.log(res))
-          //     .catch((err) => console.log(err));
-          // }}
+            .catch((err) => {
+              console.log(err);
+              alert("다시 시도해주세요");
+            });
         }}
       />
     </CreateBagBox>

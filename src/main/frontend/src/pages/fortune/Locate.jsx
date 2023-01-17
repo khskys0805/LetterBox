@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
@@ -13,7 +14,7 @@ const LocatePick = styled.div`
   top: 25%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   clip-path: polygon(
     35% -8%,
     73% -1%,
@@ -42,8 +43,8 @@ export default function Locate() {
   const { inputs, setInputs } = useOutletContext();
   const Next = () => <span>다음</span>;
   const navigate = useNavigate();
-  const msg = Array.from({ length: 25 }, (_, idx) => idx);
-  const [locate, setLocate] = useState(inputs.locate);
+  const msg = Array.from({ length: 20 }, (_, idx) => idx);
+  const [locate, setLocate] = useState(0);
   const ban = [0, 4, 20, 24];
   return (
     <>
@@ -60,6 +61,7 @@ export default function Locate() {
                   current={locate}
                   onClick={() => {
                     setLocate(index);
+                    setInputs({ ...inputs, letterlocation: index });
                   }}
                 />
               );
@@ -75,8 +77,28 @@ export default function Locate() {
       <RoundButton
         Children={Next}
         onClick={() => {
-          setInputs({ ...inputs, locate });
-          navigate("/result");
+          axios
+            .post(
+              "/letterbox/1/letter",
+              {
+                name: inputs.name,
+                nickname: inputs.nickname,
+                hint1: inputs.hints.first,
+                hint2: inputs.hints.second,
+                hint3: inputs.hints.thrid,
+                content: inputs.content.text,
+                letterlocation: inputs.letterlocation,
+              },
+              { headers: { authorization: localStorage.getItem("jwt") } }
+            )
+            .then((response) => {
+              console.log(response);
+              navigate("/result");
+            })
+            .catch((err) => {
+              alert("다시 시도해주세요");
+              console.log(err);
+            });
         }}
       />
     </>

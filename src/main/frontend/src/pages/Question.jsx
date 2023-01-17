@@ -25,17 +25,17 @@ const QuestionInside = styled.div`
 
 export default function Question() {
   const [inputs, setInputs] = useState({
-    nickName: "",
+    name: "",
+    nickname: "",
     hints: { first: "", second: "", thrid: "" },
-    connect: "",
-    content: { img: "", text: "" },
-    locate: 0,
+    content: "",
+    letterlocation: 0,
   });
   const navigate = useNavigate();
-  const [move, setMove] = useState("/question/nickname");
+  const [move, setMove] = useState("/question/name");
   function logic(event) {
     event.preventDefault();
-    setMove("/question/nickname");
+    setMove("/question/name");
     event.returnValue = "";
   }
   useEffect(() => {
@@ -48,7 +48,6 @@ export default function Question() {
     return () => {
       window.removeEventListener("beforeunload", (event) => {
         logic(event);
-        console.log("Df");
       });
     };
   });
