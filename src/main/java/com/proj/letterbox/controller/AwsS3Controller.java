@@ -18,8 +18,14 @@ public class AwsS3Controller {
         return ResponseEntity.ok().body(awsS3Service.uploadFile(multipartFile));
     }
     @DeleteMapping("/file")
-    public ResponseEntity<List<String>> deleteFile(@RequestParam String fileName) {
+    public ResponseEntity<String> deleteFile(@RequestParam String fileName) {
         awsS3Service.deleteFile(fileName);
         return ResponseEntity.ok().body(null);
+    }
+    @GetMapping("/file")
+    public ResponseEntity<String> getFile(@RequestParam String fileName) {
+
+        String url = awsS3Service.getUrl(fileName).toString();
+        return ResponseEntity.ok().body(url);
     }
 }
