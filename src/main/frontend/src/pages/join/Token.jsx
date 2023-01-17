@@ -13,7 +13,7 @@ export default function Token() {
       .get(`/login/oauth_kakao?code=${serchParams.get("code")}`)
       .then((res) => {
         localStorage.setItem("jwt", res.headers.authorization);
-        navigate("/box/user");
+        navigate("/box");
       })
       .catch((err) => {
         console.log("로그인을 다시 시도해주세요");

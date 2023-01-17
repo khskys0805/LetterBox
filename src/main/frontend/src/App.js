@@ -13,8 +13,6 @@ import Hints from "./pages/fortune/Hints";
 import Content from "./pages/fortune/Content";
 import Locate from "./pages/fortune/Locate";
 import CreateBox from "./pages/box/CreateBox";
-import UserBox from "./pages/box/UserBox";
-import LetterBox from "./pages/LetterBox";
 import { UserContextProvider } from "./pages/Context";
 import Name from "./pages/fortune/Name";
 import CheckBox from "./pages/box/CheckBox";
@@ -45,10 +43,7 @@ function App() {
                 <Route path="/box/create" element={<CreateBox />} />
               </Route>
             </Route>
-            <Route path="/box/:id" element={<CheckLogin />}>
-              <Route path="/box/:id/user" element={<UserBox />} />
-              <Route path="/box/:id/other" element={<LetterBox />} />
-            </Route>
+            <Route path="/box/:id" element={<CheckLogin />} />
           </Routes>
         </UserContextProvider>
       </div>

@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import LetterBox from "./LetterBox";
+import UserBox from "./UserBox";
 
 export default function CheckLogin() {
   const { id } = useParams();
-  const [userBoxId, setUserBoxId] = useState();
-  const navigate = useNavigate();
-  console.log(userBoxId === parseInt(id));
+  const [userBox, setUserBox] = useState();
+  const [owner, setOwner] = useState(false);
+
   useEffect(() => {
     async function fetchData() {
       await axios
@@ -14,14 +16,12 @@ export default function CheckLogin() {
           headers: { authorization: localStorage.getItem("jwt") },
         })
         .then((response) => {
-          setUserBoxId(response.data.letterboxId);
-          navigate(
-            userBoxId === parseInt(id) ? `/box/${id}/user` : `/box/${id}/other`
-          );
+          setUserBox(response.data);
+          parseInt(id) === response.data.letterboxId && setOwner(true);
         })
-        .catch((err) => navigate(`/box/${id}/other`));
+        .catch((err) => setOwner(false));
     }
     fetchData();
   }, []);
-  return <Outlet />;
+  return <>{owner ? <UserBox userBox={userBox} /> : <LetterBox />}</>;
 }
