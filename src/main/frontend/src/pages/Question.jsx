@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { SCREEN_MAX_SIZE } from "../constant/max-style";
 
@@ -24,18 +24,20 @@ const QuestionInside = styled.div`
 `;
 
 export default function Question() {
+  const { id } = useParams();
   const [inputs, setInputs] = useState({
     name: "",
     nickname: "",
     hints: { first: "", second: "", thrid: "" },
     content: "",
     letterlocation: 0,
+    userBoxId: id,
   });
   const navigate = useNavigate();
-  const [move, setMove] = useState("/question/name");
+  const [move, setMove] = useState(`/question/${id}/name`);
   function logic(event) {
     event.preventDefault();
-    setMove("/question/name");
+    setMove(`/question/${id}/name`);
     event.returnValue = "";
   }
   useEffect(() => {

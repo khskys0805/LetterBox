@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
 import API from "../../config";
@@ -47,8 +47,7 @@ export default function Locate() {
   const msg = Array.from({ length: 20 }, (_, idx) => idx);
   const [locate, setLocate] = useState(0);
   const ban = [0, 4, 20, 24];
-  // const [imgId, setImgId] = useState();
-  console.log(inputs);
+
   return (
     <>
       <LocateBox>
@@ -101,7 +100,7 @@ export default function Locate() {
 
           await axios
             .post(
-              API.LETTER("1"),
+              API.LETTER(inputs.userBoxId),
               {
                 name: inputs.name,
                 nickname: inputs.nickname,

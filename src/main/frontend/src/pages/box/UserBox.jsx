@@ -39,7 +39,7 @@ export default function UserBox({ userBox }) {
       <img
         src={require("../../img/luckyBag_inside.png")}
         alt="배경"
-        style={{ width: "100%" }}
+        style={{ width: "80%" }}
       />
       <Share />
     </StorageBox>

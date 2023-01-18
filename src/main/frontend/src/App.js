@@ -26,15 +26,33 @@ function App() {
         <UserContextProvider>
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="/auth" element={<Login />} />
-            <Route path="/kakao/login" element={<Token />} />
+            <Route
+              path="/auth"
+              element={
+                localStorage.getItem("jwt") ? (
+                  <Navigate replace to="/box" />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+            <Route
+              path="/kakao/login"
+              element={
+                localStorage.getItem("jwt") ? (
+                  <Navigate replace to="/box" />
+                ) : (
+                  <Token />
+                )
+              }
+            />
             <Route element={<PrivateRoute />}>
               <Route element={<Question />}>
-                <Route path="/question/name" element={<Name />} />
-                <Route path="/question/nickname" element={<Nickname />} />
-                <Route path="/question/hints" element={<Hints />} />
-                <Route path="/question/content" element={<Content />} />
-                <Route path="/question/locate" element={<Locate />} />
+                <Route path="/question/:id/name" element={<Name />} />
+                <Route path="/question/:id/nickname" element={<Nickname />} />
+                <Route path="/question/:id/hints" element={<Hints />} />
+                <Route path="/question/:id/content" element={<Content />} />
+                <Route path="/question/:id/locate" element={<Locate />} />
               </Route>
               <Route path="/chatting" element={<Chatting />} />
               <Route path="/result" element={<Complete />} />
