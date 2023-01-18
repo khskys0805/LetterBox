@@ -119,7 +119,7 @@ export default function CreateBox() {
             )
             .then((response) => {
               console.log(response);
-              navigate("/box/user");
+              navigate("/box");
             })
             .catch((err) => {
               console.log(err);
