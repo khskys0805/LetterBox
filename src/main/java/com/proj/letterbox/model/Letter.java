@@ -2,15 +2,22 @@ package com.proj.letterbox.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.io.File;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
+@DynamicInsert
 @Table(name="letter")
 public class Letter {
     @Id
@@ -54,4 +61,37 @@ public class Letter {
 
     @Column(name="letterloction")
     private int letterlocation;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "answer",
+            joinColumns = @JoinColumn(name = "letter_id")
+    )
+    @Column(name="answer_list")
+    private List<String> answerList = new ArrayList<>();
+
+    @Column(name="correct")
+    @ColumnDefault("false")
+    private boolean correct;
+
+    @Column(name="hint_num")
+    @ColumnDefault("0")
+    private int hintNum;
+
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
+    }
+
+    public Letter(int letterId, LetterBox letterBox, String nickname, String content, int letterlocation, Files file, List<String> answerList, int hintNum, boolean correct) {
+        this.letterId = letterId;
+        this.letterBox = letterBox;
+        this.nickname = nickname;
+        this.content = content;
+        this.letterlocation = letterlocation;
+        this.file = file;
+        this.answerList = answerList;
+        this.hintNum = hintNum;
+        this.correct = correct;
+    }
+
 }

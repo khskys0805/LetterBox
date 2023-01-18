@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/letterbox")
@@ -82,7 +83,48 @@ public class LetterBoxController {
     @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}")
     public ResponseEntity<Object> getLetter(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx) {
         Letter getLetter = letterService.getLetter(request, letterboxIdx, letterIdx);
-        return ResponseEntity.ok().body(getLetter);
+        Letter returnLetter = new Letter(getLetter.getLetterId(), getLetter.getLetterBox(), getLetter.getNickname(), getLetter.getContent(), getLetter.getLetterlocation(), getLetter.getFile(), getLetter.getAnswerList(), getLetter.getHintNum(), getLetter.isCorrect());
+        return ResponseEntity.ok().body(returnLetter);
     }
+
+
+    @ResponseBody
+    @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}/add")
+    public ResponseEntity<Object> addAnswer(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx, @RequestParam String answer) {
+        Letter getLetter = letterService.addAnswer(request, letterboxIdx, letterIdx, answer);
+        Letter returnLetter = new Letter(getLetter.getLetterId(), getLetter.getLetterBox(), getLetter.getNickname(), getLetter.getContent(), getLetter.getLetterlocation(), getLetter.getFile(), getLetter.getAnswerList(), getLetter.getHintNum(), getLetter.isCorrect());
+        return ResponseEntity.ok().body(returnLetter);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}/compare")
+    public ResponseEntity<Object> compareAnswer(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx, @RequestParam String answer) {
+        boolean result = letterService.compareAnswer(request, letterboxIdx, letterIdx, answer);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}/hint/{hintIdx}")
+    public ResponseEntity<Object> getHint(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx, @PathVariable("hintIdx") int hintIdx) {
+        String hint = null;
+        hint = letterService.getHint(request, letterboxIdx, letterIdx, hintIdx);
+        if (hint == null)
+            return ResponseEntity.badRequest().body("BAD_HINT_REQUEST");
+        else
+            return ResponseEntity.ok().body(hint);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}/hints")
+    public ResponseEntity<Object> getHints(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx) {
+        ArrayList<String> hints = null;
+        hints = letterService.getHints(request, letterboxIdx, letterIdx, hints);
+        if (hints.isEmpty())
+            return ResponseEntity.badRequest().body("BAD_HINT_REQUEST");
+        else
+            return ResponseEntity.ok().body(hints);
+    }
+
+
 
 }

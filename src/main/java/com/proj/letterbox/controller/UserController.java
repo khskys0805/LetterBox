@@ -45,18 +45,6 @@ public class UserController {
     @Value("${KakaoApiUrl}")
     private String KakaoApiUrl;
 
-    @RequestMapping(value = "/")
-
-    public String home() {
-        return "index";
-    }
-
-    @RequestMapping (value = "/login/getKakaoAuthUrl")
-    public @ResponseBody String getKakaoAuthUrl(HttpServletRequest request){
-            String reqUrl = KakaoAuthUrl + "/oauth/authorize?client_id=" + KakaoApiKey + "&redirect_uri="+ RedirectURI + "&response_type=code";
-            return reqUrl;
-    }
-
 
     // 프론트에서 인가코드 받아오는 url
     @GetMapping("/login/oauth_kakao")

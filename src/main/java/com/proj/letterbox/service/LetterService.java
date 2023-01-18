@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class LetterService {
@@ -46,6 +48,50 @@ public class LetterService {
         else {
             return null;
         }
+    }
+
+    public Letter addAnswer(HttpServletRequest request, int letterboxIdx, int letterIdx, String answer) {
+        Letter letter = getLetter(request, letterboxIdx, letterIdx);
+        letter.getAnswerList().add(answer);
+        letterRepository.save(letter);
+        return letter;
+    }
+
+    public boolean compareAnswer(HttpServletRequest request, int letterboxIdx, int letterIdx, String answer) {
+        Letter letter = getLetter(request, letterboxIdx, letterIdx);
+        Letter newLetter = addAnswer(request, letterboxIdx, letterIdx, answer);
+        if (newLetter.getName().equals(answer)) {
+            newLetter.setCorrect(true);
+            letterRepository.save(newLetter);
+            return true;
+        }
+        return false;
+    }
+
+    public String getHint(HttpServletRequest request, int letterboxIdx, int letterIdx, int hintIdx) {
+        Letter letter = getLetter(request, letterboxIdx, letterIdx);
+        if (hintIdx == 1) {
+            letter.setHintNum(1);
+            letterRepository.save(letter);
+            return letter.getHint1();
+        } else if (hintIdx == 2) {
+            letter.setHintNum(2);
+            letterRepository.save(letter);
+            return letter.getHint2();
+        } else if (hintIdx == 3) {
+            letter.setHintNum(3);
+            letterRepository.save(letter);
+            return letter.getHint3();
+        } else
+            return null;
+    }
+
+    public ArrayList<String> getHints(HttpServletRequest request, int letterboxIdx, int letterIdx, ArrayList<String> hints) {
+        Letter letter = getLetter(request, letterboxIdx, letterIdx);
+        hints.add(letter.getHint1());
+        hints.add(letter.getHint2());
+        hints.add(letter.getHint3());
+        return hints;
     }
 
 }
