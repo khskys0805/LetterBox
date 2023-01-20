@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/letterbox")
@@ -50,6 +51,16 @@ public class LetterBoxController {
         User user = userService.getUser(request);
         LetterBox getLetterBox = letterBoxService.findLetterBoxByUserIdx(user.getUserCode());
         return ResponseEntity.ok().body(getLetterBox);
+    }
+
+    @ResponseBody
+    @PostMapping("my/letter")
+    public ResponseEntity<Object> findMyLetter(HttpServletRequest request) {
+        User user = userService.getUser(request);
+        List<Letter> letterList = letterService.findMyLetter(user);
+        if (letterList.isEmpty())
+            return ResponseEntity.badRequest().body("INVALID USER");
+        return ResponseEntity.ok().body(letterList);
     }
 
 
