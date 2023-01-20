@@ -49,6 +49,14 @@ public class LetterService {
             return null;
         }
     }
+    public List<Letter> findMyLetter(User user) {
+        LetterBox letterBox = letterBoxService.findLetterBoxByUserIdx(user.getUserCode());
+        List<Letter> letterList = new ArrayList<>();
+        if (user == letterBox.getOwner()) {
+            letterList = letterRepository.findAllByLetterBox(letterBox);
+        }
+        return letterList;
+    }
 
     public Letter addAnswer(HttpServletRequest request, int letterboxIdx, int letterIdx, String answer) {
         Letter letter = getLetter(request, letterboxIdx, letterIdx);
