@@ -94,8 +94,9 @@ public class LetterService {
             return null;
     }
 
-    public ArrayList<String> getHints(HttpServletRequest request, int letterboxIdx, int letterIdx, ArrayList<String> hints) {
+    public ArrayList<String> getHints(HttpServletRequest request, int letterboxIdx, int letterIdx) {
         Letter letter = getLetter(request, letterboxIdx, letterIdx);
+        ArrayList<String> hints = new ArrayList<>();
         hints.add(letter.getHint1());
         hints.add(letter.getHint2());
         hints.add(letter.getHint3());
