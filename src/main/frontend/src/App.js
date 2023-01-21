@@ -17,6 +17,7 @@ import { UserContextProvider } from "./pages/Context";
 import Name from "./pages/fortune/Name";
 import CheckBox from "./pages/box/CheckBox";
 import CheckLogin from "./pages/box/CheckLogin";
+import ServiceBox from "./pages/box/ServiceBox";
 
 function App() {
   return (
@@ -47,13 +48,6 @@ function App() {
               }
             />
             <Route element={<PrivateRoute />}>
-              <Route element={<Question />}>
-                <Route path="/question/:id/name" element={<Name />} />
-                <Route path="/question/:id/nickname" element={<Nickname />} />
-                <Route path="/question/:id/hints" element={<Hints />} />
-                <Route path="/question/:id/content" element={<Content />} />
-                <Route path="/question/:id/locate" element={<Locate />} />
-              </Route>
               <Route path="/chatting" element={<Chatting />} />
               <Route path="/result" element={<Complete />} />
               <Route path="/messages" element={<Messages />} />
@@ -61,7 +55,18 @@ function App() {
                 <Route path="/box/create" element={<CreateBox />} />
               </Route>
             </Route>
-            <Route path="/box/:id" element={<CheckLogin />} />
+            <Route element={<ServiceBox />}>
+              <Route element={<PrivateRoute />}>
+                <Route element={<Question />}>
+                  <Route path="/question/:id/name" element={<Name />} />
+                  <Route path="/question/:id/nickname" element={<Nickname />} />
+                  <Route path="/question/:id/hints" element={<Hints />} />
+                  <Route path="/question/:id/content" element={<Content />} />
+                  <Route path="/question/:id/locate" element={<Locate />} />
+                </Route>
+              </Route>
+              <Route path="/box/:id" element={<CheckLogin />} />
+            </Route>
           </Routes>
         </UserContextProvider>
       </div>

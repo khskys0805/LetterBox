@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import styled from "styled-components";
-import RoundButton from "../../components/RoundButton";
 import API from "../../config";
 
 const LocateBox = styled.div`
@@ -42,12 +41,11 @@ const LocateCell = styled.div`
 
 export default function Locate() {
   const { inputs, setInputs } = useOutletContext();
-  const Next = () => <span>다음</span>;
   const navigate = useNavigate();
   const msg = Array.from({ length: 20 }, (_, idx) => idx);
   const [locate, setLocate] = useState(0);
   const ban = [0, 4, 20, 24];
-
+  console.log(inputs);
   return (
     <>
       <LocateBox>
@@ -100,7 +98,7 @@ export default function Locate() {
 
           await axios
             .post(
-              API.LETTER(inputs.userBoxId),
+              API.LETTER(inputs.letterboxId),
               {
                 name: inputs.name,
                 nickname: inputs.nickname,
@@ -113,9 +111,7 @@ export default function Locate() {
               },
               { headers: { authorization: localStorage.getItem("jwt") } }
             )
-            .then((response) => {
-              console.log(response);
-              console.log("성공");
+            .then(() => {
               navigate("/result");
             })
             .catch((err) => {

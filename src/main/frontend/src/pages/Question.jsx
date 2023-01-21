@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { SCREEN_MAX_SIZE } from "../constant/max-style";
 
@@ -31,15 +31,10 @@ export default function Question() {
     hints: { first: "", second: "", thrid: "" },
     content: "",
     letterlocation: 0,
-    userBoxId: id,
+    letterboxId: id,
   });
   const navigate = useNavigate();
-  const [move, setMove] = useState(`/question/${id}/name`);
-  function logic(event) {
-    event.preventDefault();
-    setMove(`/question/${id}/name`);
-    event.returnValue = "";
-  }
+
   useEffect(() => {
     function watchReload() {
       window.addEventListener("beforeunload", async (event) => {
@@ -48,11 +43,16 @@ export default function Question() {
     }
     watchReload();
     return () => {
-      window.removeEventListener("beforeunload", (event) => {
-        logic(event);
-      });
+      window.removeEventListener("beforeunload", watchReload);
     };
-  });
+  }, []);
+
+  const [move, setMove] = useState(`/question/${id}/name`);
+  function logic(event) {
+    event.preventDefault();
+    setMove(`/question${id}/name`);
+    event.returnValue = "";
+  }
 
   useEffect(() => {
     navigate(move);

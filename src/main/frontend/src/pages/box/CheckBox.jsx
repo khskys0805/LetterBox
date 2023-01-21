@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import API from "../../config";
 
 export default function CheckBox() {
@@ -17,7 +17,9 @@ export default function CheckBox() {
           ? navigate(`/box/${response.data.letterboxId}`)
           : navigate("/box/create");
       })
-      .catch((err) => navigate("/box/create"));
+      .catch((err) => {
+        localStorage.removeItem("jwt");
+      });
   }, []);
   return <Outlet />;
 }
