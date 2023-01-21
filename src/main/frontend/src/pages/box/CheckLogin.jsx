@@ -24,5 +24,5 @@ export default function CheckLogin() {
     }
     fetchData();
   }, []);
-  return <>{owner ? <UserBox userBox={userBox} /> : <LetterBox />}</>;
+  return <>{owner && <LetterBox />}</>;
 }

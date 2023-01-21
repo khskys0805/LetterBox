@@ -5,7 +5,7 @@ import { GlobalStyle } from "./style/Base";
 import Token from "./pages/join/Token";
 import PrivateRoute from "./PrivateRoute";
 import Messages from "./pages/Messages";
-import Chatting from "./pages/Chatting";
+import Chatting from "./pages/chat/Chatting";
 import Complete from "./pages/fortune/Complete";
 import Nickname from "./pages/fortune/Nickname";
 import Question from "./pages/Question";
