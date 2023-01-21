@@ -129,7 +129,7 @@ public class LetterBoxController {
     @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}/hints")
     public ResponseEntity<Object> getHints(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx) {
         ArrayList<String> hints = null;
-        hints = letterService.getHints(request, letterboxIdx, letterIdx, hints);
+        hints = letterService.getHints(request, letterboxIdx, letterIdx);
         if (hints.isEmpty())
             return ResponseEntity.badRequest().body("BAD_HINT_REQUEST");
         else
