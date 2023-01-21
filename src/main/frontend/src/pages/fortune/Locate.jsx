@@ -98,7 +98,7 @@ export default function Locate() {
 
           await axios
             .post(
-              API.LETTER(inputs.letterboxId),
+              API.LETTER(inputs.boxId),
               {
                 name: inputs.name,
                 nickname: inputs.nickname,
@@ -111,7 +111,8 @@ export default function Locate() {
               },
               { headers: { authorization: localStorage.getItem("jwt") } }
             )
-            .then(() => {
+            .then((res) => {
+              console.log(res);
               navigate("/result");
             })
             .catch((err) => {

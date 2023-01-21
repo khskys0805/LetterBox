@@ -31,7 +31,7 @@ export default function Question() {
     hints: { first: "", second: "", thrid: "" },
     content: "",
     letterlocation: 0,
-    letterboxId: id,
+    boxId: id,
   });
   const navigate = useNavigate();
 

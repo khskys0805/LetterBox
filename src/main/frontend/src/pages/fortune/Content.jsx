@@ -65,7 +65,7 @@ export default function Content() {
         Children={Next}
         onClick={() => {
           setInputs({ ...inputs, content });
-          navigate("/question/locate");
+          navigate(`/question/${inputs.boxId}/locate`);
         }}
       />
     </>
