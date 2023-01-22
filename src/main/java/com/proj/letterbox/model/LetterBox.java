@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,13 +32,15 @@ public class LetterBox {
     @CreationTimestamp
     private Timestamp create_time;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "letter_list",
-            joinColumns = @JoinColumn(name = "letterbox_id")
-    )
+            joinColumns = @JoinColumn(name = "letterbox_id"))
+    @AttributeOverrides({
+        @AttributeOverride(name = "location", column = @Column(name = "location")),
+        @AttributeOverride(name = "letter_id", column = @Column(name = "letter_id"))})
     @Column(name="location")
-    private Set<Integer> letterList = new HashSet<>();
+    private List<LetterList> letterList = new ArrayList<>();
 
     @Builder
     public LetterBox(String name, User owner) {
@@ -50,7 +51,7 @@ public class LetterBox {
 
 
 
-    public LetterBox(int letterboxId, String name, Set letterList) {
+    public LetterBox(int letterboxId, String name, List letterList) {
         this.letterboxId = letterboxId;
         this.name = name;
         this.letterList = letterList;
