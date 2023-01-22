@@ -32,7 +32,7 @@ public class LetterBox {
     @CreationTimestamp
     private Timestamp create_time;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
             name = "letter_list",
             joinColumns = @JoinColumn(name = "letterbox_id"))
