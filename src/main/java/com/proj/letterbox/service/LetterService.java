@@ -2,6 +2,7 @@ package com.proj.letterbox.service;
 
 import com.proj.letterbox.model.Letter;
 import com.proj.letterbox.model.LetterBox;
+import com.proj.letterbox.model.LetterList;
 import com.proj.letterbox.model.User;
 import com.proj.letterbox.repository.LetterBoxRepository;
 import com.proj.letterbox.repository.LetterRepository;
@@ -31,11 +32,12 @@ public class LetterService {
         letter.setUser(user);
         LetterBox letterBox = letterBoxService.getLetterBoxById(letterboxIdx);
         int location = letter.getLetterlocation();
-        letterBox.getLetterList().add(location);
+
         //TODO : letterBox는 저장할 필요가 없는지 확인
-        letterBoxRepository.save(letterBox);
         letter.setLetterBox(letterBox);
         letterRepository.save(letter);
+        letterBox.getLetterList().add(new LetterList(location, letter.getLetterId()));
+        letterBoxRepository.save(letterBox);
         return letter;
     }
 
