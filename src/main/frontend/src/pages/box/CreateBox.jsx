@@ -119,7 +119,7 @@ export default function CreateBox() {
             )
             .then((response) => {
               console.log(response);
-              navigate(`"/box/${response.data.letterboxId}"`);
+              navigate(`/box/${response.data.letterboxId}`);
             })
             .catch((err) => {
               alert("다시 시도해주세요");

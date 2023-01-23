@@ -45,7 +45,7 @@ export default function Locate() {
   const msg = Array.from({ length: 20 }, (_, idx) => idx);
   const [locate, setLocate] = useState(0);
   const ban = [0, 4, 20, 24];
-  console.log(inputs);
+
   return (
     <>
       <LocateBox>

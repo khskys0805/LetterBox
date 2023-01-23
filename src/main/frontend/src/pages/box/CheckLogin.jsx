@@ -20,9 +20,12 @@ export default function CheckLogin() {
           setUserBox(response.data);
           parseInt(id) === response.data.letterboxId && setOwner(true);
         })
-        .catch((err) => setOwner(false));
+        .catch((err) => {
+          setOwner(false);
+          localStorage.removeItem("jwt");
+        });
     }
     fetchData();
   }, []);
-  return <>{owner && <LetterBox />}</>;
+  return <>{owner ? <UserBox userBox={userBox} /> : <LetterBox />}</>;
 }
