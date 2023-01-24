@@ -48,7 +48,10 @@ function App() {
               }
             />
             <Route element={<PrivateRoute />}>
-              <Route path="/chatting" element={<Chatting />} />
+              <Route
+                path="/box/:boxId/chatting/:chatId"
+                element={<Chatting />}
+              />
               <Route path="/result" element={<Complete />} />
               <Route path="/messages" element={<Messages />} />
               <Route path="/box" element={<CheckBox />}>

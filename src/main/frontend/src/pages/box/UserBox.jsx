@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { SCREEN_MAX_SIZE } from "../../constant/max-style";
 import Share from "./Share";
@@ -81,7 +83,7 @@ export default function UserBox({ userBox }) {
   const msg = Array.from({ length: 20 }, (_, idx) => idx);
   const msgLocation = userBox.letterList.map((msg) => msg.location);
   const msgId = userBox.letterList.map((msg) => msg.letter_id);
-
+  const navigate = useNavigate();
   return (
     <StorageBox>
       <StorageTitle>
@@ -103,7 +105,9 @@ export default function UserBox({ userBox }) {
                 <LocateCell
                   key={msgId[find]}
                   onClick={() => {
-                    console.log(msgId[find]);
+                    navigate(
+                      `/box/${userBox.letterboxId}/chatting/${msgId[find]}`
+                    );
                   }}
                 >
                   <CellShape />
