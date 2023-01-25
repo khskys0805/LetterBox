@@ -106,7 +106,7 @@ export default function UserBox({ userBox }) {
                   key={msgId[find]}
                   onClick={() => {
                     navigate(
-                      `/box/${userBox.letterboxId}/chatting/${msgId[find]}`
+                      `/box/${userBox.letterboxId}/message/${msgId[find]}`
                     );
                   }}
                 >

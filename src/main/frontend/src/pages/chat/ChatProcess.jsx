@@ -35,15 +35,6 @@ const AnswerText = styled.p`
   margin-bottom: 24px;
 `;
 
-const QuestionHint = styled.div`
-  text-align: center;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: space-evenly;
-  column-gap: 20px;
-  padding: 8px 0px;
-`;
-
 const ChatForm = styled.form`
   display: flex;
   justify-contents: center;
@@ -114,7 +105,8 @@ const GetHint = ({ count, boxId, chatId }) => {
 export default function ChatProcess({ setRefresh, refresh, data }) {
   const [input, setInput] = useState("");
   const { boxId, chatId } = useParams();
-
+  const [correct, setCorrect] = useState(data.correct);
+  console.log(correct);
   let hintNumber = 0;
   return (
     <>
@@ -122,7 +114,6 @@ export default function ChatProcess({ setRefresh, refresh, data }) {
         if (index % 2 || hintNumber >= 3) {
           const show = an === "예" ? true : false;
           hintNumber = show ? hintNumber + 1 : hintNumber;
-
           return (
             <>
               <AnswerBox>
@@ -155,54 +146,58 @@ export default function ChatProcess({ setRefresh, refresh, data }) {
         }
       })}
       <QuestionBottom>
-        <ChatForm
-          onSubmit={async (event) => {
-            event.preventDefault();
-            await axios
-              .get(
-                `/letterbox/${boxId}/letter/${chatId}/compare?answer=${input}`,
-                {
-                  headers: { authorization: localStorage.getItem("jwt") },
-                }
-              )
-              .then((res) => {
-                setInput("");
-              });
-            setRefresh(!refresh);
-          }}
-        >
-          {data.answerList.length % 2 && hintNumber < 3 ? (
-            <>
-              <HintOption
-                onClick={() => {
-                  setInput("예");
-                }}
-              >
-                예
-              </HintOption>
-              <HintOption
-                onClick={() => {
-                  setInput("아니오");
-                }}
-              >
-                아니오
-              </HintOption>
-            </>
-          ) : (
-            <>
-              <ChatInput
-                placeholder="답을 입력하세요"
-                value={input}
-                onChange={(event) => {
-                  setInput(event.target.value);
-                }}
-              />
-              <ChatButton>
-                <img alt="버튼" src={require("../../img/chatButton.png")} />
-              </ChatButton>
-            </>
-          )}
-        </ChatForm>
+        {correct ? (
+          <div>정답을 맞췄어! 축하해</div>
+        ) : (
+          <ChatForm
+            onSubmit={async (event) => {
+              event.preventDefault();
+              await axios
+                .get(
+                  `/letterbox/${boxId}/letter/${chatId}/compare?answer=${input}`,
+                  {
+                    headers: { authorization: localStorage.getItem("jwt") },
+                  }
+                )
+                .then((res) => {
+                  setInput("");
+                });
+              setRefresh(!refresh);
+            }}
+          >
+            {data.answerList.length % 2 && hintNumber < 3 ? (
+              <>
+                <HintOption
+                  onClick={() => {
+                    setInput("예");
+                  }}
+                >
+                  예
+                </HintOption>
+                <HintOption
+                  onClick={() => {
+                    setInput("아니오");
+                  }}
+                >
+                  아니오
+                </HintOption>
+              </>
+            ) : (
+              <>
+                <ChatInput
+                  placeholder="답을 입력하세요"
+                  value={input}
+                  onChange={(event) => {
+                    setInput(event.target.value);
+                  }}
+                />
+                <ChatButton>
+                  <img alt="버튼" src={require("../../img/chatButton.png")} />
+                </ChatButton>
+              </>
+            )}
+          </ChatForm>
+        )}
       </QuestionBottom>
     </>
   );

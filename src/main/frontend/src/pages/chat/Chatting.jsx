@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ChatProcess from "./ChatProcess";
 
 const ChattingBox = styled.div`
@@ -38,6 +38,7 @@ export default function Chatting() {
   const { boxId, chatId } = useParams();
   const [refresh, setRefresh] = useState(false);
   const chatRef = useRef();
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchData() {
       await axios
@@ -45,7 +46,6 @@ export default function Chatting() {
           headers: { authorization: localStorage.getItem("jwt") },
         })
         .then((res) => {
-          console.log(res);
           setData(res.data);
         });
     }
@@ -74,7 +74,12 @@ export default function Chatting() {
           <div>로딩중</div>
         )}
       </ChattingBox>
-      <RoundButton Children={CloseButton} />
+      <RoundButton
+        Children={CloseButton}
+        onClick={() => {
+          navigate(`/box/${boxId}`);
+        }}
+      />
     </>
   );
 }

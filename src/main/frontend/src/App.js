@@ -53,7 +53,10 @@ function App() {
                 element={<Chatting />}
               />
               <Route path="/result" element={<Complete />} />
-              <Route path="/messages" element={<Messages />} />
+              <Route
+                path="/box/:boxId/message/:chatId"
+                element={<Messages />}
+              />
               <Route path="/box" element={<CheckBox />}>
                 <Route path="/box/create" element={<CreateBox />} />
               </Route>
