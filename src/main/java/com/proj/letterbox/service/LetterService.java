@@ -68,11 +68,11 @@ public class LetterService {
     }
 
     public boolean compareAnswer(HttpServletRequest request, int letterboxIdx, int letterIdx, String answer) {
-        Letter letter = getLetter(request, letterboxIdx, letterIdx);
         Letter newLetter = addAnswer(request, letterboxIdx, letterIdx, answer);
         if (newLetter.getName().equals(answer)) {
             newLetter.setCorrect(true);
             letterRepository.save(newLetter);
+
             return true;
         }
         return false;

@@ -1,10 +1,12 @@
 package com.proj.letterbox.controller;
 
+import com.proj.letterbox.model.EmailMessage;
 import com.proj.letterbox.model.Letter;
 import com.proj.letterbox.model.LetterBox;
 import com.proj.letterbox.model.User;
 import com.proj.letterbox.repository.LetterBoxRepository;
 import com.proj.letterbox.repository.UserRepository;
+import com.proj.letterbox.service.EmailService;
 import com.proj.letterbox.service.LetterBoxService;
 import com.proj.letterbox.service.LetterService;
 import com.proj.letterbox.service.UserService;
@@ -28,6 +30,8 @@ public class LetterBoxController {
     LetterService letterService;
     @Autowired
     UserService userService;
+    @Autowired
+    EmailService emailService;
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -111,6 +115,25 @@ public class LetterBoxController {
     @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}/compare")
     public ResponseEntity<Object> compareAnswer(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx, @RequestParam String answer) {
         boolean result = letterService.compareAnswer(request, letterboxIdx, letterIdx, answer);
+        Letter letter = letterService.getLetter(request, letterboxIdx, letterIdx);
+        LetterBox letterBox = letterBoxService.getLetterBoxById(letterboxIdx);
+        if (result == true) {
+            EmailMessage emailMessage = EmailMessage.builder()
+                    .to(letter.getUser().getEmail())
+                    .subject("[레터박스] 정답을 맞혔습니다!")
+                    .message("<html><head></head><body><h3>축하드립니다!</h3>\n" +
+                            "<p>\n" + letterBox.getName() +
+                            "님께서 " + letter.getName() + "님을 맞혔습니다!<br />\n" +
+                            letter.getName() + "님도 복주머니를 생성하여 많은 복을 받아보세요!\n" +
+                            "</p>\n" +
+                            "<a href=\"#letterbox링크\">복주머니 생성하러 가기</a></body></html>")
+                    .build();
+            boolean res = emailService.sendMail(emailMessage);
+            if (res == true)
+                return ResponseEntity.ok().body("compare result : " + result + ", email result = success");
+            else
+                return ResponseEntity.ok().body("compare result : " + result + ", email result = fail");
+        }
         return ResponseEntity.ok().body(result);
     }
 
