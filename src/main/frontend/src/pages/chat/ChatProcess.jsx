@@ -102,12 +102,11 @@ const GetHint = ({ count, boxId, chatId }) => {
   );
 };
 
-export default function ChatProcess({ setRefresh, refresh, data }) {
+export default function ChatProcess({ setRefresh, refresh, data, correct }) {
   const [input, setInput] = useState("");
   const { boxId, chatId } = useParams();
-  const [correct, setCorrect] = useState(data.correct);
-  console.log(correct);
   let hintNumber = 0;
+
   return (
     <>
       {data.answerList.map((an, index) => {

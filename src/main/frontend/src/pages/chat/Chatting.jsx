@@ -39,6 +39,7 @@ export default function Chatting() {
   const [refresh, setRefresh] = useState(false);
   const chatRef = useRef();
   const navigate = useNavigate();
+  const [correct, setCorrect] = useState(false);
   useEffect(() => {
     async function fetchData() {
       await axios
@@ -46,6 +47,7 @@ export default function Chatting() {
           headers: { authorization: localStorage.getItem("jwt") },
         })
         .then((res) => {
+          setCorrect(res.data.correct);
           setData(res.data);
         });
     }
@@ -68,6 +70,7 @@ export default function Chatting() {
               setRefresh={setRefresh}
               refresh={refresh}
               data={data}
+              correct={correct}
             />
           </>
         ) : (
