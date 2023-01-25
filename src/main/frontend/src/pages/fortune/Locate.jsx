@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import API from "../../config";
+import { useUserContext } from "../Context";
 
 const LocateBox = styled.div`
   position: relative;
@@ -39,12 +40,17 @@ const LocateCell = styled.div`
   background: ${(props) => props.current === props.number && "blue"};
 `;
 
+const LocateCellSelected = styled.div`
+  background: gray;
+`;
+
 export default function Locate() {
   const { inputs, setInputs } = useOutletContext();
   const navigate = useNavigate();
   const msg = Array.from({ length: 20 }, (_, idx) => idx);
   const [locate, setLocate] = useState(0);
-  const ban = [0, 4, 20, 24];
+  const ban = [0, 4, 15, 19];
+  const { location } = useUserContext();
 
   return (
     <>
@@ -53,6 +59,8 @@ export default function Locate() {
           {msg.map((index) => {
             if (ban.includes(index)) {
               return <div key={index} />;
+            } else if (location.includes(index)) {
+              return <LocateCellSelected key={index} />;
             } else {
               return (
                 <LocateCell

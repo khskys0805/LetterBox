@@ -1,6 +1,5 @@
 import axios from "axios";
-import React, { createContext, useState, useContext, useEffect } from "react";
-import API from "../config";
+import React, { createContext, useState, useContext } from "react";
 
 //createContext를 사용하여 상태값을 담을 박스 생성 -> 그 박스의 이름을 지정(Context)
 const Context = createContext();
@@ -9,7 +8,7 @@ const Context = createContext();
 export function UserContextProvider({ children }) {
   //글로벌하게 관리하고 싶은 상태값 지정
   const [user, setUser] = useState();
-  const [back, setBack] = useState();
+  const [location, setLocation] = useState();
   const [send, setSend] = useState(0);
 
   return (
@@ -19,8 +18,8 @@ export function UserContextProvider({ children }) {
       value={{
         user,
         setUser,
-        back,
-        setBack,
+        location,
+        setLocation,
         send,
         setSend,
       }}
