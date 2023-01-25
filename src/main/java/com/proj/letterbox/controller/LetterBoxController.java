@@ -120,8 +120,13 @@ public class LetterBoxController {
         if (result == true) {
             EmailMessage emailMessage = EmailMessage.builder()
                     .to(letter.getUser().getEmail())
-                    .subject("[레터박스] ")
-                    .message("회원님의 레터를 " + letterBox.getName() + "님이 맞추셨습니다. ")
+                    .subject("[레터박스] 정답을 맞혔습니다!")
+                    .message("<html><head></head><body><h3>축하드립니다!</h3>\n" +
+                            "<p>\n" + letterBox.getName() +
+                            "님께서 " + letter.getName() + "님을 맞혔습니다!<br />\n" +
+                            letter.getName() + "님도 복주머니를 생성하여 많은 복을 받아보세요!\n" +
+                            "</p>\n" +
+                            "<a href=\"#letterbox링크\">복주머니 생성하러 가기</a></body></html>")
                     .build();
             boolean res = emailService.sendMail(emailMessage);
             if (res == true)
