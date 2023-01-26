@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface LetterRepository extends CrudRepository<Letter, Integer> {
     public Letter findByLetterId(int letterId);
-    public List<Letter> findAllByLetterBox(LetterBox letterBox);
+    public List<Letter> findByLetterBox(LetterBox letterBox);
 }
