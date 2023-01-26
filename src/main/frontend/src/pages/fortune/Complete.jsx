@@ -1,5 +1,7 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import RoundButton from "../../components/RoundButton";
 
 const CompleteBox = styled.div`
   height: 100vh;
@@ -39,6 +41,7 @@ const CompleteImg = styled.img`
 `;
 
 export default function Complete() {
+  const navigate = useNavigate();
   return (
     <CompleteBox>
       <div>
@@ -52,6 +55,12 @@ export default function Complete() {
           상대가 정답을 맞히면
           <br /> 회원가입 시 입력된 이메일로 전송됩니다&#58;&#41;
         </div>
+        <RoundButton
+          Children={() => <>홈으로 이동</>}
+          onClick={() => {
+            navigate("/");
+          }}
+        />
       </CompleteText>
     </CompleteBox>
   );

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useUserContext } from "../Context";
+import API from "../../config";
 
 const LoginBox = styled.div`
   max-width: 500px;
@@ -61,7 +62,7 @@ const social = [
       <SocialButton
         onClick={() => {
           axios
-            .get("/login/getKakaoAuthUrl")
+            .get(API.LOGIN)
             .then((response) => window.open(response.data, "_self"))
             .catch((error) => console.log(error));
         }}
@@ -70,17 +71,10 @@ const social = [
         <div>카카오로 계속하기</div>
       </SocialButton>
     ),
-    onClick: async (setToken) => {},
   },
 ];
 
 export default function Login() {
-  const location = useLocation();
-  const { setBack, back } = useUserContext();
-  useEffect(() => {
-    setBack(!location.state ? "/createbox" : location.state);
-  }, [location]);
-  console.log(back);
   return (
     <LoginBox>
       <LoginTitle>로그인</LoginTitle>

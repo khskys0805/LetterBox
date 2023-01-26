@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
-import RoundButton from "../../components/RoundButton";
+import API from "../../config";
+import { useUserContext } from "../Context";
 
 const LocateBox = styled.div`
   position: relative;
@@ -39,13 +40,18 @@ const LocateCell = styled.div`
   background: ${(props) => props.current === props.number && "blue"};
 `;
 
+const LocateCellSelected = styled.div`
+  background: gray;
+`;
+
 export default function Locate() {
   const { inputs, setInputs } = useOutletContext();
-  const Next = () => <span>다음</span>;
   const navigate = useNavigate();
   const msg = Array.from({ length: 20 }, (_, idx) => idx);
   const [locate, setLocate] = useState(0);
-  const ban = [0, 4, 20, 24];
+  const ban = [0, 4, 15, 19];
+  const { location } = useUserContext();
+
   return (
     <>
       <LocateBox>
@@ -53,6 +59,8 @@ export default function Locate() {
           {msg.map((index) => {
             if (ban.includes(index)) {
               return <div key={index} />;
+            } else if (location.includes(index)) {
+              return <LocateCellSelected key={index} />;
             } else {
               return (
                 <LocateCell
@@ -74,12 +82,31 @@ export default function Locate() {
           alt="자리 선정"
         />
       </LocateBox>
-      <RoundButton
-        Children={Next}
-        onClick={() => {
-          axios
+      <form
+        onSubmit={async (event) => {
+          event.preventDefault();
+          const formData = new FormData();
+          formData.append("multipartFile", inputs.content.img);
+          formData.append("encType", "multipart/form-data");
+          let fileInfo = null;
+          try {
+            const fileUpload = await axios({
+              method: "POST",
+              url: "/s3/file",
+              headers: {
+                "Content-Type": "multipart/form-data", // Content-Type을 반드시 이렇게 하여야 한다.
+              },
+              data: formData, // data 전송시에 반드시 생성되어 있는 formData 객체만 전송 하여야 한다.
+            });
+            fileInfo = fileUpload.data;
+            console.log(fileInfo, fileUpload);
+          } catch (error) {
+            console.log("선택한 사진이 없습니다");
+          }
+
+          await axios
             .post(
-              "/letterbox/1/letter",
+              API.LETTER(inputs.boxId),
               {
                 name: inputs.name,
                 nickname: inputs.nickname,
@@ -88,19 +115,22 @@ export default function Locate() {
                 hint3: inputs.hints.thrid,
                 content: inputs.content.text,
                 letterlocation: inputs.letterlocation,
+                file: fileInfo,
               },
               { headers: { authorization: localStorage.getItem("jwt") } }
             )
-            .then((response) => {
-              console.log(response);
+            .then((res) => {
+              console.log(res);
               navigate("/result");
             })
             .catch((err) => {
-              alert("다시 시도해주세요");
-              console.log(err);
+              console.log(err.config.data);
+              alert("알 수 없는 에러가 발생했습니다");
             });
         }}
-      />
+      >
+        <button type="submit">최종최출</button>
+      </form>
     </>
   );
 }

@@ -34,7 +34,7 @@ export default function Name() {
         Children={Next}
         onClick={() => {
           setInputs({ ...inputs, name });
-          navigate("/question/nickname");
+          navigate(`/question/${inputs.boxId}/nickname`);
         }}
       />
     </>

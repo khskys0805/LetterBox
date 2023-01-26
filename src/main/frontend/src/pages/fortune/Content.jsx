@@ -49,14 +49,14 @@ export default function Content() {
         />
         <ImageInput>
           <label htmlFor="image">
-            {content.img ? content.img : "갤러리에서 배경 이미지 선택"}
+            {content.img ? "이미지 제목" : "갤러리에서 배경 이미지 선택"}
           </label>
           <input
             type="file"
             id="image"
             accept="image/*"
             onChange={(event) => {
-              // setContent({ ...content, img: event.target.value });
+              setContent({ ...content, img: event.target.files[0] });
             }}
           />
         </ImageInput>
@@ -65,7 +65,7 @@ export default function Content() {
         Children={Next}
         onClick={() => {
           setInputs({ ...inputs, content });
-          navigate("/question/locate");
+          navigate(`/question/${inputs.boxId}/locate`);
         }}
       />
     </>

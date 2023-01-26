@@ -1,23 +1,25 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import API from "../../config";
 
 export default function CheckBox() {
   const navigate = useNavigate();
-  const param = useParams();
 
   useEffect(() => {
     axios
-      .get("/letterbox/my", {
+      .get(API.MYPAGE, {
         headers: { authorization: localStorage.getItem("jwt") },
       })
       .then((response) => {
-        console.log(response);
         response.data
           ? navigate(`/box/${response.data.letterboxId}`)
           : navigate("/box/create");
       })
-      .catch((err) => navigate("/box/create"));
+      .catch((err) => {
+        localStorage.removeItem("jwt");
+        navigate("/auth");
+      });
   }, []);
   return <Outlet />;
 }

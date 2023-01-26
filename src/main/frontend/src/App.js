@@ -5,7 +5,7 @@ import { GlobalStyle } from "./style/Base";
 import Token from "./pages/join/Token";
 import PrivateRoute from "./PrivateRoute";
 import Messages from "./pages/Messages";
-import Chatting from "./pages/Chatting";
+import Chatting from "./pages/chat/Chatting";
 import Complete from "./pages/fortune/Complete";
 import Nickname from "./pages/fortune/Nickname";
 import Question from "./pages/Question";
@@ -17,6 +17,7 @@ import { UserContextProvider } from "./pages/Context";
 import Name from "./pages/fortune/Name";
 import CheckBox from "./pages/box/CheckBox";
 import CheckLogin from "./pages/box/CheckLogin";
+import ServiceBox from "./pages/box/ServiceBox";
 
 function App() {
   return (
@@ -26,24 +27,52 @@ function App() {
         <UserContextProvider>
           <Routes>
             <Route path="/" element={<Main />} />
-            <Route path="/auth" element={<Login />} />
-            <Route path="/kakao/login" element={<Token />} />
+            <Route
+              path="/auth"
+              element={
+                localStorage.getItem("jwt") ? (
+                  <Navigate replace to="/box" />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+            <Route
+              path="/kakao/login"
+              element={
+                localStorage.getItem("jwt") ? (
+                  <Navigate replace to="/box" />
+                ) : (
+                  <Token />
+                )
+              }
+            />
             <Route element={<PrivateRoute />}>
-              <Route element={<Question />}>
-                <Route path="/question/name" element={<Name />} />
-                <Route path="/question/nickname" element={<Nickname />} />
-                <Route path="/question/hints" element={<Hints />} />
-                <Route path="/question/content" element={<Content />} />
-                <Route path="/question/locate" element={<Locate />} />
-              </Route>
-              <Route path="/chatting" element={<Chatting />} />
+              <Route
+                path="/box/:boxId/chatting/:chatId"
+                element={<Chatting />}
+              />
               <Route path="/result" element={<Complete />} />
-              <Route path="/messages" element={<Messages />} />
+              <Route
+                path="/box/:boxId/message/:chatId"
+                element={<Messages />}
+              />
               <Route path="/box" element={<CheckBox />}>
                 <Route path="/box/create" element={<CreateBox />} />
               </Route>
             </Route>
-            <Route path="/box/:id" element={<CheckLogin />} />
+            <Route element={<ServiceBox />}>
+              <Route element={<PrivateRoute />}>
+                <Route element={<Question />}>
+                  <Route path="/question/:id/name" element={<Name />} />
+                  <Route path="/question/:id/nickname" element={<Nickname />} />
+                  <Route path="/question/:id/hints" element={<Hints />} />
+                  <Route path="/question/:id/content" element={<Content />} />
+                  <Route path="/question/:id/locate" element={<Locate />} />
+                </Route>
+              </Route>
+              <Route path="/box/:id" element={<CheckLogin />} />
+            </Route>
           </Routes>
         </UserContextProvider>
       </div>

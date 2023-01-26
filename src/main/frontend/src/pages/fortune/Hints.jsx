@@ -82,7 +82,7 @@ export default function Hints() {
         Children={Next}
         onClick={() => {
           setInputs({ ...inputs, hints });
-          navigate("/question/content");
+          navigate(`/question/${inputs.boxId}/content`);
         }}
       />
     </>

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useUserContext } from "../Context";
+
+import API from "../../config";
 
 export default function Token() {
   const [serchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { back } = useUserContext();
-  console.log(back);
+
   useEffect(() => {
     axios
-      .get(`/login/oauth_kakao?code=${serchParams.get("code")}`)
+      .get(API.LOGINTOKEN(serchParams.get("code")))
       .then((res) => {
         localStorage.setItem("jwt", res.headers.authorization);
         navigate("/box");

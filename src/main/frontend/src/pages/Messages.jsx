@@ -1,5 +1,6 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../components/RoundButton";
 import { SCREEN_MAX_SIZE } from "../constant/max-style";
@@ -36,18 +37,46 @@ export default function Messages() {
   const Pick = () => <span>누군지 맞추기</span>;
   const Close = () => <span>닫기</span>;
   const navigate = useNavigate();
+  const { boxId, chatId } = useParams();
+  const [data, setData] = useState();
+  useEffect(() => {
+    async function fetchData() {
+      await axios
+        .get(`/letterbox/${boxId}/letter/${chatId}`, {
+          headers: { authorization: localStorage.getItem("jwt") },
+        })
+        .then((res) => {
+          setData(res.data);
+        });
+    }
+    fetchData();
+  }, []);
 
   return (
     <MessagesBox>
-      <MessageSender>
-        <MessageSenderForm>from.</MessageSenderForm>
-        <MessageSenderName> 크리스마스 진심녀</MessageSenderName>
-      </MessageSender>
-      <MessagePaper>해피뉴이어 새해복 많이 받어</MessagePaper>
-      <div>
-        <RoundButton Children={Pick} onClick={() => navigate("/question")} />
-        <RoundButton Children={Close} />
-      </div>
+      {data ? (
+        <>
+          <MessageSender>
+            <MessageSenderForm>from. </MessageSenderForm>
+            <MessageSenderName>{data.nickname}</MessageSenderName>
+          </MessageSender>
+          <MessagePaper>{data.content}</MessagePaper>
+          <div>
+            <RoundButton
+              Children={Pick}
+              onClick={() => navigate(`/box/${boxId}/chatting/${chatId}`)}
+            />
+            <RoundButton
+              Children={Close}
+              onClick={() => {
+                navigate(`/box/${boxId}`);
+              }}
+            />
+          </div>
+        </>
+      ) : (
+        <div> 로딩중</div>
+      )}
     </MessagesBox>
   );
 }
