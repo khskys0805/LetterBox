@@ -19,7 +19,11 @@ export default function ServiceBox() {
           setData(response.data);
           setLocation(response.data.letterList.map(({ location }) => location));
         })
-        .catch((err) => setData());
+        .catch((err) => {
+          setData();
+          localStorage.removeItem("jwt");
+          navigate("/");
+        });
     }
     fetechData();
   }, []);

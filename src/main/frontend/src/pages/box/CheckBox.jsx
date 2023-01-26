@@ -7,19 +7,20 @@ export default function CheckBox() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(API.MYPAGE, {
-        headers: { authorization: localStorage.getItem("jwt") },
-      })
-      .then((response) => {
-        response.data
-          ? navigate(`/box/${response.data.letterboxId}`)
-          : navigate("/box/create");
-      })
-      .catch((err) => {
-        localStorage.removeItem("jwt");
-        navigate("/auth");
-      });
+    try {
+      axios
+        .get(API.MYPAGE, {
+          headers: { authorization: localStorage.getItem("jwt") },
+        })
+        .then((response) => {
+          response.data
+            ? navigate(`/box/${response.data.letterboxId}`)
+            : navigate("/box/create");
+        });
+    } catch (error) {
+      localStorage.removeItem("jwt");
+      // navigate("/");
+    }
   }, []);
   return <Outlet />;
 }
