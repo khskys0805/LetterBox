@@ -106,24 +106,24 @@ export default function ChatProcess({ setRefresh, refresh, data, correct }) {
   const [input, setInput] = useState("");
   const { boxId, chatId } = useParams();
   let hintNumber = 0;
-
   return (
     <>
       {data.answerList.map((an, index) => {
         if (index % 2 || hintNumber >= 3) {
           const show = an === "예" ? true : false;
           hintNumber = show ? hintNumber + 1 : hintNumber;
+
           return (
             <>
               <AnswerBox>
                 <AnswerText>{an}</AnswerText>
               </AnswerBox>
               <QuestionBox>
-                {show && hintNumber < 3 && (
+                {show && hintNumber <= 3 && (
                   <GetHint count={hintNumber} boxId={boxId} chatId={chatId} />
                 )}
 
-                {hintNumber >= 3 && (
+                {hintNumber > 3 && (
                   <QuestionText>이제 더이상 볼 힌트가 없어...</QuestionText>
                 )}
 
@@ -137,9 +137,11 @@ export default function ChatProcess({ setRefresh, refresh, data, correct }) {
               <AnswerBox>
                 <AnswerText>{an}</AnswerText>
               </AnswerBox>
-              <QuestionBox>
-                <QuestionText>{questionMap.get(hintNumber)}</QuestionText>
-              </QuestionBox>
+              {!correct && !(index === data.answerList.length) && (
+                <QuestionBox>
+                  <QuestionText>{questionMap.get(hintNumber)}</QuestionText>
+                </QuestionBox>
+              )}
             </>
           );
         }

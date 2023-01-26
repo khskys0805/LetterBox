@@ -13,7 +13,7 @@ const ChattingBox = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow-y: scroll;
+  overflow-y: auto;
 `;
 
 const QuestionBox = styled.div`
