@@ -121,12 +121,42 @@ public class LetterBoxController {
             EmailMessage emailMessage = EmailMessage.builder()
                     .to(letter.getUser().getEmail())
                     .subject("[레터박스] 정답을 맞혔습니다!")
-                    .message("<html><head></head><body><h3>축하드립니다!</h3>\n" +
-                            "<p>\n" + letterBox.getName() +
-                            "님께서 " + letter.getName() + "님을 맞혔습니다!<br />\n" +
-                            letter.getName() + "님도 복주머니를 생성하여 많은 복을 받아보세요!\n" +
-                            "</p>\n" +
-                            "<a href=\"#letterbox링크\">복주머니 생성하러 가기</a></body></html>")
+                    .message("<html>
+	<body style=\"text-align: center; width: 800px; margin: 0 auto\">
+		<div
+			style=\"
+				border: 2px solid transparent;
+				border-radius: 30px;
+				background-color: #f6f6f6;
+			\"
+		>
+			<h1 style=\"margin-top: 40px; font-size: 40px\">축하드립니다!</h1>
+			<div
+				style=\"
+					width: 550px;
+					margin: 30px auto;
+					padding: 10px;
+					background: rgb(255, 255, 255);
+					border-radius: 50px;
+				\"
+			>
+				<p>
+					(정답 맞힌 사람)님께서 (메시지 쓴 사람)님을 맞혔습니다!<br />
+					(메시지 쓴 사람)님도 복주머니를 생성하여 많은 복을
+					받아보세요!
+				</p>
+			</div>
+			<h2>
+				<a
+					href=\"#letterbox링크\"
+					style=\"text-decoration: none; color: #dd403d\"
+					>복주머니 생성하러 가기<br /><br />
+					<img style=\"width: 500px\" src=\"https://myletterboxbucket.s3.ap-northeast-2.amazonaws.com/d365728e-6dc2-4678-839d-de55192cd91a.png\" alt=\"\"
+				/></a>
+			</h2>
+		</div>
+	</body>
+</html>")
                     .build();
             boolean res = emailService.sendMail(emailMessage);
             if (res == true)
