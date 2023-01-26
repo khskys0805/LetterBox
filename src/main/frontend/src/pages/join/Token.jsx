@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useUserContext } from "../Context";
+
 import API from "../../config";
 
 export default function Token() {
   const [serchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { back } = useUserContext();
 
   useEffect(() => {
     axios

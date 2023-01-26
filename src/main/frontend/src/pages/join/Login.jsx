@@ -75,12 +75,6 @@ const social = [
 ];
 
 export default function Login() {
-  const location = useLocation();
-  const { setBack, back } = useUserContext();
-  useEffect(() => {
-    setBack(!location.state ? "/createbox" : location.state);
-  }, [location]);
-  console.log(back);
   return (
     <LoginBox>
       <LoginTitle>로그인</LoginTitle>
