@@ -1,4 +1,5 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body style="text-align: center; width: 800px; margin: 0 auto">
 <div
         style="
@@ -18,7 +19,7 @@
             "
     >
         <p>
-            (정답 맞힌 사람)님께서 (메시지 쓴 사람)님을 맞혔습니다!<br />
+            <span th:text="${receiver}"></span>님께서 <span th:text="${sender}"></span>님을 맞혔습니다!<br />
             (메시지 쓴 사람)님도 복주머니를 생성하여 많은 복을
             받아보세요!
         </p>

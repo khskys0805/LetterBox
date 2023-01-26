@@ -48,6 +48,8 @@ dependencies {
     implementation 'commons-io:commons-io:2.11.0'
 
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 tasks.named('test') {

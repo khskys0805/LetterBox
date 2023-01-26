@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -32,6 +34,8 @@ public class LetterBoxController {
     UserService userService;
     @Autowired
     EmailService emailService;
+
+    TemplateEngine templateEngine;
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -118,10 +122,14 @@ public class LetterBoxController {
         Letter letter = letterService.getLetter(request, letterboxIdx, letterIdx);
         LetterBox letterBox = letterBoxService.getLetterBoxById(letterboxIdx);
         if (result == true) {
+            Context context = new Context();
+            context.setVariable("sender", letter.getName());
+            context.setVariable("receiver", letterBox.getName());
+            String message = templateEngine.process("sendEmail", context);
             EmailMessage emailMessage = EmailMessage.builder()
                     .to(letter.getUser().getEmail())
                     .subject("[레터박스] 정답을 맞혔습니다!")
-                    .message("")
+                    .message(message)
                     .build();
             boolean res = emailService.sendMail(emailMessage);
             if (res == true)
