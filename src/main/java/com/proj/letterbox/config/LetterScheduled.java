@@ -13,6 +13,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
@@ -27,22 +29,27 @@ public class LetterScheduled {
     private LetterService letterService;
     @Autowired
     private LetterRepository letterRepository;
+    @Autowired
+    private LetterBoxRepository letterBoxRepository;
 
     //나중에 cron="0 0 0 * * ?"
     @Scheduled(cron="0 * * * * ?")
     public void LetterCron() {
-        Calendar cal = Calendar.getInstance();
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
         //나중에 변경
-        cal.set(2023, 2, 1);
-        long dDay = cal.getTimeInMillis();
+        cal1.set(2023, 0, 27);
+        long dDay = cal1.getTimeInMillis();
         System.out.println(dDay);
-        long now = System.currentTimeMillis();
-        System.out.println(now);
+        //long now = System.currentTimeMillis();
+        long now = cal2.getTimeInMillis();
+        System.out.println(LocalDate.now());
         long result = dDay - now;
         System.out.println(result);
 
         //int day = (int) (result / 1000 / 60 / 60 / 24);
         int min = (int) (result / 1000 / 60);
+        System.out.println(min);
 
         List<LetterBox> letterboxes = letterBoxService.findAll();
         //day >= 0 && day <= 6
@@ -56,7 +63,7 @@ public class LetterScheduled {
                     }
                 }
                 //int open = unopen / (day + 1);
-                int open = 2;
+                int open = 1;
                 Collections.shuffle(letters);
                 for (int i = 0; i < open; i++) {
                     Letter letter = letters.get(i);
@@ -64,6 +71,7 @@ public class LetterScheduled {
                     letterRepository.save(letter);
                     letterBox.getLetterList().remove(new LetterList(letter.getLetterId(), letter.getLetterlocation(), false));
                     letterBox.getLetterList().add(new LetterList(letter.getLetterId(), letter.getLetterlocation(), true));
+                    letterBoxRepository.save(letterBox);
                     System.out.println(letter.isOpen());
                 }
             }
