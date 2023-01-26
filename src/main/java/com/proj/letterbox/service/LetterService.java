@@ -36,7 +36,7 @@ public class LetterService {
         //TODO : letterBox는 저장할 필요가 없는지 확인
         letter.setLetterBox(letterBox);
         letterRepository.save(letter);
-        letterBox.getLetterList().add(new LetterList(location, letter.getLetterId()));
+        letterBox.getLetterList().add(new LetterList(location, letter.getLetterId(), false));
         letterBoxRepository.save(letterBox);
         return letter;
     }
@@ -57,6 +57,10 @@ public class LetterService {
         if (user == letterBox.getOwner()) {
             letterList = letterRepository.findAllByLetterBox(letterBox);
         }
+        return letterList;
+    }
+    public List<Letter> findAllByLetterBox(LetterBox letterBox) {
+        List<Letter> letterList = letterRepository.findAllByLetterBox(letterBox);
         return letterList;
     }
 

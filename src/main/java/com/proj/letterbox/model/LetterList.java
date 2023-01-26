@@ -15,4 +15,5 @@ import javax.persistence.Embeddable;
 public class LetterList {
     int location;
     int letter_id;
+    boolean open;
 }

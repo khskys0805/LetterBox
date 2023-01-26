@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 @Service
@@ -36,6 +37,10 @@ public class LetterBoxService {
 
     public LetterBox getLetterBoxById (int letterboxIdx) {
         return letterBoxRepository.findByLetterboxId(letterboxIdx);
+    }
+
+    public List<LetterBox> findAll () {
+        return letterBoxRepository.findAll();
     }
 
 }

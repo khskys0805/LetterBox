@@ -38,7 +38,8 @@ public class LetterBox {
             joinColumns = @JoinColumn(name = "letterbox_id"))
     @AttributeOverrides({
         @AttributeOverride(name = "location", column = @Column(name = "location")),
-        @AttributeOverride(name = "letter_id", column = @Column(name = "letter_id"))})
+        @AttributeOverride(name = "letter_id", column = @Column(name = "letter_id")),
+        @AttributeOverride(name = "open", column = @Column(name="open"))})
     @Column(name="location")
     private List<LetterList> letterList = new ArrayList<>();
 
