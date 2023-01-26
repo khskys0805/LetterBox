@@ -78,8 +78,16 @@ public class Letter {
     @ColumnDefault("0")
     private int hintNum;
 
+    @Column(name="open")
+    @ColumnDefault("false")
+    private boolean open;
+
     public void setCorrect(boolean correct) {
         this.correct = correct;
+    }
+
+    public void setOpen(boolean open) {
+        this.open = open;
     }
 
     public Letter(int letterId, LetterBox letterBox, String nickname, String content, int letterlocation, Files file, List<String> answerList, int hintNum, boolean correct) {
