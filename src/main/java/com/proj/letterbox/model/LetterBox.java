@@ -32,16 +32,8 @@ public class LetterBox {
     @CreationTimestamp
     private Timestamp create_time;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "letter_list",
-            joinColumns = @JoinColumn(name = "letterbox_id"))
-    @AttributeOverrides({
-        @AttributeOverride(name = "location", column = @Column(name = "location")),
-        @AttributeOverride(name = "letter_id", column = @Column(name = "letter_id")),
-        @AttributeOverride(name = "open", column = @Column(name="open"))})
-    @Column(name="location")
-    private List<LetterList> letterList = new ArrayList<>();
+    @Transient
+    private List<LetterList> letterLists;
 
     @Builder
     public LetterBox(String name, User owner) {
@@ -52,9 +44,14 @@ public class LetterBox {
 
 
 
-    public LetterBox(int letterboxId, String name, List letterList) {
+    public LetterBox(int letterboxId, String name) {
         this.letterboxId = letterboxId;
         this.name = name;
-        this.letterList = letterList;
+    }
+
+    public LetterBox(int letterboxId, String name, List<LetterList> letterLists) {
+        this.letterboxId = letterboxId;
+        this.name = name;
+        this.letterLists = letterLists;
     }
 }
