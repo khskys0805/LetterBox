@@ -46,7 +46,7 @@ public class LetterBoxController {
             if (user == getLetterBox.getOwner())
                 return findMyLetterBox(request);
         }
-        LetterBox returnLetterBox = new LetterBox(getLetterBox.getLetterboxId(), getLetterBox.getName(), getLetterBox.getLetterList());
+        LetterBox returnLetterBox = new LetterBox(getLetterBox.getLetterboxId(), getLetterBox.getName(), getLetterBox.getLetterLists());
         return ResponseEntity.ok().body(returnLetterBox);
     }
     //내 복주머니 조회

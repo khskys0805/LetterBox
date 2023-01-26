@@ -42,7 +42,7 @@ public class LetterScheduled {
         Calendar cal1 = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
         //나중에 변경
-        cal1.set(2023, 0, 27);
+        cal1.set(2023, 0, 28);
         long dDay = cal1.getTimeInMillis();
         System.out.println(dDay);
         //long now = System.currentTimeMillis();
@@ -61,8 +61,9 @@ public class LetterScheduled {
         if (min >= 0 && min <= 4320) {
             for(LetterBox letterBox : letterboxes) {
                 int unopen = 0;
-                List<Letter> letters = letterService.findAllByLetterBox(letterBox);
-                System.out.println(letterBox);
+                LetterBox realLB = letterBoxRepository.findByLetterboxId(letterBox.getLetterboxId());
+                List<Letter> letters = letterService.findAllByLetterBox(realLB);
+                System.out.println(letters.get(0));
                 //System.out.println(letters);
                 for (Letter letter : letters) {
                     if (!letter.isOpen()) {
@@ -89,12 +90,11 @@ public class LetterScheduled {
                     Letter letter = letters.get(0);
                     letter.setOpen(true);
                     letterRepository.save(letter);
-                    LetterBox letterBox1 = letterBoxRepository.findByLetterboxId(1);
-                    System.out.println(letterBox1 == letterBox);
-                    System.out.println(letterBox1);
-                    System.out.println(letterBox);
-                    System.out.println(letterBox1.equals(letterBox));
-                    letterBox.getLetterList().remove(new LetterList(letter.getLetterlocation(), letter.getLetterId(), false));
+                    System.out.println(letterBoxRepository.findByLetterboxId(1).toString());
+                    System.out.println(realLB.toString());
+                    //boolean res = realLB.getLetterList().remove(new LetterList(letter.getLetterlocation(), letter.getLetterId(), false));
+                    //System.out.println("remove 결과 : " + res);
+                    letterBoxRepository.save(realLB);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

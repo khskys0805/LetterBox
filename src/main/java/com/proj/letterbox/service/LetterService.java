@@ -5,6 +5,7 @@ import com.proj.letterbox.model.LetterBox;
 import com.proj.letterbox.model.LetterList;
 import com.proj.letterbox.model.User;
 import com.proj.letterbox.repository.LetterBoxRepository;
+import com.proj.letterbox.repository.LetterListRepository;
 import com.proj.letterbox.repository.LetterRepository;
 import com.proj.letterbox.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class LetterService {
     @Autowired
     LetterBoxRepository letterBoxRepository;
     @Autowired
+    LetterListRepository letterListRepository;
+    @Autowired
     UserService userService;
     @Autowired
     LetterBoxService letterBoxService;
@@ -36,8 +39,8 @@ public class LetterService {
         //TODO : letterBox는 저장할 필요가 없는지 확인
         letter.setLetterBox(letterBox);
         letterRepository.save(letter);
-        letterBox.getLetterList().add(new LetterList(location, letter.getLetterId(), false));
-        letterBoxRepository.save(letterBox);
+        LetterList letterList = new LetterList(location, letterBox, letter);
+        letterListRepository.save(letterList);
         return letter;
     }
 
