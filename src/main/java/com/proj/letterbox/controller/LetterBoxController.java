@@ -4,8 +4,6 @@ import com.proj.letterbox.model.EmailMessage;
 import com.proj.letterbox.model.Letter;
 import com.proj.letterbox.model.LetterBox;
 import com.proj.letterbox.model.User;
-import com.proj.letterbox.repository.LetterBoxRepository;
-import com.proj.letterbox.repository.UserRepository;
 import com.proj.letterbox.service.EmailService;
 import com.proj.letterbox.service.LetterBoxService;
 import com.proj.letterbox.service.LetterService;
@@ -14,10 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -35,9 +32,9 @@ public class LetterBoxController {
     @Autowired
     EmailService emailService;
 
-    TemplateEngine templateEngine;
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     //조회
     @ResponseBody
@@ -122,20 +119,24 @@ public class LetterBoxController {
         Letter letter = letterService.getLetter(request, letterboxIdx, letterIdx);
         LetterBox letterBox = letterBoxService.getLetterBoxById(letterboxIdx);
         if (result == true) {
-            Context context = new Context();
-            context.setVariable("sender", letter.getName());
-            context.setVariable("receiver", letterBox.getName());
-            String message = templateEngine.process("sendEmail", context);
-            EmailMessage emailMessage = EmailMessage.builder()
-                    .to(letter.getUser().getEmail())
-                    .subject("[레터박스] 정답을 맞혔습니다!")
-                    .message(message)
-                    .build();
-            boolean res = emailService.sendMail(emailMessage);
-            if (res == true)
-                return ResponseEntity.ok().body("compare result : " + result + ", email result = success");
-            else
-                return ResponseEntity.ok().body("compare result : " + result + ", email result = fail");
+            try {
+                /*Context context = new Context();
+                context.setVariable("sender", letter.getName());
+                context.setVariable("receiver", letterBox.getName());
+                String message = templateEngine.process("mail-templates/sendEmail", context);
+                EmailMessage emailMessage = EmailMessage.builder()
+                        .to(letter.getUser().getEmail())
+                        .subject("[레터박스] 정답을 맞혔습니다!")
+                        .message(message)
+                        .build();*/
+                boolean res = emailService.sendMail(letter, letterBox);
+                if (res == true)
+                    return ResponseEntity.ok().body("compare result : " + result + ", email result = success");
+                else
+                    return ResponseEntity.ok().body("compare result : " + result + ", email result = fail");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return ResponseEntity.ok().body(result);
     }

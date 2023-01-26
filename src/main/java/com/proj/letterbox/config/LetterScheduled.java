@@ -63,7 +63,7 @@ public class LetterScheduled {
                 int unopen = 0;
                 List<Letter> letters = letterService.findAllByLetterBox(letterBox);
                 System.out.println(letterBox);
-                System.out.println(letters);
+                //System.out.println(letters);
                 for (Letter letter : letters) {
                     if (!letter.isOpen()) {
                         unopen++;
