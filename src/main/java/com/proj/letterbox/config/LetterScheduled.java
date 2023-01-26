@@ -2,6 +2,7 @@ package com.proj.letterbox.config;
 
 import com.proj.letterbox.model.Letter;
 import com.proj.letterbox.model.LetterBox;
+import com.proj.letterbox.model.LetterList;
 import com.proj.letterbox.repository.LetterBoxRepository;
 import com.proj.letterbox.repository.LetterRepository;
 import com.proj.letterbox.service.LetterBoxService;
@@ -61,6 +62,8 @@ public class LetterScheduled {
                     Letter letter = letters.get(i);
                     letter.setOpen(true);
                     letterRepository.save(letter);
+                    letterBox.getLetterList().remove(new LetterList(letter.getLetterId(), letter.getLetterlocation(), false));
+                    letterBox.getLetterList().add(new LetterList(letter.getLetterId(), letter.getLetterlocation(), true));
                     System.out.println(letter.isOpen());
                 }
             }
