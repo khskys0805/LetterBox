@@ -18,8 +18,6 @@ import Name from "./pages/fortune/Name";
 import CheckBox from "./pages/box/CheckBox";
 import CheckLogin from "./pages/box/CheckLogin";
 import ServiceBox from "./pages/box/ServiceBox";
-import Canvas from "./components/Canvas";
-import CanvasTest from "./components/CanvasTest";
 
 function App() {
   return (
@@ -75,7 +73,6 @@ function App() {
               </Route>
               <Route path="/box/:id" element={<CheckLogin />} />
             </Route>
-            <Route path="/canvastest" element={<CanvasTest />} />
           </Routes>
         </UserContextProvider>
       </div>
