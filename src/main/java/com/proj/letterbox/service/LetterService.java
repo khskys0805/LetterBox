@@ -55,12 +55,12 @@ public class LetterService {
         LetterBox letterBox = letterBoxService.findLetterBoxByUserIdx(user.getUserCode());
         List<Letter> letterList = new ArrayList<>();
         if (user == letterBox.getOwner()) {
-            letterList = letterRepository.findAllByLetterBox(letterBox);
+            letterList = letterRepository.findByLetterBox(letterBox);
         }
         return letterList;
     }
     public List<Letter> findAllByLetterBox(LetterBox letterBox) {
-        List<Letter> letterList = letterRepository.findAllByLetterBox(letterBox);
+        List<Letter> letterList = letterRepository.findByLetterBox(letterBox);
         return letterList;
     }
 

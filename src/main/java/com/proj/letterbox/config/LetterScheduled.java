@@ -39,11 +39,6 @@ public class LetterScheduled {
     //나중에 cron="0 0 0 * * ?"
     @Scheduled(cron="0 * * * * ?")
     public void LetterCron() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("simple-jpa-application");
-
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction tx = em.getTransaction();
-        tx.begin();
         Calendar cal1 = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
         //나중에 변경
@@ -61,11 +56,14 @@ public class LetterScheduled {
         System.out.println(min);
 
         List<LetterBox> letterboxes = letterBoxService.findAll();
+        System.out.println(letterboxes);
         //day >= 0 && day <= 6
         if (min >= 0 && min <= 4320) {
             for(LetterBox letterBox : letterboxes) {
                 int unopen = 0;
                 List<Letter> letters = letterService.findAllByLetterBox(letterBox);
+                System.out.println(letterBox);
+                System.out.println(letters);
                 for (Letter letter : letters) {
                     if (!letter.isOpen()) {
                         unopen++;
@@ -73,7 +71,7 @@ public class LetterScheduled {
                 }
                 //int open = unopen / (day + 1);
                 int open = 1;
-                Collections.shuffle(letters);
+                /*Collections.shuffle(letters);
                 for (int i = 0; i < open; i++) {
                     Letter letter = letters.get(i);
                     LetterBox foundLetterBox = em.find(LetterBox.class, letterBox.getLetterboxId());
@@ -86,6 +84,19 @@ public class LetterScheduled {
                     letterBox.getLetterList().add(new LetterList(letter.getLetterlocation(), letter.getLetterId(), true));
                     letterBoxRepository.save(letterBox);
                     System.out.println(letter.isOpen());
+                }*/
+                try {
+                    Letter letter = letters.get(0);
+                    letter.setOpen(true);
+                    letterRepository.save(letter);
+                    LetterBox letterBox1 = letterBoxRepository.findByLetterboxId(1);
+                    System.out.println(letterBox1 == letterBox);
+                    System.out.println(letterBox1);
+                    System.out.println(letterBox);
+                    System.out.println(letterBox1.equals(letterBox));
+                    letterBox.getLetterList().remove(new LetterList(letter.getLetterlocation(), letter.getLetterId(), false));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
