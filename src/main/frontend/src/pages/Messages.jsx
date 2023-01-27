@@ -46,6 +46,7 @@ export default function Messages() {
           headers: { authorization: localStorage.getItem("jwt") },
         })
         .then((res) => {
+          console.log(res);
           setData(res.data);
         });
     }

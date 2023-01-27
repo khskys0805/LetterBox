@@ -116,6 +116,7 @@ export default function Locate() {
                 content: inputs.content.text,
                 letterlocation: inputs.letterlocation,
                 file: fileInfo,
+                textColor: inputs.textColor,
               },
               { headers: { authorization: localStorage.getItem("jwt") } }
             )

@@ -123,6 +123,7 @@ export default function CreateBox() {
             })
             .catch((err) => {
               alert("다시 시도해주세요");
+              localStorage.removeItem("jwt");
             });
         }}
       />
