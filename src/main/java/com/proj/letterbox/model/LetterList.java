@@ -19,12 +19,15 @@ public class LetterList {
     @Column(name = "location")
     int location;
 
-    @ManyToOne
-    @JoinColumn(name="letterBox")
+    @ManyToOne(targetEntity = LetterBox.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="letterBox_id", insertable = false, updatable = false)
     private LetterBox letterBox;
 
-    @ManyToOne
-    @JoinColumn(name="letter")
+    @Column(name="letterBox_id")
+    private int letterBoxId;
+
+    @ManyToOne(targetEntity = Letter.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="letter_id", insertable = false, updatable = false)
     private Letter letter;
 
     @Column(name = "open")

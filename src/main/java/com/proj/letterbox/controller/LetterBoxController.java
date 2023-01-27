@@ -4,6 +4,7 @@ import com.proj.letterbox.model.EmailMessage;
 import com.proj.letterbox.model.Letter;
 import com.proj.letterbox.model.LetterBox;
 import com.proj.letterbox.model.User;
+import com.proj.letterbox.repository.LetterListRepository;
 import com.proj.letterbox.service.EmailService;
 import com.proj.letterbox.service.LetterBoxService;
 import com.proj.letterbox.service.LetterService;
@@ -31,6 +32,8 @@ public class LetterBoxController {
     UserService userService;
     @Autowired
     EmailService emailService;
+    @Autowired
+    LetterListRepository letterListRepository;
 
 
     final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -45,6 +48,12 @@ public class LetterBoxController {
             User user = userService.getUser(request);
             if (user == getLetterBox.getOwner())
                 return findMyLetterBox(request);
+        }
+        try {
+            getLetterBox.setLetterLists(letterListRepository.findAllByLetterBox(getLetterBox));
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         LetterBox returnLetterBox = new LetterBox(getLetterBox.getLetterboxId(), getLetterBox.getName(), getLetterBox.getLetterLists());
         return ResponseEntity.ok().body(returnLetterBox);
