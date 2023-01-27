@@ -79,11 +79,12 @@ const CellShape = styled.div`
 `;
 
 export default function UserBox({ userBox }) {
-  console.log(userBox);
   const msg = Array.from({ length: 20 }, (_, idx) => idx);
-  const msgLocation = userBox.letterList.map((msg) => msg.location);
-  const msgId = userBox.letterList.map((msg) => msg.letter_id);
+  const messageList = userBox.letterLists ? userBox.letterLists : [];
+  const msgLocation = messageList.map((msg) => msg.location);
+  const msgId = messageList.map((msg) => msg.letterId);
   const navigate = useNavigate();
+  console.log(userBox);
   return (
     <StorageBox>
       <StorageTitle>
@@ -114,7 +115,7 @@ export default function UserBox({ userBox }) {
                 </LocateCell>
               );
             } else {
-              return <div />;
+              return <div key={msgId[find]} />;
             }
           })}
         </LocatePick>

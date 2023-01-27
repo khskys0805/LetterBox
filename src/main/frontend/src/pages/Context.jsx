@@ -8,7 +8,7 @@ const Context = createContext();
 export function UserContextProvider({ children }) {
   //글로벌하게 관리하고 싶은 상태값 지정
   const [user, setUser] = useState();
-  const [location, setLocation] = useState();
+  const [location, setLocation] = useState([]);
   const [send, setSend] = useState(0);
 
   return (

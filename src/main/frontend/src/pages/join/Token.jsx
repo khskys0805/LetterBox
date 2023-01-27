@@ -16,8 +16,8 @@ export default function Token() {
         navigate("/box");
       })
       .catch((err) => {
-        console.log("로그인을 다시 시도해주세요");
+        alert("로그인을 다시 시도해주세요");
         navigate("/auth");
       });
-  });
+  }, []);
 }

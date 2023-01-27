@@ -16,8 +16,12 @@ export default function ServiceBox() {
       axios
         .get(`${API.LETTERBOX}/${id}`)
         .then((response) => {
+          console.log(response);
           setData(response.data);
-          setLocation(response.data.letterList.map(({ location }) => location));
+          const messageList = response.data.letterLists
+            ? response.data.letterLists
+            : [];
+          setLocation(messageList.map(({ location }) => location));
         })
         .catch((err) => setData());
     }
