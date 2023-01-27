@@ -40,7 +40,7 @@ public class LetterBoxService {
 
     public LetterBox getLetterBoxById (int letterboxIdx) {
         LetterBox letterBox = letterBoxRepository.findByLetterboxId(letterboxIdx);
-        letterBox.setLetterLists(letterListRepository.findAllByLetterBox(letterBox));
+        //letterBox.setLetterLists(letterListRepository.findAllByLetterBox(letterBox));
         return letterBox;
     }
 
