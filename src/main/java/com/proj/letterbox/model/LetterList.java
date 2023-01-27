@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Data
 @RequiredArgsConstructor
-@Table(name="letterList")
+@Table(name="letter_list")
 public class LetterList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,14 +30,17 @@ public class LetterList {
     @JoinColumn(name="letter_id", insertable = false, updatable = false)
     private Letter letter;
 
+    @Column(name="letter_id")
+    private int letterId;
+
     @Column(name = "open")
     @ColumnDefault("false")
     boolean open;
 
-    public LetterList(int location, LetterBox letterBox, Letter letter) {
+    public LetterList(int location, int letterBoxId, int letterId) {
         this.location = location;
-        this.letterBox = letterBox;
-        this.letter = letter;
+        this.letterBoxId = letterBoxId;
+        this.letterId = letterId;
     }
 
 

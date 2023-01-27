@@ -50,7 +50,7 @@ public class LetterBoxController {
                 return findMyLetterBox(request);
         }
         try {
-            getLetterBox.setLetterLists(letterListRepository.findAllByLetterBox(getLetterBox));
+            getLetterBox.setLetterLists(letterListRepository.findByLetterBoxId(letterboxIdx));
 
         } catch (Exception e) {
             e.printStackTrace();
