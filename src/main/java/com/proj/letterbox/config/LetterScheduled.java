@@ -4,6 +4,7 @@ import com.proj.letterbox.model.Letter;
 import com.proj.letterbox.model.LetterBox;
 import com.proj.letterbox.model.LetterList;
 import com.proj.letterbox.repository.LetterBoxRepository;
+import com.proj.letterbox.repository.LetterListRepository;
 import com.proj.letterbox.repository.LetterRepository;
 import com.proj.letterbox.service.LetterBoxService;
 import com.proj.letterbox.service.LetterService;
@@ -35,6 +36,8 @@ public class LetterScheduled {
     private LetterRepository letterRepository;
     @Autowired
     private LetterBoxRepository letterBoxRepository;
+    @Autowired
+    private LetterListRepository letterListRepository;
 
     //나중에 cron="0 0 0 * * ?"
     @Scheduled(cron="0 * * * * ?")
@@ -56,20 +59,19 @@ public class LetterScheduled {
         System.out.println(min);
 
         List<LetterBox> letterboxes = letterBoxService.findAll();
-        System.out.println(letterboxes);
+        //System.out.println(letterboxes);
         //day >= 0 && day <= 6
         if (min >= 0 && min <= 4320) {
             for(LetterBox letterBox : letterboxes) {
                 int unopen = 0;
                 LetterBox realLB = letterBoxRepository.findByLetterboxId(letterBox.getLetterboxId());
                 List<Letter> letters = letterService.findAllByLetterBox(realLB);
-                System.out.println(letters.get(0));
-                //System.out.println(letters);
                 for (Letter letter : letters) {
                     if (!letter.isOpen()) {
                         unopen++;
                     }
                 }
+                System.out.println("unopen : " + unopen);
                 //int open = unopen / (day + 1);
                 int open = 1;
                 /*Collections.shuffle(letters);
@@ -90,11 +92,9 @@ public class LetterScheduled {
                     Letter letter = letters.get(0);
                     letter.setOpen(true);
                     letterRepository.save(letter);
-                    System.out.println(letterBoxRepository.findByLetterboxId(1).toString());
-                    System.out.println(realLB.toString());
-                    //boolean res = realLB.getLetterList().remove(new LetterList(letter.getLetterlocation(), letter.getLetterId(), false));
-                    //System.out.println("remove 결과 : " + res);
-                    letterBoxRepository.save(realLB);
+                    LetterList letterList = letterListRepository.findByLetterBoxIdAndLetterId(letterBox.getLetterboxId(), letter.getLetterId());
+                    letterList.setOpen(true);
+                    letterListRepository.save(letterList);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

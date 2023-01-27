@@ -1,6 +1,7 @@
 package com.proj.letterbox.model;
 
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
@@ -21,6 +22,7 @@ public class LetterList {
 
     @ManyToOne(targetEntity = LetterBox.class, fetch = FetchType.LAZY)
     @JoinColumn(name="letterBox_id", insertable = false, updatable = false)
+    @JsonIgnore
     private LetterBox letterBox;
 
     @Column(name="letterBox_id")
@@ -28,6 +30,7 @@ public class LetterList {
 
     @ManyToOne(targetEntity = Letter.class, fetch = FetchType.LAZY)
     @JoinColumn(name="letter_id", insertable = false, updatable = false)
+    @JsonIgnore
     private Letter letter;
 
     @Column(name="letter_id")
