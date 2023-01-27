@@ -47,7 +47,7 @@ public class LetterBoxService {
     public List<LetterBox> findAll () {
         List<LetterBox> letterBoxes = letterBoxRepository.findAll();
         for (LetterBox letterBox : letterBoxes){
-            letterBox.setLetterLists(letterListRepository.findAllByLetterBox(letterBox));
+            letterBox.setLetterLists(letterListRepository.findByLetterBoxId(letterBox.getLetterboxId()));
         }
         return letterBoxes;
     }

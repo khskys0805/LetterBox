@@ -7,5 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface LetterListRepository extends CrudRepository<LetterList, Integer> {
-    public List<LetterList> findAllByLetterBox(LetterBox letterBox);
+    public List<LetterList> findByLetterBoxId(int letterBoxId);
 }
