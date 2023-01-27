@@ -22,10 +22,12 @@ public class EmailService {
     public boolean sendMail(Letter letter, LetterBox letterBox) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+
             Context context = new Context();
             context.setVariable("sender", letter.getName());
             context.setVariable("receiver", letterBox.getName());
             String message = templateEngine.process("sendEmail", context);
+
             EmailMessage emailMessage = EmailMessage.builder()
                     .to(letter.getUser().getEmail())
                     .subject("[레터박스] 정답을 맞혔습니다!")

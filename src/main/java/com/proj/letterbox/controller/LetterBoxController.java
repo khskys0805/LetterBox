@@ -109,7 +109,7 @@ public class LetterBoxController {
     @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}")
     public ResponseEntity<Object> getLetter(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx) {
         Letter getLetter = letterService.getLetter(request, letterboxIdx, letterIdx);
-        Letter returnLetter = new Letter(getLetter.getLetterId(), getLetter.getLetterBox(), getLetter.getNickname(), getLetter.getContent(), getLetter.getLetterlocation(), getLetter.getFile(), getLetter.getAnswerList(), getLetter.getHintNum(), getLetter.isCorrect());
+        Letter returnLetter = new Letter(getLetter.getLetterId(), getLetter.getLetterBox(), getLetter.getNickname(), getLetter.getContent(), getLetter.getLetterlocation(), getLetter.getFile(), getLetter.getAnswerList(), getLetter.getHintNum(), getLetter.isCorrect(), getLetter.isOpen(), getLetter.getTextColor());
         return ResponseEntity.ok().body(returnLetter);
     }
 
@@ -118,7 +118,7 @@ public class LetterBoxController {
     @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}/add")
     public ResponseEntity<Object> addAnswer(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx, @RequestParam String answer) {
         Letter getLetter = letterService.addAnswer(request, letterboxIdx, letterIdx, answer);
-        Letter returnLetter = new Letter(getLetter.getLetterId(), getLetter.getLetterBox(), getLetter.getNickname(), getLetter.getContent(), getLetter.getLetterlocation(), getLetter.getFile(), getLetter.getAnswerList(), getLetter.getHintNum(), getLetter.isCorrect());
+        Letter returnLetter = new Letter(getLetter.getLetterId(), getLetter.getLetterBox(), getLetter.getNickname(), getLetter.getContent(), getLetter.getLetterlocation(), getLetter.getFile(), getLetter.getAnswerList(), getLetter.getHintNum(), getLetter.isCorrect(), getLetter.isOpen(), getLetter.getTextColor());
         return ResponseEntity.ok().body(returnLetter);
     }
 
@@ -130,15 +130,6 @@ public class LetterBoxController {
         LetterBox letterBox = letterBoxService.getLetterBoxById(letterboxIdx);
         if (result == true) {
             try {
-                /*Context context = new Context();
-                context.setVariable("sender", letter.getName());
-                context.setVariable("receiver", letterBox.getName());
-                String message = templateEngine.process("mail-templates/sendEmail", context);
-                EmailMessage emailMessage = EmailMessage.builder()
-                        .to(letter.getUser().getEmail())
-                        .subject("[레터박스] 정답을 맞혔습니다!")
-                        .message(message)
-                        .build();*/
                 boolean res = emailService.sendMail(letter, letterBox);
                 if (res == true)
                     return ResponseEntity.ok().body("compare result : " + result + ", email result = success");
