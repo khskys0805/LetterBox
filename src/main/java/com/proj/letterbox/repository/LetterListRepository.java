@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface LetterListRepository extends CrudRepository<LetterList, Integer> {
     public List<LetterList> findByLetterBoxId(int letterBoxId);
+    public LetterList findByLetterBoxIdAndLetterId(int letterBoxId, int letterId);
 }
