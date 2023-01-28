@@ -25,7 +25,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Slf4j
-@EnableScheduling
+//@EnableScheduling
 @Component
 public class LetterScheduled {
     @Autowired
@@ -40,7 +40,7 @@ public class LetterScheduled {
     private LetterListRepository letterListRepository;
 
     //나중에 cron="0 0 0 * * ?"
-    @Scheduled(cron="0 * * * * ?")
+    //@Scheduled(cron="0 * * * * ?")
     public void LetterCron() {
         Calendar cal1 = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();

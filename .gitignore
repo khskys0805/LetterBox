@@ -6,6 +6,8 @@ build/
 !**/src/test/**/build/
 .properites
 application.properties
+src/main/resources/static/
+bin/main/
 
 
 

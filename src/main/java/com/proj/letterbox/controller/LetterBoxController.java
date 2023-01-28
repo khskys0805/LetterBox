@@ -64,6 +64,9 @@ public class LetterBoxController {
     public ResponseEntity<Object> findMyLetterBox(HttpServletRequest request) {
         User user = userService.getUser(request);
         LetterBox getLetterBox = letterBoxService.findLetterBoxByUserIdx(user.getUserCode());
+        if (getLetterBox == null) {
+            return ResponseEntity.ok().body(getLetterBox);
+        }
         getLetterBox.setLetterLists(letterListRepository.findByLetterBoxId(getLetterBox.getLetterboxId()));
         return ResponseEntity.ok().body(getLetterBox);
     }
