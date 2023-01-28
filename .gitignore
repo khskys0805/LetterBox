@@ -6,8 +6,8 @@ build/
 !**/src/test/**/build/
 .properites
 application.properties
-
-
+src/main/resources
+bin/main
 
 ### IntelliJ IDEA ###
 .idea
@@ -16,4 +16,4 @@ application.properties
 *.ipr
 out/
 !**/src/main/**/out/
-!**/src/test/**/out/
+!**/src/test/**/out
