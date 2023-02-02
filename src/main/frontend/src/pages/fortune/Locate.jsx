@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
+import BoxShape from "../../components/BoxShape";
 import API from "../../config";
 import { useUserContext } from "../Context";
 
@@ -27,23 +28,35 @@ const LocatePick = styled.div`
     -2% 30%
   );
   left: 5%;
+  align-items: center;
 `;
 
 const LocateCell = styled.div`
   width: 100%;
-  height: 100%;
   border-radius: 4px;
   &:hover {
-    background: blue;
-    cursor: pointer;
+    background: repeating-linear-gradient(
+      45deg,
+      #ca2323,
+      #4440 5px,
+      #ed563f 12px,
+      #ff1c1cbf 15px
+    );
   }
-  background: ${(props) => props.current === props.number && "blue"};
 `;
 
 const LocateCellSelected = styled.div`
   background: gray;
 `;
-
+const CellShape = styled.img`
+  object-fit: contain;
+  width: 80%;
+  &:hover {
+    cursor: pointer;
+  }
+  visibility: ${(props) =>
+    props.current === props.number ? "visible" : "hidden"};
+`;
 export default function Locate() {
   const { inputs, setInputs } = useOutletContext();
   const navigate = useNavigate();
@@ -65,13 +78,17 @@ export default function Locate() {
               return (
                 <LocateCell
                   key={index}
-                  number={index}
-                  current={locate}
                   onClick={() => {
                     setLocate(index);
                     setInputs({ ...inputs, letterlocation: index });
                   }}
-                />
+                >
+                  <CellShape
+                    src={require("../../img/coin.png")}
+                    current={locate}
+                    number={index}
+                  />
+                </LocateCell>
               );
             }
           })}
@@ -82,6 +99,7 @@ export default function Locate() {
           alt="자리 선정"
         />
       </LocateBox>
+
       <form
         onSubmit={async (event) => {
           event.preventDefault();

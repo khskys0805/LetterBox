@@ -1,7 +1,7 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import BoxShape from "../../components/BoxShape";
 import { SCREEN_MAX_SIZE } from "../../constant/max-style";
 import Share from "./Share";
 
@@ -31,60 +31,10 @@ const TtitleNickname = styled.span`
   color: #dd403d;
 `;
 
-const LocatePick = styled.div`
-  width: 90%;
-  height: 70%;
-  position: absolute;
-  top: 25%;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  clip-path: polygon(
-    35% -8%,
-    73% -1%,
-    102% 30%,
-    100% 70%,
-    71% 100%,
-    29% 100%,
-    0% 70%,
-    -2% 30%
-  );
-  left: 5%;
-`;
-
-const LocateCell = styled.div`
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  position: relative;
-`;
-
-const LocateBox = styled.div`
-  position: relative;
-`;
-
-const CellShape = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: blue;
-  &:hover {
-    background: red;
-    cursor: pointer;
-  }
-`;
-
 export default function UserBox({ userBox }) {
-  const msg = Array.from({ length: 20 }, (_, idx) => idx);
   const messageList = userBox.letterLists ? userBox.letterLists : [];
-  const msgLocation = messageList.map((msg) => msg.location);
-  const msgId = messageList.map((msg) => msg.letterId);
   const navigate = useNavigate();
-  console.log(userBox);
+
   return (
     <StorageBox>
       <StorageTitle>
@@ -92,34 +42,13 @@ export default function UserBox({ userBox }) {
         <span>의</span>
         <p>복주머니</p>
       </StorageTitle>
-      <LocateBox>
-        <img
-          src={require("../../img/luckyBag_inside.png")}
-          alt="배경"
-          style={{ width: "100%" }}
-        />
-        <LocatePick>
-          {msg.map((index) => {
-            const find = msgLocation.indexOf(index);
-            if (find !== -1) {
-              return (
-                <LocateCell
-                  key={msgId[find]}
-                  onClick={() => {
-                    navigate(
-                      `/box/${userBox.letterboxId}/message/${msgId[find]}`
-                    );
-                  }}
-                >
-                  <CellShape />
-                </LocateCell>
-              );
-            } else {
-              return <div key={msgId[find]} />;
-            }
-          })}
-        </LocatePick>
-      </LocateBox>
+      <BoxShape
+        owner={true}
+        messageList={messageList}
+        onClick={(num) => {
+          navigate(`/box/${userBox.letterboxId}/message/${num}`);
+        }}
+      />
       <Share />
     </StorageBox>
   );
