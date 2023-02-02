@@ -50,7 +50,7 @@ export default function BoxShape({ messageList, onClick, owner }) {
   const msg = Array.from({ length: 20 }, (_, idx) => idx);
   const msgLocation = messageList.map((msg) => msg.location);
   const msgId = messageList.map((msg) => msg.letterId);
-  console.log(messageList);
+
   return (
     <BoxShapeCover>
       <BoxShapeImg src={require("../img/luckyBag_inside.png")} alt="배경" />
