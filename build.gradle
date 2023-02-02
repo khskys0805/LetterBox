@@ -74,9 +74,6 @@ processResources {
 task copyWebApp(type: Copy) {
     dependsOn "buildReact"
     into "$projectDir/src/main/resources"
-    from("$webappDir/build") {
-        include  '**/*.json'
-    }
     
     from("$webappDir/build") {
         include "static/**"
@@ -84,8 +81,8 @@ task copyWebApp(type: Copy) {
     }
 
 
-    from("$webappDir/build") {
-        include '**/*.html'
+    from("$webappDir/build/") {
+        include "*.html"
         into "templates"
     }
     
