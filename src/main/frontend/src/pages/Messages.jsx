@@ -34,8 +34,6 @@ const MessageSenderName = styled.span`
 `;
 
 export default function Messages() {
-  const Pick = () => <span>누군지 맞추기</span>;
-  const Close = () => <span>닫기</span>;
   const navigate = useNavigate();
   const { boxId, chatId } = useParams();
   const [data, setData] = useState();
@@ -46,8 +44,11 @@ export default function Messages() {
           headers: { authorization: localStorage.getItem("jwt") },
         })
         .then((res) => {
-          console.log(res);
           setData(res.data);
+        })
+        .catch((err) => {
+          alert("잘못된 접근입니다");
+          navigate("/box");
         });
     }
     fetchData();
@@ -64,11 +65,11 @@ export default function Messages() {
           <MessagePaper>{data.content}</MessagePaper>
           <div>
             <RoundButton
-              Children={Pick}
+              Children={() => <span>누군지 맞추기</span>}
               onClick={() => navigate(`/box/${boxId}/chatting/${chatId}`)}
             />
             <RoundButton
-              Children={Close}
+              Children={() => <span>닫기</span>}
               onClick={() => {
                 navigate(`/box/${boxId}`);
               }}

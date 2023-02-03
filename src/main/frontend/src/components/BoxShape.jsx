@@ -50,6 +50,7 @@ export default function BoxShape({ messageList, onClick, owner }) {
   const msg = Array.from({ length: 20 }, (_, idx) => idx);
   const msgLocation = messageList.map((msg) => msg.location);
   const msgId = messageList.map((msg) => msg.letterId);
+  const msgOpen = messageList.map((msg) => msg.open);
 
   return (
     <BoxShapeCover>
@@ -65,7 +66,7 @@ export default function BoxShape({ messageList, onClick, owner }) {
                     owner={owner}
                     src={require("../img/coin.png")}
                     onClick={() => {
-                      onClick(msgId[find]);
+                      onClick(msgId[find], msgOpen[find]);
                     }}
                   />
                 </BoxShapeCell>

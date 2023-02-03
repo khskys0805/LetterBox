@@ -45,8 +45,12 @@ export default function UserBox({ userBox }) {
       <BoxShape
         owner={true}
         messageList={messageList}
-        onClick={(num) => {
-          navigate(`/box/${userBox.letterboxId}/message/${num}`);
+        onClick={(id, open) => {
+          if (open) {
+            navigate(`/box/${userBox.letterboxId}/message/${id}`);
+          } else {
+            alert("아직 확인하실 수 없습니다.");
+          }
         }}
       />
       <Share name={userBox.name} />
