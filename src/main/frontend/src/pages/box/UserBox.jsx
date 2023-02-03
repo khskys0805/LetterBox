@@ -49,7 +49,7 @@ export default function UserBox({ userBox }) {
           navigate(`/box/${userBox.letterboxId}/message/${num}`);
         }}
       />
-      <Share />
+      <Share name={userBox.name} />
     </StorageBox>
   );
 }
