@@ -3,6 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
 import { useEffect } from "react";
+import StopButton from "../../components/StopButton";
 
 const ConnectTitle = styled.p`
   line-height: 24px;
@@ -142,13 +143,17 @@ export default function Content() {
           </SelectButton>
         </ContentColor>
       </div>
-      <RoundButton
-        Children={Next}
-        onClick={() => {
-          setInputs({ ...inputs, content });
-          navigate(`/question/${inputs.boxId}/locate`);
-        }}
-      />
+      {content ? (
+        <RoundButton
+          Children={Next}
+          onClick={() => {
+            setInputs({ ...inputs, content });
+            navigate(`/question/${inputs.boxId}/locate`);
+          }}
+        />
+      ) : (
+        <StopButton text="내용을 입력해주세요" />
+      )}
     </>
   );
 }
