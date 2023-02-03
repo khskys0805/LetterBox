@@ -138,7 +138,6 @@ export default function Locate() {
                 data: formData, // data 전송시에 반드시 생성되어 있는 formData 객체만 전송 하여야 한다.
               });
               fileInfo = fileUpload.data;
-              console.log(fileInfo, fileUpload);
             } catch (error) {
               console.log("선택한 사진이 없습니다");
             }
@@ -160,7 +159,6 @@ export default function Locate() {
                 { headers: { authorization: localStorage.getItem("jwt") } }
               )
               .then((res) => {
-                console.log(res);
                 navigate("/result");
               })
               .catch((err) => {
