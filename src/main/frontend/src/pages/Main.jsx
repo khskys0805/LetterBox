@@ -24,12 +24,21 @@ export default function Main() {
     <MainBox>
       <img src={require("../img/luckyBag.png")} alt="로고" />
       {user ? (
-        <RoundButton
-          Children={Bag}
-          onClick={() => {
-            navigate("/box");
-          }}
-        />
+        <>
+          <RoundButton
+            Children={Bag}
+            onClick={() => {
+              navigate("/box");
+            }}
+          />
+          <RoundButton
+            Children={() => <span>로그아웃</span>}
+            onClick={() => {
+              localStorage.removeItem("jwt");
+              window.location.replace("/");
+            }}
+          />
+        </>
       ) : (
         <RoundButton
           Children={Login}

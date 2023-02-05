@@ -3,6 +3,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import RoundButton from "../../components/RoundButton";
 import styled from "styled-components";
 import { SCREEN_MAX_SIZE } from "../../constant/max-style";
+import BoxShape from "../../components/BoxShape";
 
 const LetterBoxCover = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
@@ -38,7 +39,7 @@ export default function LetterBox() {
   const Bag = () => <span>내 복주머니 확인하기</span>;
   const navigate = useNavigate();
   const { box } = useOutletContext();
-
+  const messageList = box.letterLists ? box.letterLists : [];
   return (
     <LetterBoxCover>
       <LetterBoxTitle>
@@ -46,10 +47,12 @@ export default function LetterBox() {
         <span>의</span>
         <p>복주머니</p>
       </LetterBoxTitle>
-      <img
-        src={require("../../img/luckyBag_inside.png")}
-        alt="배경"
-        style={{ width: "80%" }}
+      <BoxShape
+        messageList={messageList}
+        owner={false}
+        onClick={() => {
+          console.log("사용자가 아닙니다");
+        }}
       />
       <LetterBoxButton>
         <RoundButton

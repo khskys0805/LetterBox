@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { SCREEN_MAX_SIZE } from "../../constant/max-style";
 
 const QuestionBox = styled.div`
   margin-bottom: 10px;
@@ -71,11 +72,13 @@ const HintOption = styled.button`
 `;
 
 const QuestionBottom = styled.div`
+  max-width: 1080px;
+  width: 100%;
   position: fixed;
   bottom: 95px;
-  width: 100%;
-  left: 0;
+  left: 50%;
   background: #f7f7f7;
+  transform: translateX(-50%);
 `;
 const questionMap = new Map([
   [0, "땡! 틀렸어! 1단계 힌트 볼래?"],

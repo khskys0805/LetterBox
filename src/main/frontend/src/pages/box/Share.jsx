@@ -35,8 +35,8 @@ const ShareUrl = styled.div`
   }
 `;
 
-export default function Share() {
-  const title = "내 복주머니 보내기";
+export default function Share({ name }) {
+  const title = `${name}님에게 복을 선물하기`;
   const sendUrl = window.location.href;
   useEffect(() => {
     const script = document.createElement("script");
@@ -63,15 +63,16 @@ export default function Share() {
           if (window.Kakao) {
             const kakao = window.Kakao;
             if (!kakao.isInitialized()) {
-              kakao.init("99304b0d884f05332d0672be26b74689");
+              kakao.init(process.env.REACT_APP_KAKAO_KEY);
             }
 
             kakao.Link.sendDefault({
               objectType: "feed",
               content: {
                 title: title,
-                description: "#케익 #딸기 #삼평동 #카페 #분위기 #소개팅",
-                imageUrl: require("../../img/luckyBag_inside.png"),
+                description: "#편지 #나를 맞춰줘 #감동",
+                imageUrl:
+                  "https://myletterboxbucket.s3.ap-northeast-2.amazonaws.com/d365728e-6dc2-4678-839d-de55192cd91a.png",
                 link: {
                   mobileWebUrl: sendUrl,
                   webUrl: sendUrl,

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
+import StopButton from "../../components/StopButton";
 
 const InputBox = styled.input`
   all: unset;
@@ -30,13 +31,17 @@ export default function Name() {
           value={name}
         />
       </div>
-      <RoundButton
-        Children={Next}
-        onClick={() => {
-          setInputs({ ...inputs, name });
-          navigate(`/question/${inputs.boxId}/nickname`);
-        }}
-      />
+      {name ? (
+        <RoundButton
+          Children={Next}
+          onClick={() => {
+            setInputs({ ...inputs, name });
+            navigate(`/question/${inputs.boxId}/nickname`);
+          }}
+        />
+      ) : (
+        <StopButton text="이름을 입력해주세요" />
+      )}
     </>
   );
 }

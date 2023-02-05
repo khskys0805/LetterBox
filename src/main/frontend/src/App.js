@@ -62,15 +62,16 @@ function App() {
               </Route>
             </Route>
             <Route element={<ServiceBox />}>
-              <Route element={<PrivateRoute />}></Route>
+              <Route element={<PrivateRoute />}>
+                <Route element={<Question />}>
+                  <Route path="/question/:id/name" element={<Name />} />
+                  <Route path="/question/:id/nickname" element={<Nickname />} />
+                  <Route path="/question/:id/hints" element={<Hints />} />
+                  <Route path="/question/:id/content" element={<Content />} />
+                  <Route path="/question/:id/locate" element={<Locate />} />
+                </Route>
+              </Route>
               <Route path="/box/:id" element={<CheckLogin />} />
-            </Route>
-            <Route element={<Question />}>
-              <Route path="/question/:id/name" element={<Name />} />
-              <Route path="/question/:id/nickname" element={<Nickname />} />
-              <Route path="/question/:id/hints" element={<Hints />} />
-              <Route path="/question/:id/content" element={<Content />} />
-              <Route path="/question/:id/locate" element={<Locate />} />
             </Route>
           </Routes>
         </UserContextProvider>

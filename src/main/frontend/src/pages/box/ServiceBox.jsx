@@ -9,14 +9,13 @@ export default function ServiceBox() {
   const [data, setData] = useState();
   const { id } = useParams();
   const navigate = useNavigate();
-  const { location, setLocation } = useUserContext();
+  const { setLocation } = useUserContext();
 
   useEffect(() => {
     function fetechData() {
       axios
         .get(`${API.LETTERBOX}/${id}`)
         .then((response) => {
-          console.log(response);
           setData(response.data);
           const messageList = response.data.letterLists
             ? response.data.letterLists
@@ -33,7 +32,7 @@ export default function ServiceBox() {
         <Outlet context={{ box: data }} />
       ) : (
         <>
-          <span>올바르지 않는 접근입니다</span>
+          <span>올바르지 않는 접근이거나 로딩중입니다</span>
           <RoundButton
             Children={() => <span>홈으로 이동</span>}
             onClick={() => {
