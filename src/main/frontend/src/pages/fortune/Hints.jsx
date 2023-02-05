@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
+import StopButton from "../../components/StopButton";
 
 const HintsTitle = styled.p`
   line-height: 24px;
@@ -78,13 +79,17 @@ export default function Hints() {
         </HintsInput>
       </div>
 
-      <RoundButton
-        Children={Next}
-        onClick={() => {
-          setInputs({ ...inputs, hints });
-          navigate(`/question/${inputs.boxId}/content`);
-        }}
-      />
+      {hints.first && hints.second && hints.thrid ? (
+        <RoundButton
+          Children={Next}
+          onClick={() => {
+            setInputs({ ...inputs, hints });
+            navigate(`/question/${inputs.boxId}/content`);
+          }}
+        />
+      ) : (
+        <StopButton text="힌트를 입력해주세요" />
+      )}
     </>
   );
 }

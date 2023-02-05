@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
-import { ColorPicker, useColor } from "react-color-palette";
-import "react-color-palette/lib/css/styles.css";
 import { useEffect } from "react";
+import StopButton from "../../components/StopButton";
 
 const ConnectTitle = styled.p`
   line-height: 24px;
@@ -71,6 +70,7 @@ const SelectButton = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
+  cursor: pointer;
 `;
 
 const ContentColor = styled.div``;
@@ -83,19 +83,7 @@ export default function Content() {
   const [file, setFile] = useState("");
   const [color, setColor] = useState("#000000");
   const [selectcolor, setselectCorlor] = useState(false);
-  // console.log(color);
-  const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
-  const handleResize = () => {
-    setWindowSize({ width: window.innerWidth, height: window.innerHeight });
-  };
 
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    return window.removeEventListener("resize", handleResize);
-  });
   return (
     <>
       <div>
@@ -111,20 +99,29 @@ export default function Content() {
           />
           <InputImg src={file} />
         </InputCover>
-        <ImageInput>
-          <label htmlFor="image">
-            {content.img ? "이미지 제목" : "갤러리에서 배경 이미지 선택"}
-          </label>
-          <input
-            type="file"
-            id="image"
-            accept="image/*"
-            onChange={(event) => {
-              setContent({ ...content, img: event.target.files[0] });
-              setFile(URL.createObjectURL(event.target.files[0]));
+        {content.img ? (
+          <SelectButton
+            onClick={() => {
+              setContent({ ...content, img: "" });
+              setFile("");
             }}
-          />
-        </ImageInput>
+          >
+            이미지 취소하기
+          </SelectButton>
+        ) : (
+          <ImageInput>
+            <label htmlFor="image">갤러리에서 배경 이미지 선택</label>
+            <input
+              type="file"
+              id="image"
+              accept="image/*"
+              onChange={(event) => {
+                setContent({ ...content, img: event.target.files[0] });
+                setFile(URL.createObjectURL(event.target.files[0]));
+              }}
+            />
+          </ImageInput>
+        )}
         <ContentColor>
           <SelectButton
             onClick={() => {
@@ -144,13 +141,17 @@ export default function Content() {
           </SelectButton>
         </ContentColor>
       </div>
-      <RoundButton
-        Children={Next}
-        onClick={() => {
-          setInputs({ ...inputs, content });
-          navigate(`/question/${inputs.boxId}/locate`);
-        }}
-      />
+      {content ? (
+        <RoundButton
+          Children={Next}
+          onClick={() => {
+            setInputs({ ...inputs, content });
+            navigate(`/question/${inputs.boxId}/locate`);
+          }}
+        />
+      ) : (
+        <StopButton text="내용을 입력해주세요" />
+      )}
     </>
   );
 }

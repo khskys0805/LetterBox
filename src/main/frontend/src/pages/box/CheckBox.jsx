@@ -12,7 +12,6 @@ export default function CheckBox() {
         headers: { authorization: localStorage.getItem("jwt") },
       })
       .then((response) => {
-        console.log(response);
         response.data
           ? navigate(`/box/${response.data.letterboxId}`)
           : navigate("/box/create");

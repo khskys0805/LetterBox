@@ -19,6 +19,7 @@ const MessagePaper = styled.div`
   background: #f6f6f6;
   border-radius: 50px;
   padding: 34px;
+  color: ${(props) => props.color};
 `;
 
 const MessageSender = styled.h2`
@@ -32,10 +33,7 @@ const MessageSenderForm = styled.span`
 const MessageSenderName = styled.span`
   text-transform: uppercase;
 `;
-
 export default function Messages() {
-  const Pick = () => <span>누군지 맞추기</span>;
-  const Close = () => <span>닫기</span>;
   const navigate = useNavigate();
   const { boxId, chatId } = useParams();
   const [data, setData] = useState();
@@ -46,8 +44,11 @@ export default function Messages() {
           headers: { authorization: localStorage.getItem("jwt") },
         })
         .then((res) => {
-          console.log(res);
           setData(res.data);
+        })
+        .catch((err) => {
+          alert("잘못된 접근입니다");
+          navigate("/box");
         });
     }
     fetchData();
@@ -56,25 +57,29 @@ export default function Messages() {
   return (
     <MessagesBox>
       {data ? (
-        <>
-          <MessageSender>
-            <MessageSenderForm>from. </MessageSenderForm>
-            <MessageSenderName>{data.nickname}</MessageSenderName>
-          </MessageSender>
-          <MessagePaper>{data.content}</MessagePaper>
-          <div>
-            <RoundButton
-              Children={Pick}
-              onClick={() => navigate(`/box/${boxId}/chatting/${chatId}`)}
-            />
-            <RoundButton
-              Children={Close}
-              onClick={() => {
-                navigate(`/box/${boxId}`);
-              }}
-            />
-          </div>
-        </>
+        data.open ? (
+          <>
+            <MessageSender>
+              <MessageSenderForm>from. </MessageSenderForm>
+              <MessageSenderName>{data.nickname}</MessageSenderName>
+            </MessageSender>
+            <MessagePaper color={data.textColor}>{data.content}</MessagePaper>
+            <div>
+              <RoundButton
+                Children={() => <span>누군지 맞추기</span>}
+                onClick={() => navigate(`/box/${boxId}/chatting/${chatId}`)}
+              />
+              <RoundButton
+                Children={() => <span>닫기</span>}
+                onClick={() => {
+                  navigate(`/box/${boxId}`);
+                }}
+              />
+            </div>
+          </>
+        ) : (
+          <MessagePaper>아직 확인하실 수 없습니다</MessagePaper>
+        )
       ) : (
         <div> 로딩중</div>
       )}
