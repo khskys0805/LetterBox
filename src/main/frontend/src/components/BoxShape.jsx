@@ -64,7 +64,9 @@ export default function BoxShape({ messageList, onClick, owner }) {
                 <BoxShapeCell>
                   <CellShape
                     owner={owner}
-                    src={require("../img/coin.png")}
+                    src={require(msgOpen[find]
+                      ? "../img/coin.png"
+                      : "../img/noCoin.png")}
                     onClick={() => {
                       onClick(msgId[find], msgOpen[find]);
                     }}
