@@ -36,16 +36,6 @@ gap: 10px;
 
 const social = [
   {
-    site: "Goolge",
-    background: "#D33A2D",
-    Children: () => (
-      <>
-        <img alt="구글" src={require("../../img/google.png")} />
-        <span>구글로 계속하기</span>
-      </>
-    ),
-  },
-  {
     site: "Naver",
     background: "#01C73C",
     Children: () => (
