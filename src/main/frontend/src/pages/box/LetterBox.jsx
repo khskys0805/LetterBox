@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import RoundButton from "../../components/RoundButton";
 import styled from "styled-components";
-import { SCREEN_MAX_SIZE } from "../../constant/max-style";
+import { SCREEN_MAX_SIZE } from "../../constant";
 import BoxShape from "../../components/BoxShape";
 import Clock from "../../components/Clock";
 

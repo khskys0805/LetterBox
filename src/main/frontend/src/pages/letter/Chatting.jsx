@@ -4,6 +4,7 @@ import RoundButton from "../../components/RoundButton";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import ChatProcess from "./ChatProcess";
+import API from "../../config";
 
 const ChattingBox = styled.div`
   background: #f7f7f7;
@@ -43,7 +44,7 @@ export default function Chatting() {
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get(`/letterbox/${boxId}/letter/${chatId}`, {
+        .get(API.MESSAGE(boxId, chatId), {
           headers: { authorization: localStorage.getItem("jwt") },
         })
         .then((res) => {

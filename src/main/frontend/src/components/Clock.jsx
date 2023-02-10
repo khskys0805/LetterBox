@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { END_DATE } from "../constant/max-style";
+import { END_DATE } from "../constant";
 
 export default function Clock() {
   const [time, setTime] = useState(new Date());

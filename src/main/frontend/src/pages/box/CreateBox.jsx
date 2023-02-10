@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
 import API from "../../config";
-import { SCREEN_MAX_SIZE } from "../../constant/max-style";
+import { SCREEN_MAX_SIZE } from "../../constant";
 
 const CreateBagBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
@@ -113,12 +113,11 @@ export default function CreateBox() {
         onClick={() => {
           axios
             .post(
-              API.CREATEBOX,
+              API.LETTERBOX,
               { name: boxName },
               { headers: { authorization: localStorage.getItem("jwt") } }
             )
             .then((response) => {
-              console.log(response);
               navigate(`/box/${response.data.letterboxId}`);
             })
             .catch((err) => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { SCREEN_MAX_SIZE } from "../constant/max-style";
+import { SCREEN_MAX_SIZE } from "../../constant";
 
 const QuestionBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;

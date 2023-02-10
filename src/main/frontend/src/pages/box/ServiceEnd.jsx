@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { END_DATE } from "../../constant/max-style";
+import { END_DATE } from "../../constant";
 
 export default function ServiceEnd() {
   const [show, setShow] = useState(true);

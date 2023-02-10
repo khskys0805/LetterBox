@@ -4,17 +4,17 @@ import Main from "./pages/Main";
 import { GlobalStyle } from "./style/Base";
 import Token from "./pages/join/Token";
 import PrivateRoute from "./PrivateRoute";
-import Messages from "./pages/Messages";
-import Chatting from "./pages/chat/Chatting";
-import Complete from "./pages/fortune/Complete";
-import Nickname from "./pages/fortune/Nickname";
-import Question from "./pages/Question";
-import Hints from "./pages/fortune/Hints";
-import Content from "./pages/fortune/Content";
-import Locate from "./pages/fortune/Locate";
+import Messages from "./pages/letter/Messages";
+import Chatting from "./pages/letter/Chatting";
+import Complete from "./pages/quest/Complete";
+import Nickname from "./pages/quest/Nickname";
+import Question from "./pages/quest/Question";
+import Hints from "./pages/quest/Hints";
+import Content from "./pages/quest/Content";
+import Locate from "./pages/quest/Locate";
 import CreateBox from "./pages/box/CreateBox";
 import { UserContextProvider } from "./pages/Context";
-import Name from "./pages/fortune/Name";
+import Name from "./pages/quest/Name";
 import CheckBox from "./pages/box/CheckBox";
 import CheckLogin from "./pages/box/CheckLogin";
 import ServiceBox from "./pages/box/ServiceBox";
@@ -58,12 +58,13 @@ function App() {
                 path="/box/:boxId/message/:chatId"
                 element={<Messages />}
               />
-              <Route path="/box" element={<CheckBox />}>
-                <Route element={<ServiceEnd />}>
-                  <Route path="/box/create" element={<CreateBox />} />
-                </Route>
+            </Route>
+            <Route path="/box" element={<CheckBox />}>
+              <Route element={<ServiceEnd />}>
+                <Route path="/box/create" element={<CreateBox />} />
               </Route>
             </Route>
+
             <Route element={<ServiceBox />}>
               <Route element={<PrivateRoute />}>
                 <Route element={<ServiceEnd />}>

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../components/RoundButton";
-import { SCREEN_MAX_SIZE } from "../constant/max-style";
+import { SCREEN_MAX_SIZE } from "../constant";
 
 const MainBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;

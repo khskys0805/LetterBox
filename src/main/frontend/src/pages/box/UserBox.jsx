@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import BoxShape from "../../components/BoxShape";
-import { SCREEN_MAX_SIZE } from "../../constant/max-style";
+import { SCREEN_MAX_SIZE } from "../../constant";
 import Share from "./Share";
 
 const StorageBox = styled.div`
