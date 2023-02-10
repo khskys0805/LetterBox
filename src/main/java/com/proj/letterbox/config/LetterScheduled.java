@@ -26,7 +26,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Slf4j
-//@EnableScheduling
+@EnableScheduling
 @Component
 public class LetterScheduled {
     @Autowired

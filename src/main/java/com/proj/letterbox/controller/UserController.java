@@ -45,10 +45,36 @@ public class UserController {
     @Value("${KakaoApiUrl}")
     private String KakaoApiUrl;
 
+    @Value("${NaverAuthUrl}")
+    private String NaverAuthUrl;
+
+    @Value("${NaverClientId}")
+    private String NaverClientId;
+
+    @Value("${NaverClientSecret}")
+    private String NaverClientSecret;
+
+    @Value("${NaverRedirectURI}")
+    private String NaverRedirectURI;
+
     @RequestMapping (value = "/login/getKakaoAuthUrl")
     public @ResponseBody String getKakaoAuthUrl(HttpServletRequest request){
         String reqUrl = KakaoAuthUrl + "/oauth/authorize?client_id=" + KakaoApiKey + "&redirect_uri="+ RedirectURI + "&response_type=code";
         return reqUrl;
+    }
+
+    @RequestMapping (value = "/login/getNaverAuthUrl")
+    public String getNaverAuthUrl(HttpServletRequest request) {
+        String reqUrl = NaverAuthUrl + "?response_type=code&client_id=" + NaverClientId + "&state=state&redirect_uri=" + NaverRedirectURI;
+        return reqUrl;
+    }
+
+    @GetMapping("/login/oauth_naver")
+    public ResponseEntity getLoginNaver(@RequestParam("code") String code, @RequestParam("state") String state) {
+        OauthToken oauthToken= userService.getNaverAccessToken(code);
+        System.out.println(oauthToken);
+        String jwtToken = userService.saveNaverUserAndGetToken(oauthToken.getAccess_token());
+        return ResponseEntity.ok().body(jwtToken);
     }
 
     // 프론트에서 인가코드 받아오는 url

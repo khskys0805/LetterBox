@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proj.letterbox.config.jwt.JwtProperties;
 import com.proj.letterbox.model.User;
 import com.proj.letterbox.model.oauth.KakaoProfile;
+import com.proj.letterbox.model.oauth.NaverProfile;
 import com.proj.letterbox.model.oauth.OauthToken;
 import com.proj.letterbox.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,18 @@ public class UserService {
 
     @Value("${KakaoApiUrl}")
     private String KakaoApiUrl;
+
+    @Value("${NaverAuthUrl}")
+    private String NaverAuthUrl;
+
+    @Value("${NaverClientId}")
+    private String NaverClientId;
+
+    @Value("${NaverClientSecret}")
+    private String NaverClientSecret;
+
+    @Value("${NaverRedirectURI}")
+    private String NaverRedirectURI;
 
     public OauthToken getAccessToken(String code) {
 
@@ -82,6 +95,66 @@ public class UserService {
 
         return oauthToken; //(8)Json 데이터가 OauthToken 객체에 잘 담기면 리턴해준다.
     }
+
+    public OauthToken getNaverAccessToken(String code) {
+
+        //(2)RestTemplate 객체를 만든다. 통신에 유용한 클래스이다. 클래스에 대해 자세히 알고싶다면 구글에 서치!
+        RestTemplate rt = new RestTemplate();
+
+        //(3)HttpHeader 객체를 생성한다. 헤더에 들어가야하는 정보는 공식 문서를 잘 찾아보자.
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        //(4)HttpBody 객체를 생성한다. 바디에도 참 많은..🤤 파라미터가 요구된다. 마찬가지로 공식 문서를 찾아보면 나와있다. Required 항목에 필수라고 체크된 것만 넣으면 된다. 만약 앱을 등록할 때 시크릿 키를 만들었다면 반드시 넣어야 한다.
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", NaverClientId);
+        params.add("client_secret", NaverClientSecret);
+        params.add("code", code);
+        //params.add("client_secret", "{시크릿 키}"); // 생략 가능!
+
+        //(5)HttpEntity 객체를 생성한다. 앞서 만든 HttpHeader 와 HttpBody 정보를 하나의 객체에 담기 위해서이다.
+        HttpEntity<MultiValueMap<String, String>> naverTokenRequest =
+                new HttpEntity<>(params, headers);
+
+        //(6)ResponseEntity 객체를 String 형만 받도록 생성해준다. 이유는 응답받는 값이 Json 형식이기 때문이다.
+        ResponseEntity<String> accessTokenResponse = rt.exchange(
+                "https://nid.naver.com/oauth2.0/token",
+                HttpMethod.POST,
+                naverTokenRequest,
+                String.class
+        );
+        System.out.println(accessTokenResponse);
+        //(7)String으로 받은 Json 형식의 데이터를 ObjectMapper 라는 클래스를 사용해 객체로 변환해줄 것이다. 그러기 위해서는 해당 Json 형식과 맞는 OauthToken 이라는 클래스를 만들어 줘야한다(👇아래 참고).
+        //.readValue(Json 데이터, 변환할 클래스) 메소드를 이용해 바디값을 읽어온다.
+        ObjectMapper objectMapper = new ObjectMapper();
+        OauthToken oauthToken = null;
+        try {
+            oauthToken = objectMapper.readValue(accessTokenResponse.getBody(), OauthToken.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return oauthToken; //(8)Json 데이터가 OauthToken 객체에 잘 담기면 리턴해준다.
+    }
+    public String saveNaverUserAndGetToken(String token) {
+
+        //(1)findProfile()이라는 메소드를 이용해 엑세스 토큰으로 카카오 서버에서 사용자 정보를 가져온다. 해당 메소드는 saveUser() 메소드 아래에 구현한다.
+        //KakaoProfile profile = findNaverProfile(token);
+        NaverProfile naverProfile = findNaverProfile(token);
+        System.out.println(naverProfile);
+
+        //(2)UserReapository 에 만들어뒀던 findByKakaoEmail() 메소드를 이용해 User 객체에 담아준다.
+        User user = userRepository.findByEmail(naverProfile.getResponse().getEmail());
+        //(3)DB에 사용자를 저장하기 전, 이미 존재하는 사용자인지 체크할 필요가 있다.
+        //이를 user 변수의 값이 null인지 아닌지로 판단한다. 만약 null 이라면 DB에 저장되지 않은 사용자이므로 사용자 저장 로직을 실행한다
+        if(user == null) {
+            user = new User(naverProfile.getResponse().getId(), naverProfile.getResponse().getNickname(), naverProfile.getResponse().getEmail(), naverProfile.getResponse().getName(), "ROLE_USER", "NAVER");
+            userRepository.save(user);
+        }
+        //createToken() 메소드를 이용해 String 형의 JWT 를 반환한다.
+        return createToken(user);
+    }
     public String saveUserAndGetToken(String token) {
 
         //(1)findProfile()이라는 메소드를 이용해 엑세스 토큰으로 카카오 서버에서 사용자 정보를 가져온다. 해당 메소드는 saveUser() 메소드 아래에 구현한다.
@@ -92,15 +165,7 @@ public class UserService {
         //(3)DB에 사용자를 저장하기 전, 이미 존재하는 사용자인지 체크할 필요가 있다.
         //이를 user 변수의 값이 null인지 아닌지로 판단한다. 만약 null 이라면 DB에 저장되지 않은 사용자이므로 사용자 저장 로직을 실행한다
         if(user == null) {
-            user = User.builder()
-                    .id(profile.getId())
-                    //(4)카카오 프로필 이미지는 Properties 가 아닌 KakaoAccount 에서 가져온다. 자세한 설명은 👇아래에 있다.
-                    .profileImg(profile.getKakao_account().getProfile().getProfile_image_url())
-                    .nickname(profile.getKakao_account().getProfile().getNickname())
-                    .email(profile.getKakao_account().getEmail())
-                    //(5)사용자의 Role(권한)은 ROLE_USER 로 고정한다.
-                    .userRole("ROLE_USER").build();
-
+            user = new User(profile.getId(), profile.getKakao_account().getProfile().getProfile_image_url(), profile.getKakao_account().getProfile().getNickname(), profile.getKakao_account().getEmail(), "ROLE_USER", "KAKAO");
             userRepository.save(user);
         }
         //createToken() 메소드를 이용해 String 형의 JWT 를 반환한다.
@@ -131,7 +196,6 @@ public class UserService {
 
     //(1-1)응답 받은 Json 데이터와 정확히 일치하는 KakaoProfile 클래스를 만든다.(👇아래 참고)
     public KakaoProfile findProfile(String token) {
-
         //(1-2)통신에 필요한 RestTemplate 객체를 만든다. 이후 이어질 부분은 이전 포스팅에서 설명했기 때문에 간단히 짚고 넘어가겠다.
         RestTemplate rt = new RestTemplate();
 
@@ -148,7 +212,7 @@ public class UserService {
         // Http 요청 (POST 방식) 후, response 변수에 응답을 받음
         ResponseEntity<String> kakaoProfileResponse = rt.exchange(
                 "https://kapi.kakao.com/v2/user/me",
-                HttpMethod.POST,
+                HttpMethod.GET,
                 kakaoProfileRequest,
                 String.class
         );
@@ -163,6 +227,45 @@ public class UserService {
         }
 
         return kakaoProfile;
+    }
+
+    public NaverProfile findNaverProfile(String token) {
+        System.out.println("token : " + token);
+        //(1-2)통신에 필요한 RestTemplate 객체를 만든다. 이후 이어질 부분은 이전 포스팅에서 설명했기 때문에 간단히 짚고 넘어가겠다.
+        RestTemplate rt = new RestTemplate();
+
+        //(1-3)HttpHeader 객체를 생성한다.
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + token); //(1-4)헤더에는 발급받은 엑세스 토큰을 넣어 요청해야한다. 카카오 공식 문서를 참고하자.
+        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        //(1-5)HttpHeader 와 HttpBody 정보를 하나의 객체에 담아준다.
+        HttpEntity<MultiValueMap<String, String>> naverProfileRequest =
+                new HttpEntity<>(headers);
+
+        //(1-6)해당 주소로 Http 요청을 보내 String 변수에 응답을 받는다.
+        // Http 요청 (POST 방식) 후, response 변수에 응답을 받음
+       ResponseEntity<String> naverProfileResponse = rt.exchange(
+               "https://openapi.naver.com/v1/nid/me",
+               HttpMethod.POST,
+               naverProfileRequest,
+               String.class
+       );
+       System.out.println("response : " + naverProfileResponse);
+
+
+        //(1-7)Json 응답을 KakaoProfile 객체로 변환해 리턴해준다.
+        ObjectMapper objectMapper = new ObjectMapper();
+        NaverProfile naverProfile = null;
+        try {
+            naverProfile = objectMapper.readValue(naverProfileResponse.getBody(), NaverProfile.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        //return kakaoProfile;*/
+        return naverProfile;
     }
     public User getUser(HttpServletRequest request) {
 
