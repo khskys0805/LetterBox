@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { END_DATE } from "../constant";
 
 export default function Clock() {
-  const [time, setTime] = useState(new Date());
+  const [time, setTime] = useState({ day: 0, hour: 0, min: 0, sec: 0 });
   useEffect(() => {
     const id = setInterval(() => {
       const diff = Math.floor(new Date(END_DATE) - new Date()) / 1000;

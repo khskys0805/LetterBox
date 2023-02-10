@@ -4,6 +4,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import StopButton from "../../components/StopButton";
 import API from "../../config";
+import { USERIMAGE } from "../../constant";
 import { useUserContext } from "../Context";
 
 const LocateBox = styled.div`
@@ -115,7 +116,7 @@ export default function Locate() {
         </LocatePick>
         <img
           style={{ width: "100%" }}
-          src={require("../../img/luckyBag_inside.png")}
+          src={require(`../../img${USERIMAGE}`)}
           alt="자리 선정"
         />
       </LocateBox>

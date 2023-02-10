@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../components/RoundButton";
-import { SCREEN_MAX_SIZE } from "../constant";
+import { MAINIMAGE, SCREEN_MAX_SIZE } from "../constant";
 
 const MainBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
@@ -22,7 +22,7 @@ export default function Main() {
   const user = localStorage.getItem("jwt");
   return (
     <MainBox>
-      <img src={require("../img/luckyBag.png")} alt="로고" />
+      <img src={require(`../img/${MAINIMAGE}`)} alt="로고" />
       {user ? (
         <>
           <RoundButton

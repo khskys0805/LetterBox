@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { USERIMAGE } from "../constant";
 
 const BoxShapeCover = styled.div`
   position: relative;
@@ -54,7 +55,7 @@ export default function BoxShape({ messageList, onClick, owner }) {
 
   return (
     <BoxShapeCover>
-      <BoxShapeImg src={require("../img/luckyBag_inside.png")} alt="배경" />
+      <BoxShapeImg src={require(`../img/${USERIMAGE}`)} alt="배경" />
       <BoxShapePick>
         {msg.map((index) => {
           const find = msgLocation.indexOf(index);
