@@ -28,7 +28,7 @@ const InputBox = styled.textarea.attrs((props) => ({
 const ImageInput = styled.div`
   width: 100%;
   padding: 16px 20px;
-  background: #da2e2a;
+  background: #b0c6ff;
   border-radius: 50px;
   color: white;
   box-sizing: border-box;
@@ -61,7 +61,7 @@ const InputColor = styled.input`
 const SelectButton = styled.div`
   width: 100%;
   padding: 16px 20px;
-  background: #da2e2a;
+  background: #b0c6ff;
   border-radius: 50px;
   color: white;
   box-sizing: border-box;

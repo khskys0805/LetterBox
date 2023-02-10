@@ -19,12 +19,14 @@ import CheckBox from "./pages/box/CheckBox";
 import CheckLogin from "./pages/box/CheckLogin";
 import ServiceBox from "./pages/box/ServiceBox";
 import ServiceEnd from "./pages/box/ServiceEnd";
+import { Header } from "./pages/nav/Header";
 
 function App() {
   return (
     <BrowserRouter>
       <GlobalStyle />
       <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
+        <Header />
         <UserContextProvider>
           <Routes>
             <Route path="/" element={<Main />} />

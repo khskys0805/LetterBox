@@ -7,24 +7,15 @@ const BoxShapeCover = styled.div`
 `;
 
 const BoxShapePick = styled.div`
-  width: 90%;
-  height: 70%;
+  width: 83%;
+  height: 78%;
   position: absolute;
-  top: 25%;
+  top: 22.6%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  clip-path: polygon(
-    35% -8%,
-    73% -1%,
-    102% 30%,
-    100% 70%,
-    71% 100%,
-    29% 100%,
-    0% 70%,
-    -2% 30%
-  );
-  left: 5%;
+  grid-template-rows: repeat(7, 1fr);
+  left: 16%;
+  gap: 6px;
 `;
 
 const BoxShapeCell = styled.div`
@@ -34,10 +25,11 @@ const BoxShapeCell = styled.div`
   position: relative;
 `;
 
-const CellShape = styled.img`
-  width: 80%;
-  height: 80%;
-  object-fit: contain;
+const CellShape = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: ${(props) => props.color};
   &:hover {
     cursor: ${(props) => props.owner && "pointer"};
   }
@@ -60,21 +52,21 @@ export default function BoxShape({ messageList, onClick, owner }) {
         {msg.map((index) => {
           const find = msgLocation.indexOf(index);
           return (
-            <div key={index}>
-              {find !== -1 && (
-                <BoxShapeCell>
+            <>
+              {find !== -1 ? (
+                <BoxShapeCell key={index}>
                   <CellShape
                     owner={owner}
-                    src={require(msgOpen[find]
-                      ? "../img/coin.png"
-                      : "../img/noCoin.png")}
+                    color={msgOpen[find] ? "red" : "gray"}
                     onClick={() => {
                       onClick(msgId[find], msgOpen[find]);
                     }}
                   />
                 </BoxShapeCell>
+              ) : (
+                <div key={index} />
               )}
-            </div>
+            </>
           );
         })}
       </BoxShapePick>

@@ -4,7 +4,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import StopButton from "../../components/StopButton";
 import API from "../../config";
-import { USERIMAGE } from "../../constant";
+import { THEME, USERIMAGE } from "../../constant";
 import { useUserContext } from "../Context";
 
 const LocateBox = styled.div`
@@ -65,7 +65,7 @@ const SubmitButton = styled.button`
   all: unset;
   margin: 30px auto 0;
   cursor: pointer;
-  background: #ffcd4a;
+  background: ${THEME};
   border-radius: 50px;
   padding: 16px 0;
   width: 100%;
@@ -116,7 +116,7 @@ export default function Locate() {
         </LocatePick>
         <img
           style={{ width: "100%" }}
-          src={require(`../../img${USERIMAGE}`)}
+          src={require(`../../img/${USERIMAGE}`)}
           alt="자리 선정"
         />
       </LocateBox>
