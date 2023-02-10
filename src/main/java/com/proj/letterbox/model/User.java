@@ -26,6 +26,12 @@ public class User {
     @Column(name = "profile_img")
     private String profileImg;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "naverId")
+    private String naverId;
+
     @Column(name = "nickname")
     private String nickname;
 
@@ -42,15 +48,26 @@ public class User {
 //    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = 'user')
 //    @JoinColumn(name = 'user_code')
 //    private LetterBox letterBox;
+    public User(String naverId, String nickname,
+                String email, String name, String userRole, String platform) {
 
-    @Builder
+        this.naverId = naverId;
+        this.nickname = nickname;
+        this.email = email;
+        this.name = name;
+        this.userRole = userRole;
+        this.platform = platform;
+    }
+
     public User(Long id, String profileImg, String nickname,
-                String email, String userRole) {
+                String email, String userRole, String platform) {
 
         this.id = id;
         this.profileImg = profileImg;
         this.nickname = nickname;
         this.email = email;
         this.userRole = userRole;
+        this.platform = platform;
     }
+
 }

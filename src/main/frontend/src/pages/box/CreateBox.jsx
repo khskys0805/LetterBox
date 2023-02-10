@@ -12,8 +12,7 @@ const CreateBagBox = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  padding: 36px;
+  justify-content: space-evenly
   box-sizing: border-box;
 `;
 
