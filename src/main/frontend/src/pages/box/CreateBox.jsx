@@ -3,35 +3,24 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import RoundButton from "../../components/RoundButton";
+import StopButton from "../../components/StopButton";
 import API from "../../config";
-import { SCREEN_MAX_SIZE } from "../../constant";
+import { MAINIMAGE, SCREEN_MAX_SIZE } from "../../constant";
 
 const CreateBagBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
   margin: 0 auto;
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly
-  box-sizing: border-box;
-`;
-
-const CreateBagInfo = styled.div`
-  position: relative;
-`;
-
-const CreateBagForm = styled.div`
-  position: absolute;
-  top: 64%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 60%;
-  padding: 20px;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0 15px;
 `;
 
 const CreateBagImg = styled.img`
   width: 100%;
-  height: 100%;
+  height: 60%;
+  object-fit: contain;
 `;
 
 const BagInput = styled.input`
@@ -41,6 +30,8 @@ const BagInput = styled.input`
   border-radius: 24px;
   max-width: 72%;
   margin-right: 5px;
+  text-align: center;
+  box-shadow: 4px 4px 10px 0px #00000040;
   @media only screen and (max-width: 300px) {
     max-width: 70%;
     padding: 6px 10px;
@@ -49,25 +40,10 @@ const BagInput = styled.input`
 `;
 
 const BagInputLabel = styled.label`
-  color: white;
-  & span {
-    font-size: 24px;
-  }
+  font-size: 28px;
 
-  & p {
-    font-size: 48px;
-    text-align: center;
-    padding: 15px 0;
-  }
-
-  @media only screen and (max-width: 300px) {
-    & span {
-      font-size: 12px;
-    }
-
-    & p {
-      font-size: 20px;
-    }
+  @media only screen and (max-width: 500px) {
+    font-size: 20px;
   }
 `;
 
@@ -86,45 +62,41 @@ export default function CreateBox() {
 
   return (
     <CreateBagBox>
-      <CreateBagInfo>
-        <CreateBagImg
-          src={require("../../img/luckyBag_inside.png")}
-          alt="배경"
-        />
-        <CreateBagForm>
-          <BagInput
-            placeholder="복주머니 이름"
-            id="bagName"
-            value={boxName}
-            onChange={(event) => {
-              setBoxName(event.target.value);
-            }}
-          />
-          <BagInputLabel htmlFor="bagName">
-            <span>의</span>
-            <p>복주머니</p>
-          </BagInputLabel>
-        </CreateBagForm>
-      </CreateBagInfo>
       <CreateBagTitle>누구의 복주머니인가요?</CreateBagTitle>
-      <RoundButton
-        Children={Create}
-        onClick={() => {
-          axios
-            .post(
-              API.LETTERBOX,
-              { name: boxName },
-              { headers: { authorization: localStorage.getItem("jwt") } }
-            )
-            .then((response) => {
-              navigate(`/box/${response.data.letterboxId}`);
-            })
-            .catch((err) => {
-              alert("다시 시도해주세요");
-              localStorage.removeItem("jwt");
-            });
-        }}
-      />
+      <CreateBagImg src={require(`../../img/${MAINIMAGE}`)} alt="배경" />
+      <div>
+        <BagInput
+          placeholder="복주머니 이름"
+          id="bagName"
+          value={boxName}
+          onChange={(event) => {
+            setBoxName(event.target.value);
+          }}
+        />
+        <BagInputLabel htmlFor="bagName">의 시간표</BagInputLabel>
+      </div>
+      {boxName ? (
+        <RoundButton
+          Children={Create}
+          onClick={() => {
+            axios
+              .post(
+                API.LETTERBOX,
+                { name: boxName },
+                { headers: { authorization: localStorage.getItem("jwt") } }
+              )
+              .then((response) => {
+                navigate(`/box/${response.data.letterboxId}`);
+              })
+              .catch((err) => {
+                alert("다시 시도해주세요");
+                localStorage.removeItem("jwt");
+              });
+          }}
+        />
+      ) : (
+        <StopButton text="만들기" />
+      )}
     </CreateBagBox>
   );
 }

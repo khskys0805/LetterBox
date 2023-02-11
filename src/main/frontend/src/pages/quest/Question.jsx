@@ -5,11 +5,11 @@ import { SCREEN_MAX_SIZE } from "../../constant";
 
 const QuestionBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  height: 100%;
 `;
 
 const QuestionInside = styled.div`

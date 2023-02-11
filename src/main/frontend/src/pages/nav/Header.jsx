@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { THEME } from "../../constant";
 
-const HeaderCover = styled.div`
+const HeaderCover = styled.header`
   padding: 15px;
   background-color: ${THEME};
   display: flex;

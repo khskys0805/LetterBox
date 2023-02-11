@@ -9,7 +9,6 @@ import Clock from "../../components/Clock";
 const LetterBoxCover = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
   margin: 0 auto;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

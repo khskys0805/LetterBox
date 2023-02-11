@@ -27,7 +27,7 @@ function App() {
     <BrowserRouter>
       <GlobalStyle />
       <Header />
-      <div
+      <main
         style={{
           maxWidth: "1080px",
           margin: "0 auto",
@@ -94,7 +94,7 @@ function App() {
             </Route>
           </Routes>
         </UserContextProvider>
-      </div>
+      </main>
     </BrowserRouter>
   );
 }

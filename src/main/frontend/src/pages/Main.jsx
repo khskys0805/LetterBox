@@ -7,12 +7,12 @@ import { MAINIMAGE, SCREEN_MAX_SIZE } from "../constant";
 const MainBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
   margin: 0 auto;
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   padding: 36px;
   box-sizing: border-box;
+  height: calc(100vh - 46px);
 `;
 
 export default function Main() {

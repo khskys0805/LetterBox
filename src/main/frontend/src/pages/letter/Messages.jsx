@@ -9,7 +9,6 @@ import { SCREEN_MAX_SIZE } from "../../constant";
 const MessagesBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
   padding: 0 28px;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;

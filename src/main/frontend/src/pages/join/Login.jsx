@@ -10,6 +10,7 @@ const LoginBox = styled.div`
   display: grid;
   grid-auto-columns: 1fr 5fr;
   padding: 0 36px;
+  height: 100%;
 `;
 
 const LoginTitle = styled.span`

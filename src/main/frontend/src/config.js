@@ -14,6 +14,10 @@ const API = {
   MESSAGE(BOX, LETTER) {
     return `/letterbox/${BOX}/letter/${LETTER}`;
   },
+  NAVERLOGIN: "/login/getNaverAuthUrl",
+  NAVERTOKEN(CODE, STATE) {
+    return `/login/oauth_naver?code=${CODE}&&state=${STATE}`;
+  },
 };
 
 export default API;

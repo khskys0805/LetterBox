@@ -12,8 +12,8 @@ const ButtonBox = styled.div`
   align-items: center;
   column-gap: 6px;
   justify-content: center;
-  margin: 30px auto 0;
   cursor: pointer;
+  margin: 30px auto 0;
 `;
 
 export default function RoundButton(props) {
