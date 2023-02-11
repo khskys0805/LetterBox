@@ -20,13 +20,20 @@ import CheckLogin from "./pages/box/CheckLogin";
 import ServiceBox from "./pages/box/ServiceBox";
 import ServiceEnd from "./pages/box/ServiceEnd";
 import { Header } from "./pages/nav/Header";
+import { NaverLogin } from "./pages/join/NaverToken";
 
 function App() {
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <div style={{ maxWidth: "1080px", margin: "0 auto" }}>
-        <Header />
+      <Header />
+      <div
+        style={{
+          maxWidth: "1080px",
+          margin: "0 auto",
+          height: "calc(100vh - 46px)",
+        }}
+      >
         <UserContextProvider>
           <Routes>
             <Route path="/" element={<Main />} />
@@ -50,6 +57,7 @@ function App() {
                 )
               }
             />
+            <Route path="/naver/login" element={<NaverLogin />} />
             <Route element={<PrivateRoute />}>
               <Route
                 path="/box/:boxId/chatting/:chatId"

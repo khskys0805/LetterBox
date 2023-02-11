@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import API from "../../config";
 
-export default function Token() {
+export function NaverLogin() {
   const [serchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get(API.LOGINTOKEN(serchParams.get("code")))
+      .get(API.NAVERTOKEN(serchParams.get("code"), serchParams.get("state")))
       .then((res) => {
         localStorage.setItem("jwt", res.headers.authorization);
         navigate("/box");
