@@ -74,7 +74,10 @@ public class UserController {
         OauthToken oauthToken= userService.getNaverAccessToken(code);
         System.out.println(oauthToken);
         String jwtToken = userService.saveNaverUserAndGetToken(oauthToken.getAccess_token());
-        return ResponseEntity.ok().body(jwtToken);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+        //JWT 가 담긴 헤더와 200 ok 스테이터스 값, "success" 라는 바디값을 ResponseEntity 에 담아 프론트 측에 전달한다.
+        return ResponseEntity.ok().headers(headers).body(null);
     }
 
     // 프론트에서 인가코드 받아오는 url

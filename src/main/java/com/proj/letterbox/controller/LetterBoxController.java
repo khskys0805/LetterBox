@@ -112,7 +112,7 @@ public class LetterBoxController {
     @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}")
     public ResponseEntity<Object> getLetter(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx) {
         Letter getLetter = letterService.getLetter(request, letterboxIdx, letterIdx);
-        Letter returnLetter = new Letter(getLetter.getLetterId(), getLetter.getLetterBox(), getLetter.getNickname(), getLetter.getContent(), getLetter.getLetterlocation(), getLetter.getFile(), getLetter.getAnswerList(), getLetter.getHintNum(), getLetter.isCorrect(), getLetter.isOpen(), getLetter.getTextColor());
+        Letter returnLetter = new Letter(getLetter.getLetterId(), getLetter.getLetterBox(), getLetter.getNickname(), getLetter.getContent(), getLetter.getLetterlocation(), getLetter.getFile(), getLetter.getAnswerList(), getLetter.getHintNum(), getLetter.isCorrect(), getLetter.isOpen(), getLetter.getTextColor(), getLetter.getBackColor());
         return ResponseEntity.ok().body(returnLetter);
     }
 
@@ -121,7 +121,7 @@ public class LetterBoxController {
     @GetMapping(value = "/{letterboxIdx}/letter/{letterIdx}/add")
     public ResponseEntity<Object> addAnswer(HttpServletRequest request, @PathVariable("letterboxIdx") int letterboxIdx, @PathVariable("letterIdx") int letterIdx, @RequestParam String answer) {
         Letter getLetter = letterService.addAnswer(request, letterboxIdx, letterIdx, answer);
-        Letter returnLetter = new Letter(getLetter.getLetterId(), getLetter.getLetterBox(), getLetter.getNickname(), getLetter.getContent(), getLetter.getLetterlocation(), getLetter.getFile(), getLetter.getAnswerList(), getLetter.getHintNum(), getLetter.isCorrect(), getLetter.isOpen(), getLetter.getTextColor());
+        Letter returnLetter = new Letter(getLetter.getLetterId(), getLetter.getLetterBox(), getLetter.getNickname(), getLetter.getContent(), getLetter.getLetterlocation(), getLetter.getFile(), getLetter.getAnswerList(), getLetter.getHintNum(), getLetter.isCorrect(), getLetter.isOpen(), getLetter.getTextColor(), getLetter.getBackColor());
         return ResponseEntity.ok().body(returnLetter);
     }
 
