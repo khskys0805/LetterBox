@@ -85,6 +85,9 @@ public class Letter {
     @Column(name="text_color")
     private String textColor;
 
+    @Column(name="back_color")
+    private String backColor;
+
     public void setCorrect(boolean correct) {
         this.correct = correct;
     }
@@ -93,7 +96,7 @@ public class Letter {
         this.open = open;
     }
 
-    public Letter(int letterId, LetterBox letterBox, String nickname, String content, int letterlocation, Files file, List<String> answerList, int hintNum, boolean correct, boolean open, String textColor) {
+    public Letter(int letterId, LetterBox letterBox, String nickname, String content, int letterlocation, Files file, List<String> answerList, int hintNum, boolean correct, boolean open, String textColor, String backColor) {
         this.letterId = letterId;
         this.letterBox = letterBox;
         this.nickname = nickname;
@@ -105,6 +108,7 @@ public class Letter {
         this.correct = correct;
         this.open = open;
         this.textColor = textColor;
+        this.backColor = backColor;
     }
 
 }

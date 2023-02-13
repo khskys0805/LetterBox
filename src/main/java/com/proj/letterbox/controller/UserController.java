@@ -17,12 +17,15 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URI;
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,22 +65,31 @@ public class UserController {
         String reqUrl = KakaoAuthUrl + "/oauth/authorize?client_id=" + KakaoApiKey + "&redirect_uri="+ RedirectURI + "&response_type=code";
         return reqUrl;
     }
+    private String generateRandomString() {
+        return UUID.randomUUID().toString();
+    }
 
     @RequestMapping (value = "/login/getNaverAuthUrl")
     public String getNaverAuthUrl(HttpServletRequest request) {
-        String reqUrl = NaverAuthUrl + "?response_type=code&client_id=" + NaverClientId + "&state=state&redirect_uri=" + NaverRedirectURI;
+        String state = generateRandomString();
+        request.getSession().setAttribute("state", state);
+        String reqUrl = NaverAuthUrl + "?response_type=code&client_id=" + NaverClientId + "&state=" + state + "&redirect_uri=" + NaverRedirectURI;
         return reqUrl;
     }
 
     @GetMapping("/login/oauth_naver")
-    public ResponseEntity getLoginNaver(@RequestParam("code") String code, @RequestParam("state") String state) {
-        OauthToken oauthToken= userService.getNaverAccessToken(code);
-        System.out.println(oauthToken);
-        String jwtToken = userService.saveNaverUserAndGetToken(oauthToken.getAccess_token());
-        HttpHeaders headers = new HttpHeaders();
-        headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
-        //JWT 가 담긴 헤더와 200 ok 스테이터스 값, "success" 라는 바디값을 ResponseEntity 에 담아 프론트 측에 전달한다.
-        return ResponseEntity.ok().headers(headers).body(null);
+    public ResponseEntity getLoginNaver(HttpServletRequest request, @RequestParam("code") String code, @RequestParam("state") String state) {
+        String sessionState = (String) request.getSession().getAttribute("state");
+        if (StringUtils.pathEquals(sessionState, state)) {
+            OauthToken oauthToken = userService.getNaverAccessToken(code);
+            System.out.println(oauthToken);
+            String jwtToken = userService.saveNaverUserAndGetToken(oauthToken.getAccess_token());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add(JwtProperties.HEADER_STRING, JwtProperties.TOKEN_PREFIX + jwtToken);
+            //JWT 가 담긴 헤더와 200 ok 스테이터스 값, "success" 라는 바디값을 ResponseEntity 에 담아 프론트 측에 전달한다.
+            return ResponseEntity.ok().headers(headers).body(null);
+        }
+        return null;
     }
 
     // 프론트에서 인가코드 받아오는 url
