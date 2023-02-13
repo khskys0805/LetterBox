@@ -14,11 +14,42 @@ const InputBox = styled.input`
   margin-top: 35px;
 `;
 
+const ColorBox = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  row-gap: 20px;
+  @media only screen and (max-width: 500px) {
+    row-gap: 10px;
+  }
+`;
+
+const ColorCell = styled.div`
+  width: 50px;
+  height: 50px;
+  background: ${(props) => props.bgColor};
+  border-radius: 10px;
+  border: 3px solid
+    ${(props) => (props.bgColor === props.current ? "#C7BEE8" : "white")};
+`;
+
 export default function Nickname() {
   const { inputs, setInputs } = useOutletContext();
   const Next = () => <span>다음</span>;
   const navigate = useNavigate();
   const [nickname, setNickname] = useState(inputs.nickname);
+  const [pickColor, setPickColor] = useState("#FFAEAE");
+  const colors = [
+    "#FFAEAE",
+    "#FFC79E",
+    "#FFF599",
+    "#BAE9C2",
+    "#D0F4FF",
+    "#AAC2FF",
+    "#C5AAFF",
+    "#FFC8F6",
+  ];
+  console.log(pickColor);
   return (
     <>
       <div>
@@ -31,6 +62,18 @@ export default function Nickname() {
           value={nickname}
         />
       </div>
+      <ColorBox>
+        {colors.map((color) => (
+          <ColorCell
+            current={pickColor}
+            bgColor={color}
+            key={color}
+            onClick={() => {
+              setPickColor(color);
+            }}
+          />
+        ))}
+      </ColorBox>
       {nickname ? (
         <RoundButton
           Children={Next}

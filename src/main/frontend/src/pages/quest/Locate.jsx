@@ -11,54 +11,30 @@ const LocateBox = styled.div`
   position: relative;
 `;
 const LocatePick = styled.div`
-  width: 90%;
-  height: 70%;
+  width: 83%;
+  height: 77%;
   position: absolute;
-  top: 25%;
+  top: 22.6%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  clip-path: polygon(
-    35% -8%,
-    73% -1%,
-    102% 30%,
-    100% 70%,
-    71% 100%,
-    29% 100%,
-    0% 70%,
-    -2% 30%
-  );
-  left: 5%;
-  align-items: center;
+  grid-template-rows: repeat(7, 1fr);
+  left: 16%;
+  gap: 4px;
 `;
 
 const LocateCell = styled.div`
   width: 100%;
-  border-radius: 4px;
+  height: 100%;
+  border-radius: 20%;
   &:hover {
-    background: repeating-linear-gradient(
-      45deg,
-      #ca2323,
-      #4440 5px,
-      #ed563f 12px,
-      #ff1c1cbf 15px
-    );
+    background: #b0c6ff;
   }
+  background-color: ${(props) => props.current === props.number && "#B0C6FF"};
 `;
 
-const SelectedCellShape = styled.img`
-  object-fit: contain;
-  width: 80%;
-`;
-
-const CellShape = styled.img`
-  object-fit: contain;
-  width: 80%;
-  &:hover {
-    cursor: pointer;
-  }
-  visibility: ${(props) =>
-    props.current === props.number ? "visible" : "hidden"};
+const SelectedCellShape = styled.div`
+  background-color: #74809f;
+  border-radius: 20%;
 `;
 
 const SubmitButton = styled.button`
@@ -75,9 +51,9 @@ const SubmitButton = styled.button`
 export default function Locate() {
   const { inputs, setInputs } = useOutletContext();
   const navigate = useNavigate();
-  const msg = Array.from({ length: 20 }, (_, idx) => idx);
-  const [locate, setLocate] = useState(0);
-  const ban = [0, 4, 15, 19];
+  const msg = Array.from({ length: 35 }, (_, idx) => idx);
+  const [locate, setLocate] = useState();
+  const ban = [];
   const { location } = useUserContext();
 
   return (
@@ -88,28 +64,18 @@ export default function Locate() {
             if (ban.includes(index)) {
               return <div key={index} />;
             } else if (location.includes(index)) {
-              return (
-                <div key={index}>
-                  <SelectedCellShape
-                    src={require("../../img/selectedCoin.png")}
-                  />
-                </div>
-              );
+              return <SelectedCellShape key={index} />;
             } else {
               return (
                 <LocateCell
+                  current={locate}
+                  number={index}
                   key={index}
                   onClick={() => {
                     setLocate(index);
                     setInputs({ ...inputs, letterlocation: index });
                   }}
-                >
-                  <CellShape
-                    src={require("../../img/coin.png")}
-                    current={locate}
-                    number={index}
-                  />
-                </LocateCell>
+                />
               );
             }
           })}

@@ -7,17 +7,18 @@ import StopButton from "../../components/StopButton";
 import API from "../../config";
 import { MAINIMAGE, SCREEN_MAX_SIZE } from "../../constant";
 
-const CreateBagBox = styled.div`
+const CreateBoxCover = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  padding: 0 15px;
+  padding: 20px 15px;
+  gap: 20px;
 `;
 
-const CreateBagImg = styled.img`
+const CreateBoxImg = styled.img`
   width: 100%;
   height: 60%;
   object-fit: contain;
@@ -47,12 +48,21 @@ const BagInputLabel = styled.label`
   }
 `;
 
-const CreateBagTitle = styled.p`
+const CreateBoxTitle = styled.p`
   text-align: center;
   font-size: 32px;
+  margin-top: 25px;
   @media only screen and (max-width: 300px) {
     font-size: 20px;
   }
+`;
+
+const CreateBoxName = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
 `;
 
 export default function CreateBox() {
@@ -61,10 +71,10 @@ export default function CreateBox() {
   const [boxName, setBoxName] = useState("");
 
   return (
-    <CreateBagBox>
-      <CreateBagTitle>누구의 복주머니인가요?</CreateBagTitle>
-      <CreateBagImg src={require(`../../img/${MAINIMAGE}`)} alt="배경" />
-      <div>
+    <CreateBoxCover>
+      <CreateBoxTitle>누구의 복주머니인가요?</CreateBoxTitle>
+      <CreateBoxImg src={require(`../../img/${MAINIMAGE}`)} alt="배경" />
+      <CreateBoxName>
         <BagInput
           placeholder="복주머니 이름"
           id="bagName"
@@ -74,7 +84,7 @@ export default function CreateBox() {
           }}
         />
         <BagInputLabel htmlFor="bagName">의 시간표</BagInputLabel>
-      </div>
+      </CreateBoxName>
       {boxName ? (
         <RoundButton
           Children={Create}
@@ -97,6 +107,6 @@ export default function CreateBox() {
       ) : (
         <StopButton text="만들기" />
       )}
-    </CreateBagBox>
+    </CreateBoxCover>
   );
 }
