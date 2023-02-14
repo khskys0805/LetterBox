@@ -1,6 +1,5 @@
 const API = {
   MYPAGE: "/letterbox/my",
-  CREATEBOX: "/letterbox",
   LETTERBOX: "/letterbox",
   LOGIN: "/login/getKakaoAuthUrl",
   LOGINTOKEN(CODE) {
@@ -8,6 +7,16 @@ const API = {
   },
   LETTER(ID) {
     return `/letterbox/${ID}/letter`;
+  },
+  ANSWER(BOX, LETTER, INPUT) {
+    return `/letterbox/${BOX}/letter/${LETTER}/compare?answer=${INPUT}`;
+  },
+  MESSAGE(BOX, LETTER) {
+    return `/letterbox/${BOX}/letter/${LETTER}`;
+  },
+  NAVERLOGIN: "/login/getNaverAuthUrl",
+  NAVERTOKEN(CODE, STATE) {
+    return `/login/oauth_naver?code=${CODE}&&state=${STATE}`;
   },
 };
 
