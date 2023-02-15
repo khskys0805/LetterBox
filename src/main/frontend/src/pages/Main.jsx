@@ -12,13 +12,12 @@ const MainBox = styled.div`
   justify-content: space-around;
   padding: 36px;
   box-sizing: border-box;
-  height: calc(100vh - 46px);
 `;
 
 export default function Main() {
   const navigate = useNavigate();
   const Login = () => <span>로그인</span>;
-  const Bag = () => <span>내 복주머니 확인하기</span>;
+  const Bag = () => <span>내 시간표 확인하기</span>;
   const user = localStorage.getItem("jwt");
   return (
     <MainBox>

@@ -53,7 +53,7 @@ export default function Nickname() {
   return (
     <>
       <div>
-        <p>복을 보낼 닉네임을 정해주세요</p>
+        <p>시간표를 꾸밀 닉네임과 시간표의 색상을 정해주세요</p>
         <InputBox
           placeholder="닉네임 입력"
           onChange={(event) => {

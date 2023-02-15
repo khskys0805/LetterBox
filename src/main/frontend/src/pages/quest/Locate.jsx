@@ -135,7 +135,7 @@ export default function Locate() {
               });
           }}
         >
-          <SubmitButton type="submit">최종제출</SubmitButton>
+          <SubmitButton type="submit">보내기</SubmitButton>
         </form>
       ) : (
         <StopButton text="위치를 지정해주세요" />

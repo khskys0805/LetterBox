@@ -27,7 +27,7 @@ const LetterBoxTitle = styled.h2`
 `;
 
 const TtitleNickname = styled.span`
-  color: #dd403d;
+  color: #8040e9;
 `;
 
 const LetterBoxButton = styled.div`
@@ -35,8 +35,8 @@ const LetterBoxButton = styled.div`
 `;
 
 export default function LetterBox() {
-  const Fortune = () => <span>복 선물하기</span>;
-  const Bag = () => <span>내 복주머니 확인하기</span>;
+  const Fortune = () => <span>수업 선물하기</span>;
+  const Bag = () => <span>내 시간표 확인하기</span>;
   const navigate = useNavigate();
   const { box } = useOutletContext();
   const messageList = box.letterLists ? box.letterLists : [];
@@ -44,9 +44,8 @@ export default function LetterBox() {
     <LetterBoxCover>
       <LetterBoxTitle>
         <TtitleNickname>{box.name}</TtitleNickname>
-        <span>의</span>
+        <span>의 시간표</span>
         <Clock />
-        <p>복주머니</p>
       </LetterBoxTitle>
       <BoxShape
         messageList={messageList}
