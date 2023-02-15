@@ -49,11 +49,10 @@ public class User {
 //    @JoinColumn(name = 'user_code')
 //    private LetterBox letterBox;
     public User(String naverId,
-                String email, String name, String userRole, String platform) {
+                String email, String userRole, String platform) {
 
         this.naverId = naverId;
         this.email = email;
-        this.name = name;
         this.userRole = userRole;
         this.platform = platform;
     }

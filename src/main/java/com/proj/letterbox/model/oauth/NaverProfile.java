@@ -13,6 +13,5 @@ public class NaverProfile {
     public class NaverResponse {
         public String id;
         public String email;
-        public String name;
     }
 }
