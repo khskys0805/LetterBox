@@ -33,6 +33,7 @@ export default function Question() {
     letterlocation: 0,
     boxId: id,
     textColor: "#000000",
+    bgColor: "#000000",
   });
   const navigate = useNavigate();
 

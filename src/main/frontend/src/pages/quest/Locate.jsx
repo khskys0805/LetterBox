@@ -122,6 +122,7 @@ export default function Locate() {
                   letterlocation: inputs.letterlocation,
                   file: fileInfo,
                   textColor: inputs.textColor,
+                  backColor: inputs.bgColor,
                 },
                 { headers: { authorization: localStorage.getItem("jwt") } }
               )

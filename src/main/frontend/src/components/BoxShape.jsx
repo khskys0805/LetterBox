@@ -37,7 +37,7 @@ export default function BoxShape({ messageList, onClick, owner }) {
   const msgLocation = messageList.map((msg) => msg.location);
   const msgId = messageList.map((msg) => msg.letterId);
   const msgOpen = messageList.map((msg) => msg.open);
-
+  const msgBgColor = messageList.map((msg) => msg.backColor);
   return (
     <BoxShapeCover>
       <BoxShapeImg src={require(`../img/${USERIMAGE}`)} alt="배경" />
@@ -48,15 +48,15 @@ export default function BoxShape({ messageList, onClick, owner }) {
             <>
               {find !== -1 ? (
                 <CellShape
-                  key={`index`}
+                  key={msgOpen[find]}
                   owner={owner}
-                  color={msgOpen[find] ? "red" : "#74809f"}
+                  color={msgOpen[find] ? msgBgColor[find] : "#74809f"}
                   onClick={() => {
                     onClick(msgId[find], msgOpen[find]);
                   }}
                 />
               ) : (
-                <div key={`index`} />
+                <div key={index} />
               )}
             </>
           );
