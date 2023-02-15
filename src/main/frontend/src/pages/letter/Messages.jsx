@@ -68,9 +68,11 @@ export default function Messages() {
               <MessageSenderForm>from. </MessageSenderForm>
               <MessageSenderName>{data.nickname}</MessageSenderName>
             </MessageSender>
-            <MessagePaper color={data.textColor} img={data.file.fileurl}>
+            <MessagePaper
+              color={data.textColor}
+              img={data.file && data.file.fileurl}
+            >
               {data.content}
-              {/* <img src={data.file.fileurl} /> */}
             </MessagePaper>
             <div>
               <RoundButton
