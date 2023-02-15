@@ -40,7 +40,7 @@ export default function UserBox({ userBox }) {
       <StorageTitle>
         <TtitleNickname>{userBox.name}</TtitleNickname>
         <span>의</span>
-        <p>복주머니</p>
+        <p>시간표</p>
       </StorageTitle>
       <BoxShape
         owner={true}
