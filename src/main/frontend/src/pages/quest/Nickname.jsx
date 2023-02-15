@@ -49,7 +49,7 @@ export default function Nickname() {
     "#C5AAFF",
     "#FFC8F6",
   ];
-  console.log(pickColor);
+
   return (
     <>
       <div>
@@ -78,7 +78,7 @@ export default function Nickname() {
         <RoundButton
           Children={Next}
           onClick={() => {
-            setInputs({ ...inputs, nickname });
+            setInputs({ ...inputs, nickname, bgColor: pickColor });
             navigate(`/question/${inputs.boxId}/hints`);
           }}
         />
