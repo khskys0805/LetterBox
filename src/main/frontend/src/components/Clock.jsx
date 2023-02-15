@@ -28,7 +28,6 @@ export default function Clock() {
         <>
           확정까지
           <span>
-            {" "}
             {time.day}
             <ClockInfo>일</ClockInfo>{" "}
           </span>
