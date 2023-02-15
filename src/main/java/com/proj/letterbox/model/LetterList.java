@@ -40,10 +40,14 @@ public class LetterList {
     @ColumnDefault("false")
     boolean open;
 
-    public LetterList(int location, int letterBoxId, int letterId) {
+    @Column(name="back_color")
+    private String backColor;
+
+    public LetterList(int location, int letterBoxId, int letterId, String backColor) {
         this.location = location;
         this.letterBoxId = letterBoxId;
         this.letterId = letterId;
+        this.backColor = backColor;
     }
 
 

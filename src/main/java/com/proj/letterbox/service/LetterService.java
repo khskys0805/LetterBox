@@ -39,7 +39,7 @@ public class LetterService {
         //TODO : letterBox는 저장할 필요가 없는지 확인
         letter.setLetterBox(letterBox);
         letterRepository.save(letter);
-        LetterList letterList = new LetterList(location, letterboxIdx, letter.getLetterId());
+        LetterList letterList = new LetterList(location, letterboxIdx, letter.getLetterId(), letter.getBackColor());
         letterListRepository.save(letterList);
         return letter;
     }
