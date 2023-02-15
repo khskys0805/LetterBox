@@ -58,7 +58,7 @@ public class LetterScheduled {
 
         int day = (int) (result / 1000 / 60 / 60 / 24);
         int min = (int) (result / 1000 / 60);
-        //System.out.println(min);
+        //System.out.println(day);
 
         List<LetterBox> letterboxes = letterBoxService.findAll();
         //System.out.println(letterboxes);
