@@ -11,7 +11,7 @@ const ChattingBox = styled.div`
   background: #f7f7f7;
   padding: 40px 15px 12px;
   margin-bottom: 72px;
-  height: calc(100vh - 205px);
+  height: calc(100vh - 255px);
   display: flex;
   flex-direction: column;
   position: relative;

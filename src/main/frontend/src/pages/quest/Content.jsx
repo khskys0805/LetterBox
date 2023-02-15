@@ -87,7 +87,7 @@ export default function Content() {
   return (
     <>
       <div>
-        <ConnectTitle>따듯한 말을 가득 담아 복을 보내주세요</ConnectTitle>
+        <ConnectTitle>재미있게 시간표를 꾸며보세요</ConnectTitle>
         <InputCover>
           <InputBox
             placeholder="내용 입력"
