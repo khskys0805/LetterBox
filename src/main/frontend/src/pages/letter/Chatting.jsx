@@ -64,17 +64,21 @@ export default function Chatting() {
     <>
       <ChattingBox ref={chatRef}>
         {data ? (
-          <>
-            <QuestionBox>
-              <QuestionText>{data.nickname}가 누구인 거 같애?</QuestionText>
-            </QuestionBox>
-            <ChatProcess
-              setRefresh={setRefresh}
-              refresh={refresh}
-              data={data}
-              correct={correct}
-            />
-          </>
+          data.open ? (
+            <>
+              <QuestionBox>
+                <QuestionText>{data.nickname}가 누구인 거 같애?</QuestionText>
+              </QuestionBox>
+              <ChatProcess
+                setRefresh={setRefresh}
+                refresh={refresh}
+                data={data}
+                correct={correct}
+              />
+            </>
+          ) : (
+            "아직 이용하실 수 없습니다"
+          )
         ) : (
           <div>로딩중</div>
         )}

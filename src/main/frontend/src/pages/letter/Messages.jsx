@@ -21,10 +21,7 @@ const MessagePaper = styled.div`
   border-radius: 50px;
   padding: 34px;
   color: ${(props) => props.color};
-  background-image: url(${(props) => props.img});
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
+  position: relative;
 `;
 
 const MessageSender = styled.h2`
@@ -37,6 +34,17 @@ const MessageSenderForm = styled.span`
 
 const MessageSenderName = styled.span`
   text-transform: uppercase;
+`;
+
+const MessagePaperImage = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
 `;
 export default function Messages() {
   const navigate = useNavigate();
@@ -68,9 +76,9 @@ export default function Messages() {
               <MessageSenderForm>from. </MessageSenderForm>
               <MessageSenderName>{data.nickname}</MessageSenderName>
             </MessageSender>
-            <MessagePaper color={data.textColor} img={data.file.fileurl}>
+            <MessagePaper color={data.textColor}>
               {data.content}
-              {/* <img src={data.file.fileurl} /> */}
+              <MessagePaperImage src={data.file.fileurl} />
             </MessagePaper>
             <div>
               <RoundButton
