@@ -2,13 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import RoundButton from "../components/RoundButton";
-import { SCREEN_MAX_SIZE } from "../constant/max-style";
+import RoundButton from "../../components/RoundButton";
+import API from "../../config";
+import { SCREEN_MAX_SIZE } from "../../constant";
 
 const MessagesBox = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
   padding: 0 28px;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -40,7 +40,7 @@ export default function Messages() {
   useEffect(() => {
     async function fetchData() {
       await axios
-        .get(`/letterbox/${boxId}/letter/${chatId}`, {
+        .get(API.MESSAGE(boxId, chatId), {
           headers: { authorization: localStorage.getItem("jwt") },
         })
         .then((res) => {

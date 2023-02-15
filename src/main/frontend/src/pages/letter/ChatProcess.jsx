@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import { SCREEN_MAX_SIZE } from "../../constant/max-style";
+import API from "../../config";
 
 const QuestionBox = styled.div`
   margin-bottom: 10px;
@@ -157,13 +157,10 @@ export default function ChatProcess({ setRefresh, refresh, data, correct }) {
             onSubmit={async (event) => {
               event.preventDefault();
               await axios
-                .get(
-                  `/letterbox/${boxId}/letter/${chatId}/compare?answer=${input}`,
-                  {
-                    headers: { authorization: localStorage.getItem("jwt") },
-                  }
-                )
-                .then((res) => {
+                .get(API.ANSWER(boxId, chatId, input), {
+                  headers: { authorization: localStorage.getItem("jwt") },
+                })
+                .then(() => {
                   setInput("");
                 });
               setRefresh(!refresh);

@@ -1,9 +1,10 @@
 import React from "react";
 import styled from "styled-components";
+import { THEME } from "../constant";
 
 const ButtonBox = styled.div`
   width: 100%;
-  background: ${(props) => (props.background ? props.background : "#FFCD4A")};
+  background: ${(props) => (props.background ? props.background : THEME)};
   border-radius: 50px;
   padding: 16px 0;
   color: ${(props) => (props.color ? props.color : "white")};
@@ -11,8 +12,8 @@ const ButtonBox = styled.div`
   align-items: center;
   column-gap: 6px;
   justify-content: center;
-  margin: 30px auto 0;
   cursor: pointer;
+  margin: 30px auto 0;
 `;
 
 export default function RoundButton(props) {

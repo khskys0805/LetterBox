@@ -2,13 +2,13 @@ import React from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import RoundButton from "../../components/RoundButton";
 import styled from "styled-components";
-import { SCREEN_MAX_SIZE } from "../../constant/max-style";
+import { SCREEN_MAX_SIZE } from "../../constant";
 import BoxShape from "../../components/BoxShape";
+import Clock from "../../components/Clock";
 
 const LetterBoxCover = styled.div`
   max-width: ${SCREEN_MAX_SIZE}px;
   margin: 0 auto;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -45,6 +45,7 @@ export default function LetterBox() {
       <LetterBoxTitle>
         <TtitleNickname>{box.name}</TtitleNickname>
         <span>의</span>
+        <Clock />
         <p>복주머니</p>
       </LetterBoxTitle>
       <BoxShape
