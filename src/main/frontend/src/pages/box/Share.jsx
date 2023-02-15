@@ -70,9 +70,9 @@ export default function Share({ name }) {
               objectType: "feed",
               content: {
                 title: title,
-                description: "#편지 #나를 맞춰줘 #감동",
+                description: "#편지 #나를 맞춰줘 #감동 #개강",
                 imageUrl:
-                  "https://myletterboxbucket.s3.ap-northeast-2.amazonaws.com/d365728e-6dc2-4678-839d-de55192cd91a.png",
+                  "https://myletterboxbucket.s3.ap-northeast-2.amazonaws.com/%EB%A0%88%ED%84%B0%EB%B0%95%EC%8A%A4.png",
                 link: {
                   mobileWebUrl: sendUrl,
                   webUrl: sendUrl,

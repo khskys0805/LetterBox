@@ -26,7 +26,7 @@ export default function Clock() {
     <>
       {show && (
         <>
-          확정까지
+          확정까지{" "}
           <span>
             {time.day}
             <ClockInfo>일</ClockInfo>{" "}
