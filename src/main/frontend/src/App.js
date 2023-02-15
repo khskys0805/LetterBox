@@ -31,7 +31,7 @@ function App() {
         style={{
           maxWidth: "1080px",
           margin: "0 auto",
-          height: "calc(100vh - 46px)",
+          height: "calc(100vh - 55px)",
         }}
       >
         <UserContextProvider>

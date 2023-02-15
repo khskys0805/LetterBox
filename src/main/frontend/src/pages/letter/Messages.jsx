@@ -13,6 +13,7 @@ const MessagesBox = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   margin: 0 auto;
+  height: 100%;
 `;
 const MessagePaper = styled.div`
   height: 50%;
@@ -20,6 +21,10 @@ const MessagePaper = styled.div`
   border-radius: 50px;
   padding: 34px;
   color: ${(props) => props.color};
+  background-image: url(${(props) => props.img});
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 `;
 
 const MessageSender = styled.h2`
@@ -63,7 +68,10 @@ export default function Messages() {
               <MessageSenderForm>from. </MessageSenderForm>
               <MessageSenderName>{data.nickname}</MessageSenderName>
             </MessageSender>
-            <MessagePaper color={data.textColor}>{data.content}</MessagePaper>
+            <MessagePaper color={data.textColor} img={data.file.fileurl}>
+              {data.content}
+              {/* <img src={data.file.fileurl} /> */}
+            </MessagePaper>
             <div>
               <RoundButton
                 Children={() => <span>누군지 맞추기</span>}

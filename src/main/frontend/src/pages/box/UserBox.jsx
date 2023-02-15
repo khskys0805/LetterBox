@@ -28,7 +28,7 @@ const StorageTitle = styled.h2`
 `;
 
 const TtitleNickname = styled.span`
-  color: #dd403d;
+  color: #8040e9;
 `;
 
 export default function UserBox({ userBox }) {

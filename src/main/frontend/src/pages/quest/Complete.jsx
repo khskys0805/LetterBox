@@ -26,7 +26,7 @@ const CompleteText = styled.div`
 `;
 
 const LuckyLetter = styled.strong`
-  color: #da2e2a;
+  color: #8040e9;
 `;
 
 const CompleteStrongText = styled.p`
@@ -45,11 +45,11 @@ export default function Complete() {
   return (
     <CompleteBox>
       <div>
-        <CompleteImg src={require("../../img/luckyBag_small.png")} alt="로고" />
+        <CompleteImg src={require("../../img/subLogo.png")} alt="로고" />
       </div>
       <CompleteText>
         <CompleteStrongText>
-          <LuckyLetter>&#31119;</LuckyLetter>을 성공적으로 보냈습니다!
+          <LuckyLetter>시간표를</LuckyLetter> 성공적으로 꾸몄습니다!
         </CompleteStrongText>
         <div>
           상대가 정답을 맞히면
