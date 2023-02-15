@@ -34,6 +34,15 @@ const LetterBoxButton = styled.div`
   width: 100%;
 `;
 
+const LetterClock = styled.div`
+  font-size: 16px;
+  background: #eac1d6;
+  padding: 0 10px;
+  color: white;
+  border-radius: 20px;
+  margin: 10px 0;
+`;
+
 export default function LetterBox() {
   const Fortune = () => <span>수업 선물하기</span>;
   const Bag = () => <span>내 시간표 확인하기</span>;
@@ -45,7 +54,9 @@ export default function LetterBox() {
       <LetterBoxTitle>
         <TtitleNickname>{box.name}</TtitleNickname>
         <span>의 시간표</span>
-        <Clock />
+        <LetterClock>
+          <Clock />
+        </LetterClock>
       </LetterBoxTitle>
       <BoxShape
         messageList={messageList}

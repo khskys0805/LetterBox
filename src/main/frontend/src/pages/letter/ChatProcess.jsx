@@ -80,6 +80,11 @@ const QuestionBottom = styled.div`
   background: #f7f7f7;
   transform: translateX(-50%);
 `;
+
+const ChatAnswer = styled.div`
+  height: 55px;
+  text-align: center;
+`;
 const questionMap = new Map([
   [0, "땡! 틀렸어! 1단계 힌트 볼래?"],
   [1, "또... 틀렸어! 2단계 힌트 볼래?"],
@@ -151,7 +156,7 @@ export default function ChatProcess({ setRefresh, refresh, data, correct }) {
       })}
       <QuestionBottom>
         {correct ? (
-          <div>정답을 맞췄어! 축하해</div>
+          <ChatAnswer>정답을 맞췄어! 축하해</ChatAnswer>
         ) : (
           <ChatForm
             onSubmit={async (event) => {
