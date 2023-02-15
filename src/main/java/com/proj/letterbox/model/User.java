@@ -48,11 +48,10 @@ public class User {
 //    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = 'user')
 //    @JoinColumn(name = 'user_code')
 //    private LetterBox letterBox;
-    public User(String naverId, String nickname,
+    public User(String naverId,
                 String email, String name, String userRole, String platform) {
 
         this.naverId = naverId;
-        this.nickname = nickname;
         this.email = email;
         this.name = name;
         this.userRole = userRole;
