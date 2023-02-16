@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import API from "../../config";
@@ -12,11 +12,11 @@ export default function Token() {
       .get(API.LOGINTOKEN(serchParams.get("code")))
       .then((res) => {
         localStorage.setItem("jwt", res.headers.authorization);
-        navigate("/box");
+        navigate(-2);
       })
       .catch((err) => {
         alert("로그인을 다시 시도해주세요");
-        navigate("/auth");
+        navigate(-1);
       });
   }, []);
 }
