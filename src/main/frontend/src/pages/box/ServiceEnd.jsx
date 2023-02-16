@@ -10,7 +10,7 @@ const ServiceEndCover = styled.div`
   align-items: center;
   height: 100%;
   justify-content: space-around;
-  width: 500px;
+  max-width: 500px;
   margin: 0 auto;
   text-align: center;
   & p {
@@ -29,7 +29,7 @@ export default function ServiceEnd() {
   const navigate = useNavigate();
   useEffect(() => {
     const id = setInterval(() => {
-      const diff = END_DATE() - new Date();
+      const diff = new Date(END_DATE) - new Date();
       setShow(diff >= 0 ? true : false);
     }, 1000);
     return () => clearInterval(id);
