@@ -72,7 +72,7 @@ export default function CreateBox() {
 
   return (
     <CreateBoxCover>
-      <CreateBoxTitle>누구의 복주머니인가요?</CreateBoxTitle>
+      <CreateBoxTitle>누구의 시간표인가요?</CreateBoxTitle>
       <CreateBoxImg src={require(`../../img/${MAINIMAGE}`)} alt="배경" />
       <CreateBoxName>
         <BagInput
