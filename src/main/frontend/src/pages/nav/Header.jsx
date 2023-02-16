@@ -20,6 +20,10 @@ const LogoImg = styled.img`
   object-fit: contain;
 `;
 
+const LoginText = styled.div`
+  cursor: pointer;
+`;
+
 export function Header() {
   const navigate = useNavigate();
 
@@ -34,23 +38,23 @@ export function Header() {
           }}
         />
         {localStorage.getItem("jwt") ? (
-          <div
+          <LoginText
             onClick={() => {
               localStorage.removeItem("jwt");
               window.location.reload();
             }}
           >
             로그아웃
-          </div>
+          </LoginText>
         ) : (
-          <div
+          <LoginText
             onClick={() => {
               localStorage.removeItem("jwt");
               navigate("/auth");
             }}
           >
             로그인
-          </div>
+          </LoginText>
         )}
       </HeaderInside>
     </HeaderCover>
