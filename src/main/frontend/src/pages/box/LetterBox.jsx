@@ -69,7 +69,7 @@ export default function LetterBox() {
         <RoundButton
           Children={Fortune}
           onClick={() => {
-            navigate(`/question/${box.letterboxId}/nickname`);
+            navigate(`/question/${box.letterboxId}/name`);
           }}
         />
         <RoundButton
