@@ -16,7 +16,7 @@ export default function Token() {
       })
       .catch((err) => {
         alert("로그인을 다시 시도해주세요");
-        navigate(-3);
+        navigate(-1);
       });
   }, []);
 }
