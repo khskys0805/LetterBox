@@ -76,7 +76,7 @@ export default function CreateBox() {
       <CreateBoxImg src={require(`../../img/${MAINIMAGE}`)} alt="배경" />
       <CreateBoxName>
         <BagInput
-          placeholder="복주머니 이름"
+          placeholder="시간표 이름"
           id="bagName"
           value={boxName}
           onChange={(event) => {
