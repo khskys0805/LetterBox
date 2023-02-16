@@ -11,7 +11,7 @@ export default function Clock() {
   const [show, setShow] = useState(true);
   useEffect(() => {
     const id = setInterval(() => {
-      const diff = Math.floor(new Date(END_DATE) - new Date()) / 1000;
+      const diff = Math.floor(END_DATE() - new Date()) / 1000;
       const diffDay = Math.floor(diff / (60 * 60 * 24));
       const diffhour = Math.floor((diff % (60 * 60 * 24)) / 60 / 60);
       const diffMin = Math.floor(((diff % (60 * 60 * 24)) / 60) % 60);
@@ -26,7 +26,7 @@ export default function Clock() {
     <>
       {show && (
         <>
-          확정까지
+          확정까지{" "}
           <span>
             {time.day}
             <ClockInfo>일</ClockInfo>{" "}
