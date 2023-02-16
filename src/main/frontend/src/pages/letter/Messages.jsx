@@ -82,7 +82,7 @@ export default function Messages() {
             </MessagePaper>
             <div>
               <RoundButton
-                Children={() => <span>누군지 맞추기</span>}
+                Children={() => <span>누군지 맞히기</span>}
                 onClick={() => navigate(`/box/${boxId}/chatting/${chatId}`)}
               />
               <RoundButton
