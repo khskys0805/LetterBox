@@ -29,7 +29,7 @@ export default function ServiceEnd() {
   const navigate = useNavigate();
   useEffect(() => {
     const id = setInterval(() => {
-      const diff = new Date(END_DATE) - new Date();
+      const diff = END_DATE() - new Date();
       setShow(diff >= 0 ? true : false);
     }, 1000);
     return () => clearInterval(id);
