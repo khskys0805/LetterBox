@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import CopyText from "copy-to-clipboard";
 
 const ShareBox = styled.ul`
   display: flex;
@@ -103,7 +104,7 @@ export default function Share({ name }) {
       <ShareOptions
         onClick={async () => {
           try {
-            await navigator.clipboard.writeText(sendUrl);
+            CopyText(sendUrl);
             setCopy(sendUrl);
           } catch (e) {
             alert("복사에 실패하였습니다");
@@ -111,6 +112,7 @@ export default function Share({ name }) {
         }}
       >
         <img src={require("../../img/link.png")} alt="url 복사" />
+
         {copy && <ShareUrl>url이 복사되었습니다.</ShareUrl>}
       </ShareOptions>
     </ShareBox>

@@ -12,7 +12,7 @@ export function NaverLogin() {
       .get(API.NAVERTOKEN(serchParams.get("code"), serchParams.get("state")))
       .then((res) => {
         localStorage.setItem("jwt", res.headers.authorization);
-        navigate(-3);
+        navigate(-2);
       })
       .catch((err) => {
         alert("로그인을 다시 시도해주세요");
