@@ -18,6 +18,7 @@ export default function CheckBox() {
       })
       .catch((err) => {
         localStorage.removeItem("jwt");
+        navigate("/auth");
       });
   }, []);
   return <Outlet />;
