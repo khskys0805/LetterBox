@@ -75,7 +75,7 @@ export default function LetterBox() {
         <RoundButton
           Children={Bag}
           onClick={() => {
-            navigate("/auth");
+            navigate("/box");
           }}
         />
       </LetterBoxButton>
