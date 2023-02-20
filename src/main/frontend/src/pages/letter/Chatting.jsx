@@ -67,7 +67,7 @@ export default function Chatting() {
           data.open ? (
             <>
               <QuestionBox>
-                <QuestionText>{data.nickname}가 누구인 거 같애?</QuestionText>
+                <QuestionText>{data.nickname}가 누구인 거 같아?</QuestionText>
               </QuestionBox>
               <ChatProcess
                 setRefresh={setRefresh}

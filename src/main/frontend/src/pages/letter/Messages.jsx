@@ -65,7 +65,7 @@ export default function Messages() {
         });
     }
     fetchData();
-  }, []);
+  }, [data]);
 
   return (
     <MessagesBox>
@@ -78,11 +78,11 @@ export default function Messages() {
             </MessageSender>
             <MessagePaper color={data.textColor}>
               {data.content}
-              <MessagePaperImage src={data.file.fileurl} />
+              <MessagePaperImage src={data.file && data.file.fileurl} />
             </MessagePaper>
             <div>
               <RoundButton
-                Children={() => <span>누군지 맞추기</span>}
+                Children={() => <span>누군지 맞히기</span>}
                 onClick={() => navigate(`/box/${boxId}/chatting/${chatId}`)}
               />
               <RoundButton

@@ -10,7 +10,7 @@ const ServiceEndCover = styled.div`
   align-items: center;
   height: 100%;
   justify-content: space-around;
-  width: 500px;
+  max-width: 500px;
   margin: 0 auto;
   text-align: center;
   & p {

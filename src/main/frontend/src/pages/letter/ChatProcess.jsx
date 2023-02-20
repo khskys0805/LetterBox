@@ -156,7 +156,7 @@ export default function ChatProcess({ setRefresh, refresh, data, correct }) {
       })}
       <QuestionBottom>
         {correct ? (
-          <ChatAnswer>정답을 맞췄어! 축하해</ChatAnswer>
+          <ChatAnswer>정답을 맞혔어! 축하해</ChatAnswer>
         ) : (
           <ChatForm
             onSubmit={async (event) => {
