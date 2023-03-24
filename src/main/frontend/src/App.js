@@ -70,22 +70,25 @@ function App() {
               />
             </Route>
             <Route path="/box" element={<CheckBox />}>
-              {/* <Route element={<ServiceEnd />}> */}
-              <Route path="/box/create" element={<CreateBox />} />
-              {/* </Route> */}
+              <Route element={<ServiceEnd />}>
+                <Route path="/box/create" element={<CreateBox />} />
+              </Route>
             </Route>
 
             <Route element={<ServiceBox />}>
               <Route element={<PrivateRoute />}>
-                {/* <Route element={<ServiceEnd />}> */}
-                <Route element={<Question />}>
-                  <Route path="/question/:id/name" element={<Name />} />
-                  <Route path="/question/:id/nickname" element={<Nickname />} />
-                  <Route path="/question/:id/hints" element={<Hints />} />
-                  <Route path="/question/:id/content" element={<Content />} />
-                  <Route path="/question/:id/locate" element={<Locate />} />
+                <Route element={<ServiceEnd />}>
+                  <Route element={<Question />}>
+                    <Route path="/question/:id/name" element={<Name />} />
+                    <Route
+                      path="/question/:id/nickname"
+                      element={<Nickname />}
+                    />
+                    <Route path="/question/:id/hints" element={<Hints />} />
+                    <Route path="/question/:id/content" element={<Content />} />
+                    <Route path="/question/:id/locate" element={<Locate />} />
+                  </Route>
                 </Route>
-                {/* </Route> */}
               </Route>
               <Route path="/box/:id" element={<CheckLogin />} />
             </Route>
