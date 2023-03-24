@@ -63,7 +63,7 @@ public class LetterScheduled {
         List<LetterBox> letterboxes = letterBoxService.findAll();
         //System.out.println(letterboxes);
         //day >= 0 && day <= 6
-        if (day >= 0 && day <= 6) {
+        if (day >= 0 && day <= 2) {
             for(LetterBox letterBox : letterboxes) {
                 int unopen = 0;
                 LetterBox realLB = letterBoxRepository.findByLetterboxId(letterBox.getLetterboxId());
