@@ -47,7 +47,7 @@ public class LetterScheduled {
         Calendar cal1 = Calendar.getInstance();
         Calendar cal2 = Calendar.getInstance();
         //나중에 변경
-        cal1.set(2023, 2, 2);
+        cal1.set(2023, 2, 27);
         long dDay = cal1.getTimeInMillis();
         //System.out.println(dDay);
         //long now = System.currentTimeMillis();
